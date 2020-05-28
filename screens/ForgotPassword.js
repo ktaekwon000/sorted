@@ -11,7 +11,7 @@ const validationSchema = Yup.object().shape({
   email: Yup.string()
     .label("Email")
     .email("Enter a valid email")
-    .required("Please enter a registered email")
+    .required("Please enter a registered email"),
 });
 
 function ForgotPassword({ navigation, firebase }) {
@@ -20,7 +20,8 @@ function ForgotPassword({ navigation, firebase }) {
 
     try {
       await firebase.passwordReset(email);
-      console.log("Password reset email sent successfully");
+      console.log(`Password reset email sent successfully for ${email}`);
+      alert("Password reset email sent successfully!");
       navigation.navigate("Login");
     } catch (error) {
       actions.setFieldError("general", error.message);
@@ -45,7 +46,7 @@ function ForgotPassword({ navigation, firebase }) {
           isValid,
           touched,
           handleBlur,
-          isSubmitting
+          isSubmitting,
         }) => (
           <>
             <FormInput
@@ -80,16 +81,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    marginTop: 150
+    marginTop: 150,
   },
   text: {
     color: "#333",
     fontSize: 24,
-    marginLeft: 25
+    marginLeft: 25,
   },
   buttonContainer: {
-    margin: 25
-  }
+    margin: 25,
+  },
 });
 
 export default withFirebaseHOC(ForgotPassword);
