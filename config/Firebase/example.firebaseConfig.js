@@ -1,4 +1,4 @@
-// Rename this file to "firebaeConfig.js" before use
+// Rename this file to "firebaseConfig.js" before use
 // Replace all Xs with real Firebase API keys
 
 export default {
@@ -8,5 +8,5 @@ export default {
   projectId: "XXXX",
   storageBucket: "XXXX",
   messagingSenderId: "XXXX",
-  appId: "XXXX"
+  appId: "XXXX",
 };
