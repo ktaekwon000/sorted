@@ -4,7 +4,7 @@ import {
   View,
   TouchableOpacity,
   KeyboardAvoidingView,
-  ScrollView
+  ScrollView,
 } from "react-native";
 import { Button, CheckBox } from "react-native-elements";
 import { Ionicons } from "@expo/vector-icons";
@@ -31,7 +31,7 @@ const validationSchema = Yup.object().shape({
   confirmPassword: Yup.string()
     .oneOf([Yup.ref("password")], "Confirm Password must matched Password")
     .required("Confirm Password is required"),
-  check: Yup.boolean().oneOf([true], "Please check the agreement")
+  check: Yup.boolean().oneOf([true], "Please check the agreement"),
 });
 
 function Signup({ navigation, firebase }) {
@@ -86,7 +86,7 @@ function Signup({ navigation, firebase }) {
   }
 
   return (
-    <KeyboardAvoidingView style={styles.container} enabled behavior="padding">
+    <KeyboardAvoidingView style={styles.container} enabled>
       <ScrollView>
         <Formik
           initialValues={{
@@ -94,7 +94,7 @@ function Signup({ navigation, firebase }) {
             email: "",
             password: "",
             confirmPassword: "",
-            check: false
+            check: false,
           }}
           onSubmit={(values, actions) => {
             handleOnSignup(values, actions);
@@ -110,7 +110,7 @@ function Signup({ navigation, firebase }) {
             touched,
             handleBlur,
             isSubmitting,
-            setFieldValue
+            setFieldValue,
           }) => (
             <>
               <FormInput
@@ -200,7 +200,7 @@ function Signup({ navigation, firebase }) {
           title="Have an account? Login"
           onPress={goToLogin}
           titleStyle={{
-            color: "#039BE5"
+            color: "#039BE5",
           }}
           type="clear"
         />
@@ -213,19 +213,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    marginTop: 50
+    marginTop: 50,
   },
   logoContainer: {
     marginBottom: 15,
-    alignItems: "center"
+    alignItems: "center",
   },
   buttonContainer: {
-    margin: 25
+    margin: 25,
   },
   checkBoxContainer: {
     backgroundColor: "#fff",
-    borderColor: "#fff"
-  }
+    borderColor: "#fff",
+  },
 });
 
 export default withFirebaseHOC(Signup);
