@@ -3,8 +3,8 @@ import { Image } from "react-native-elements";
 
 const AppLogo = () => (
   <Image
-    source={require("../assets/sorted_black_transparentbg.png")}
-    style={{ width: 426, height: 308 }}
+    source={require("../assets/sorted_icon_black_whitebg.png")}
+    style={{ width: 213, height: 204 }}
   />
 );
 
