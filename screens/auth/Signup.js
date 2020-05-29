@@ -80,7 +80,7 @@ function Signup({ navigation, firebase }) {
       }
     } catch (error) {
       console.warn(error);
-      // actions.setFieldError("general", error.message);
+      actions.setFieldError("general", error.message);
     } finally {
       actions.setSubmitting(false);
     }
