@@ -12,7 +12,7 @@ function Initial({ navigation, firebase }) {
     try {
       loadLocalAsync();
 
-      firebase.checkUserAuth(user => {
+      firebase.checkUserAuth((user) => {
         if (user) {
           // if the user has previously logged in
           navigation.navigate("App");
@@ -28,13 +28,10 @@ function Initial({ navigation, firebase }) {
 
   async function loadLocalAsync() {
     return await Promise.all([
-      Asset.loadAsync([
-        require("../assets/flame.png"),
-        require("../assets/icon.png")
-      ]),
+      Asset.loadAsync([require("../assets/sorted_black_transparentbg.png")]),
       Font.loadAsync({
-        ...Icon.Ionicons.font
-      })
+        ...Icon.Ionicons.font,
+      }),
     ]);
   }
 
