@@ -70,16 +70,17 @@ function Signup({ navigation, firebase }) {
     const { name, email, password } = values;
 
     try {
-      const response = await firebase.signupWithEmail(email, password);
+      await firebase.signupWithEmail(email, password, name);
 
-      if (response.user.uid) {
-        const { uid } = response.user;
+      if (firebase.retrieveUser().uid) {
+        const { uid } = firebase.retrieveUser();
         const userData = { email, name, uid };
         await firebase.createNewUser(userData);
         navigation.navigate("App");
       }
     } catch (error) {
-      actions.setFieldError("general", error.message);
+      console.warn(error);
+      // actions.setFieldError("general", error.message);
     } finally {
       actions.setSubmitting(false);
     }
