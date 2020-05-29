@@ -12,8 +12,13 @@ const Firebase = {
   loginWithEmail: (email, password) => {
     return firebase.auth().signInWithEmailAndPassword(email, password);
   },
-  signupWithEmail: (email, password) => {
-    return firebase.auth().createUserWithEmailAndPassword(email, password);
+  signupWithEmail: (email, password, displayName) => {
+    return firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then((result) =>
+        firebase.auth().currentUser.updateProfile({ displayName })
+      );
   },
   signOut: () => {
     return firebase.auth().signOut();
@@ -24,9 +29,11 @@ const Firebase = {
   passwordReset: (email) => {
     return firebase.auth().sendPasswordResetEmail(email);
   },
+  retrieveUser: () => {
+    return firebase.auth().currentUser;
+  },
   // firestore
   createNewUser: (userData) => {
-    // console.log("createNewUser called");
     return firebase
       .firestore()
       .collection("users")
