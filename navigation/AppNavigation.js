@@ -1,12 +1,18 @@
 import { createStackNavigator } from "react-navigation-stack";
-import Home from "../screens/app/Home";
+import SettingsScreen from "../screens/app/SettingsScreen";
 
 const AppNavigation = createStackNavigator(
   {
-    Home: { screen: Home },
+    Settings: {
+      screen: SettingsScreen,
+      navigationOptions: { title: "Settings" },
+    },
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "Settings",
+    defaultNavigationOptions: {
+      title: "placeholder text",
+    },
   }
 );
 
