@@ -7,6 +7,8 @@ import firebaseConfig from "./firebaseConfig";
 firebase.initializeApp(firebaseConfig);
 firebase.firestore();
 
+// console and devtools will warn about setting timers that are too long.
+// seems to be a firebase issue, not in the repo's code
 const Firebase = {
   // auth
   loginWithEmail: (email, password) => {
