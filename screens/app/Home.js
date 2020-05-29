@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-elements";
-import { withFirebaseHOC } from "../config/Firebase";
+import { withFirebaseHOC } from "../../config/Firebase";
 
 function Home({ navigation, firebase }) {
   async function handleSignout() {
@@ -20,7 +20,7 @@ function Home({ navigation, firebase }) {
         title="Signout"
         onPress={handleSignout}
         titleStyle={{
-          color: "#F57C00"
+          color: "#F57C00",
         }}
         type="clear"
       />
@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center"
-  }
+    justifyContent: "center",
+  },
 });
 
 export default withFirebaseHOC(Home);

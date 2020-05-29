@@ -5,11 +5,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { HideWithKeyboard } from "react-native-hide-with-keyboard";
-import FormInput from "../components/FormInput";
-import FormButton from "../components/FormButton";
-import ErrorMessage from "../components/ErrorMessage";
-import AppLogo from "../components/AppLogo";
-import { withFirebaseHOC } from "../config/Firebase";
+import FormInput from "../../components/FormInput";
+import FormButton from "../../components/FormButton";
+import ErrorMessage from "../../components/ErrorMessage";
+import AppLogo from "../../components/AppLogo";
+import { withFirebaseHOC } from "../../config/Firebase";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -19,7 +19,7 @@ const validationSchema = Yup.object().shape({
   password: Yup.string()
     .label("Password")
     .required()
-    .min(6, "Password must have at least 6 characters ")
+    .min(6, "Password must have at least 6 characters "),
 });
 
 function Login({ navigation, firebase }) {
@@ -80,7 +80,7 @@ function Login({ navigation, firebase }) {
           isValid,
           touched,
           handleBlur,
-          isSubmitting
+          isSubmitting,
         }) => (
           <>
             <FormInput
@@ -128,7 +128,7 @@ function Login({ navigation, firebase }) {
         title="Don't have an account? Sign Up"
         onPress={goToSignup}
         titleStyle={{
-          color: "#F57C00"
+          color: "#F57C00",
         }}
         type="clear"
       />
@@ -136,7 +136,7 @@ function Login({ navigation, firebase }) {
         title="Forgot Password?"
         onPress={goToForgotPassword}
         titleStyle={{
-          color: "#039BE5"
+          color: "#039BE5",
         }}
         type="clear"
       />
@@ -148,15 +148,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    marginTop: 50
+    marginTop: 50,
   },
   logoContainer: {
     marginBottom: 15,
-    alignItems: "center"
+    alignItems: "center",
   },
   buttonContainer: {
-    margin: 25
-  }
+    margin: 25,
+  },
 });
 
 export default withFirebaseHOC(Login);

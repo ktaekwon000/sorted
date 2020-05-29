@@ -1,17 +1,17 @@
 import { createStackNavigator } from "react-navigation-stack";
-import Login from "../screens/Login";
-import Signup from "../screens/Signup";
-import ForgotPassword from "../screens/ForgotPassword";
+import Login from "../screens/auth/Login";
+import Signup from "../screens/auth/Signup";
+import ForgotPassword from "../screens/auth/ForgotPassword";
 
 const AuthNavigation = createStackNavigator(
   {
     Login: { screen: Login },
     Signup: { screen: Signup },
-    ForgotPassword: { screen: ForgotPassword }
+    ForgotPassword: { screen: ForgotPassword },
   },
   {
     initialRouteName: "Login",
-    headerMode: "none"
+    headerMode: "none",
   }
 );
 
