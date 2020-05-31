@@ -13,6 +13,7 @@ function Initial({ navigation, firebase }) {
       loadLocalAsync();
 
       navigation.navigate("Auth");
+      // code below enables auto-login
       // firebase.checkUserAuth((user) => {
       //   if (user) {
       //     // if the user has previously logged in
