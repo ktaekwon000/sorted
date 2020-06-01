@@ -20,7 +20,7 @@ const getBlogPosts = (dispatch) => async (callback) => {
     .collection("entries")
     .orderBy("createdDate")
     .get();
-  entries.forEach((entry) => results.push(entry.data()));
+  entries.forEach((entry) => results.push({ ...entry.data(), id: entry.id }));
   dispatch({ type: "getBlogPosts", payload: results });
   if (callback) {
     callback();

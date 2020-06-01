@@ -17,12 +17,13 @@ const BlogListScreen = ({ navigation, firebase }) => {
     <View>
       <FlatList
         data={state}
-        keyExtractor={(entry) => entry.createdDate}
+        keyExtractor={(entry) => entry.id}
         renderItem={({ item }) => (
           <View>
             <Text>{item.title}</Text>
             <Text>{item.content}</Text>
             <Text>{item.createdDate}</Text>
+            <Text>{item.id}</Text>
           </View>
         )}
       />
