@@ -1,6 +1,6 @@
 # sorted
 
-Orbital 2020 project by Kim Tae Kwon
+Orbital 2020 project by Kim Tae Kwon and Kim Sangwoo
 
 # Installation
 
