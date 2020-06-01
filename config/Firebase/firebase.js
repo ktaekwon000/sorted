@@ -1,4 +1,4 @@
-import * as firebase from "firebase";
+import firebase from "firebase";
 import "@firebase/auth";
 import "@firebase/firestore";
 import firebaseConfig from "./firebaseConfig";
@@ -6,6 +6,7 @@ import firebaseConfig from "./firebaseConfig";
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 firebase.firestore();
+export { firebase };
 
 // console and devtools will warn about setting timers that are too long.
 // seems to be a firebase issue, not in the repo's code
