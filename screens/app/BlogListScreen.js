@@ -24,11 +24,11 @@ const BlogListScreen = ({ navigation, firebase }) => {
         data={state}
         keyExtractor={(entry) => entry.id}
         renderItem={({ item }) => (
-          <View>
+          <View style={{ padding: 10 }}>
             <Text>{item.title}</Text>
             <Text>{item.content}</Text>
-            <Text>{item.createdDate}</Text>
-            <Text>{item.id}</Text>
+            <Text>{new Date(item.createdDate).toString()}</Text>
+            <Text>ID (for debugging): {item.id}</Text>
             <Text></Text>
           </View>
         )}
