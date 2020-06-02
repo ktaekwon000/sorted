@@ -6,14 +6,14 @@ import {
   FlatList,
   ActivityIndicator,
 } from "react-native";
-import { Context as BlogContext } from "../../config/BlogContext";
+import { Context as DiaryContext } from "../../config/DiaryContext";
 
-const BlogListScreen = ({ navigation, firebase }) => {
-  const { state, getBlogPosts } = useContext(BlogContext);
+const DiaryScreen = ({ navigation, firebase }) => {
+  const { state, getDiaryEntries } = useContext(DiaryContext);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getBlogPosts(() => setLoading(false));
+    getDiaryEntries(() => setLoading(false));
   }, []);
 
   return loading ? (
@@ -35,7 +35,7 @@ const BlogListScreen = ({ navigation, firebase }) => {
         refreshing={loading}
         onRefresh={() => {
           setLoading(true);
-          getBlogPosts(() => setLoading(false));
+          getDiaryEntries(() => setLoading(false));
         }}
       />
     </View>
@@ -44,4 +44,4 @@ const BlogListScreen = ({ navigation, firebase }) => {
 
 const styles = StyleSheet.create({});
 
-export default BlogListScreen;
+export default DiaryScreen;
