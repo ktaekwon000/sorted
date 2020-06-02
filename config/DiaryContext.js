@@ -19,7 +19,9 @@ const entriesCollection = () =>
 
 const getDiaryEntries = (dispatch) => async (callback) => {
   const results = [];
-  const orderedEntries = await entriesCollection().orderBy("createdDate").get();
+  const orderedEntries = await entriesCollection()
+    .orderBy("createdDate", "desc")
+    .get();
   orderedEntries.forEach((entry) =>
     results.push({ ...entry.data(), id: entry.id })
   );
@@ -40,8 +42,15 @@ const addDiaryEntry = (dispatch) => async (entry, callback) => {
   }
 };
 
+const deleteDiaryEntry = (dispatch) => async (id, callback) => {
+  await entriesCollection().doc(id).delete();
+  if (callback) {
+    callback();
+  }
+};
+
 export const { Context, Provider } = createDataContext(
   reducer,
-  { getDiaryEntries, addDiaryEntry },
+  { getDiaryEntries, addDiaryEntry, deleteDiaryEntry },
   []
 );
