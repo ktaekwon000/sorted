@@ -12,17 +12,16 @@ function Initial({ navigation, firebase }) {
     try {
       loadLocalAsync();
 
-      navigation.navigate("Auth");
-      // code below enables auto-login
-      // firebase.checkUserAuth((user) => {
-      //   if (user) {
-      //     // if the user has previously logged in
-      //     navigation.navigate("App");
-      //   } else {
-      //     // if the user has previously logged out from the app
-      //     navigation.navigate("Auth");
-      //   }
-      // });
+      // removing code below breaks signout button
+      firebase.checkUserAuth((user) => {
+        if (user) {
+          // if the user has previously logged in
+          navigation.navigate("App");
+        } else {
+          // if the user has previously logged out from the app
+          navigation.navigate("Auth");
+        }
+      });
     } catch (error) {
       console.log(error);
     }
