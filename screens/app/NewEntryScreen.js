@@ -1,16 +1,27 @@
-import React, { useContext } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import React, { useState, useContext } from "react";
+import { Text, View, StyleSheet, ActivityIndicator } from "react-native";
 import EntryComponent from "../../components/EntryComponent";
 import { Context as DiaryContext } from "../../config/DiaryContext";
 
 const NewEntryScreen = ({ navigation }) => {
-  const { addDiaryEntry } = useContext(DiaryContext);
-  return (
+  const { addDiaryEntry, getDiaryEntries } = useContext(DiaryContext);
+  const [loading, setLoading] = useState(false);
+  return loading ? (
+    <ActivityIndicator />
+  ) : (
     <View>
       <EntryComponent
-        onSubmit={(values) =>
-          addDiaryEntry(values, () => navigation.navigate("Diary"))
-        }
+        onSubmit={(values) => {
+          {
+            setLoading(true);
+            addDiaryEntry(values, () =>
+              getDiaryEntries(() => {
+                setLoading(false);
+                navigation.navigate("Diary");
+              })
+            );
+          }
+        }}
       />
     </View>
   );
