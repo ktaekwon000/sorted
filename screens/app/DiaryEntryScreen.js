@@ -1,5 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, View, StyleSheet, ActivityIndicator } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  TouchableOpacity,
+} from "react-native";
 import { Button } from "react-native-elements";
 import { Context as DiaryContext } from "../../config/DiaryContext";
 
@@ -10,10 +16,10 @@ const DiaryEntryScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    navigation.setParams({ title: entry.title });
+    navigation.setParams({ title: entry.title, entry });
 
     const listener = navigation.addListener("didFocus", () => {
-      navigation.setParams({ title: entry.title });
+      navigation.setParams({ title: entry.title, entry });
     });
 
     return () => {
@@ -42,6 +48,16 @@ const DiaryEntryScreen = ({ navigation }) => {
 
 DiaryEntryScreen.navigationOptions = ({ navigation }) => ({
   title: navigation.getParam("title", "Loading..."),
+  headerRight: (
+    <TouchableOpacity
+      style={{ marginRight: 13 }}
+      onPress={() =>
+        navigation.navigate("Edit", { entry: navigation.getParam("entry") })
+      }
+    >
+      <Text style={{ color: "#007AFF" }}>Edit</Text>
+    </TouchableOpacity>
+  ),
 });
 const styles = StyleSheet.create({});
 
