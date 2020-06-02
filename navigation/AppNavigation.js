@@ -1,9 +1,10 @@
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
 import { createStackNavigator } from "react-navigation-stack";
-import { Provider as BlogProvider } from "../config/BlogContext";
+import { Provider as DiaryProvider } from "../config/DiaryContext";
 import SettingsScreen from "../screens/app/SettingsScreen";
-import BlogListScreen from "../screens/app/BlogListScreen";
+import DiaryScreen from "../screens/app/DiaryScreen";
+import NewEntryScreen from "../screens/app/NewEntryScreen";
 import { createAppContainer } from "react-navigation";
 
 const AppNavigation = createStackNavigator(
@@ -12,8 +13,8 @@ const AppNavigation = createStackNavigator(
       screen: SettingsScreen,
       navigationOptions: { title: "Settings" },
     },
-    BlogList: {
-      screen: BlogListScreen,
+    Diary: {
+      screen: DiaryScreen,
       navigationOptions: ({ navigation }) => ({
         title: "Your entries",
         headerTitleStyle: {
@@ -23,7 +24,7 @@ const AppNavigation = createStackNavigator(
         headerRight: (
           <TouchableOpacity
             style={{ marginRight: 13 }}
-            onPress={() => alert("new entry")}
+            onPress={() => navigation.navigate("NewEntry")}
           >
             <Text style={{ color: "#007AFF" }}>New Post</Text>
           </TouchableOpacity>
@@ -38,10 +39,14 @@ const AppNavigation = createStackNavigator(
         ),
       }),
     },
+    NewEntry: {
+      screen: NewEntryScreen,
+      navigationOptions: { title: "New entry" },
+    },
   },
 
   {
-    initialRouteName: "BlogList",
+    initialRouteName: "Diary",
     defaultNavigationOptions: {
       title: "placeholder text",
     },
@@ -51,7 +56,7 @@ const AppNavigation = createStackNavigator(
 const AppContainer = createAppContainer(AppNavigation);
 
 export default () => (
-  <BlogProvider>
+  <DiaryProvider>
     <AppContainer />
-  </BlogProvider>
+  </DiaryProvider>
 );
