@@ -1,6 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, View, StyleSheet, FlatList } from "react-native";
-import { Button } from "react-native-elements";
+import {
+  Text,
+  View,
+  StyleSheet,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
 import { Context as BlogContext } from "../../config/BlogContext";
 
 const BlogListScreen = ({ navigation, firebase }) => {
@@ -12,7 +17,7 @@ const BlogListScreen = ({ navigation, firebase }) => {
   }, []);
 
   return loading ? (
-    <Text>loading...</Text>
+    <ActivityIndicator />
   ) : (
     <View>
       <FlatList
@@ -24,13 +29,14 @@ const BlogListScreen = ({ navigation, firebase }) => {
             <Text>{item.content}</Text>
             <Text>{item.createdDate}</Text>
             <Text>{item.id}</Text>
+            <Text></Text>
           </View>
         )}
-      />
-      <Button
-        title="Go to settings"
-        type="outline"
-        onPress={() => navigation.navigate("Settings")}
+        refreshing={loading}
+        onRefresh={() => {
+          setLoading(true);
+          getBlogPosts(() => setLoading(false));
+        }}
       />
     </View>
   );

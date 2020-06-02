@@ -10,17 +10,16 @@ const reducer = (state, action) => {
   }
 };
 
+const uid = () => firebase.auth().currentUser.uid;
+const entriesCollection = () =>
+  firebase.firestore().collection("users").doc(uid()).collection("entries");
+
 const getBlogPosts = (dispatch) => async (callback) => {
-  const uid = await firebase.auth().currentUser.uid;
   const results = [];
-  const entries = await firebase
-    .firestore()
-    .collection("users")
-    .doc(uid)
-    .collection("entries")
-    .orderBy("createdDate")
-    .get();
-  entries.forEach((entry) => results.push({ ...entry.data(), id: entry.id }));
+  const orderedEntries = await entriesCollection().orderBy("createdDate").get();
+  orderedEntries.forEach((entry) =>
+    results.push({ ...entry.data(), id: entry.id })
+  );
   dispatch({ type: "getBlogPosts", payload: results });
   if (callback) {
     callback();
