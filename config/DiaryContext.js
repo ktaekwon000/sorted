@@ -32,10 +32,13 @@ const addDiaryEntry = (dispatch) => async (entry, callback) => {
     ...entry,
     createdDate: FieldValue.serverTimestamp(),
   });
+  if (callback) {
+    callback();
+  }
 };
 
 export const { Context, Provider } = createDataContext(
   reducer,
-  { getDiaryEntries },
+  { getDiaryEntries, addDiaryEntry },
   []
 );

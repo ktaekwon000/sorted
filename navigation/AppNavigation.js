@@ -26,7 +26,7 @@ const AppNavigation = createStackNavigator(
             style={{ marginRight: 13 }}
             onPress={() => navigation.navigate("NewEntry")}
           >
-            <Text style={{ color: "#007AFF" }}>New Post</Text>
+            <Text style={{ color: "#007AFF" }}>New Entry</Text>
           </TouchableOpacity>
         ),
         headerLeft: () => (
