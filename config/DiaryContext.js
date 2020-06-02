@@ -5,8 +5,11 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "getDiaryEntries":
       return action.payload;
+    case "addDiaryEntry":
+      return state;
     default:
       console.warn(`Default case reached with action type ${action.type}`);
+      return state;
   }
 };
 

@@ -5,6 +5,7 @@ import { Provider as DiaryProvider } from "../config/DiaryContext";
 import SettingsScreen from "../screens/app/SettingsScreen";
 import DiaryScreen from "../screens/app/DiaryScreen";
 import NewEntryScreen from "../screens/app/NewEntryScreen";
+import DiaryEntryScreen from "../screens/app/DiaryEntryScreen";
 import { createAppContainer } from "react-navigation";
 
 const AppNavigation = createStackNavigator(
@@ -42,6 +43,9 @@ const AppNavigation = createStackNavigator(
     NewEntry: {
       screen: NewEntryScreen,
       navigationOptions: { title: "New entry" },
+    },
+    DiaryEntry: {
+      screen: DiaryEntryScreen,
     },
   },
 
