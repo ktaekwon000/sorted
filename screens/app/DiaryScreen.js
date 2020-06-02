@@ -14,12 +14,19 @@ const DiaryScreen = ({ navigation, firebase }) => {
 
   useEffect(() => {
     getDiaryEntries(() => setLoading(false));
+    const listener = navigation.addListener("didFocus", () => {
+      setLoading(true);
+      getDiaryEntries(() => setLoading(false));
+    });
+    return () => {
+      listener.remove();
+    };
   }, []);
 
   return loading ? (
     <ActivityIndicator />
   ) : (
-    <View>
+    <View style={{ flex: 1 }}>
       <FlatList
         data={state}
         keyExtractor={(entry) => entry.id}
@@ -27,7 +34,7 @@ const DiaryScreen = ({ navigation, firebase }) => {
           <View style={{ padding: 10 }}>
             <Text>{item.title}</Text>
             <Text>{item.content}</Text>
-            <Text>{new Date(item.createdDate).toString()}</Text>
+            <Text>{new Date(item.createdDate.seconds * 1000).toString()}</Text>
             <Text>ID (for debugging): {item.id}</Text>
             <Text></Text>
           </View>
