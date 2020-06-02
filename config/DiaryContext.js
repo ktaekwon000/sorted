@@ -5,10 +5,8 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "getDiaryEntries":
       return action.payload;
-    case "addDiaryEntry":
-      return state;
     default:
-      console.warn(`Default case reached with action type ${action.type}`);
+      console.log(`Default case reached with action type ${action.type}`);
       return state;
   }
 };
@@ -49,8 +47,18 @@ const deleteDiaryEntry = (dispatch) => async (id, callback) => {
   }
 };
 
+const editDiaryEntry = (dispatch) => async (id, entry, callback) => {
+  const FieldValue = firebase.firestore.FieldValue;
+  await entriesCollection()
+    .doc(id)
+    .update({ ...entry, updatedDate: FieldValue.serverTimestamp() });
+  if (callback) {
+    callback();
+  }
+};
+
 export const { Context, Provider } = createDataContext(
   reducer,
-  { getDiaryEntries, addDiaryEntry, deleteDiaryEntry },
+  { getDiaryEntries, addDiaryEntry, deleteDiaryEntry, editDiaryEntry },
   []
 );
