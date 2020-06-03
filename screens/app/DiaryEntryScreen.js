@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
-  Text,
   View,
   StyleSheet,
   ActivityIndicator,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
-import { Button } from "react-native-elements";
+import { Button, Text } from "react-native-elements";
 import { Context as DiaryContext } from "../../config/DiaryContext";
+import { ScrollView } from "react-native-gesture-handler";
 
 const DiaryEntryScreen = ({ navigation }) => {
   const id = navigation.getParam("id");
@@ -30,18 +31,29 @@ const DiaryEntryScreen = ({ navigation }) => {
   return loading ? (
     <ActivityIndicator />
   ) : (
-    <View>
-      <Text>{entry.title}</Text>
-      <Text>{entry.content}</Text>
-      <Button
-        title="Delete"
-        onPress={() => {
-          setLoading(true);
-          deleteDiaryEntry(id, () => {
-            getDiaryEntries(() => navigation.navigate("Diary"));
-          });
-        }}
-      />
+    <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, height: Dimensions.get("window").height - 50 }}>
+        <Text h3 style={{ margin: 5 }}>
+          {entry.title}
+        </Text>
+        <ScrollView>
+          <Text style={{ margin: 5, fontSize: 30 }}>{entry.content}</Text>
+        </ScrollView>
+      </View>
+      <View style={{ flex: 0.08 }}>
+        <Button
+          title=" Delete "
+          onPress={() => {
+            setLoading(true);
+            deleteDiaryEntry(id, () => {
+              getDiaryEntries(() => navigation.navigate("Diary"));
+            });
+          }}
+          style={{
+            alignSelf: "center",
+          }}
+        />
+      </View>
     </View>
   );
 };
