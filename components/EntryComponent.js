@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { View, Dimensions } from "react-native";
 import { Button, Input } from "react-native-elements";
 import { Formik, Form, Field } from "formik";
 
@@ -17,14 +17,18 @@ const EntryComponent = ({
             onChangeText={handleChange("title")}
           />
           <View padding={10} />
-          <Input
-            placeholder="Content"
-            multiline
-            numberOfLines={6}
-            textAlignVertical="top"
-            value={values.content}
-            onChangeText={handleChange("content")}
-          />
+          //TODO: fix the design
+          <View style={{ height: Dimensions.get("window").height * 0.28 }}>
+            <Input
+              placeholder="Content"
+              multiline
+              scrollEnabled
+              numberOfLines={10}
+              textAlignVertical="top"
+              value={values.content}
+              onChangeText={handleChange("content")}
+            />
+          </View>
           <View padding={20} />
           <Button title="Submit" onPress={handleSubmit} />
         </View>
