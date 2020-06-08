@@ -29,7 +29,6 @@ function Settings({ navigation, firebase }) {
             .seconds * 1000
         )
       );
-      console.log(createdDate);
       setName(user.displayName);
       setEmail(user.email);
       setUid(user.uid);
