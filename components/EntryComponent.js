@@ -17,7 +17,7 @@ const EntryComponent = ({
             onChangeText={handleChange("title")}
           />
           <View padding={10} />
-          //TODO: fix the design
+          {/* //TODO: fix the design */}
           <View style={{ height: Dimensions.get("window").height * 0.28 }}>
             <Input
               placeholder="Content"
