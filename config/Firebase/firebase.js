@@ -37,11 +37,19 @@ const Firebase = {
   },
   // firestore
   createNewUser: (userData) => {
+    const FieldValue = firebase.firestore.FieldValue;
     return firebase
       .firestore()
       .collection("users")
       .doc(`${userData.uid}`)
-      .set(userData);
+      .set({ ...userData, createdDate: FieldValue.serverTimestamp() });
+  },
+  retrieveUserDocument: (userData) => {
+    return firebase
+      .firestore()
+      .collection("users")
+      .doc(`${userData.uid}`)
+      .get();
   },
 };
 

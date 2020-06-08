@@ -8,6 +8,7 @@ import NewEntryScreen from "../screens/app/NewEntryScreen";
 import DiaryEntryScreen from "../screens/app/DiaryEntryScreen";
 import EditScreen from "../screens/app/EditScreen";
 import { createAppContainer } from "react-navigation";
+import StatsScreen from "../screens/app/StatsScreen";
 
 const AppNavigation = createStackNavigator(
   {
@@ -50,6 +51,9 @@ const AppNavigation = createStackNavigator(
     },
     Edit: {
       screen: EditScreen,
+    },
+    Stats: {
+      screen: StatsScreen,
     },
   },
 

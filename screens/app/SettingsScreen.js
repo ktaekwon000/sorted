@@ -4,10 +4,11 @@ import { Button } from "react-native-elements";
 import { withFirebaseHOC } from "../../config/Firebase";
 
 function Settings({ navigation, firebase }) {
-  const [ready, setReady] = useState(false);
+  // const [ready, setReady] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [uid, setUid] = useState("");
+  const [createdDate, setCreatedDate] = useState(new Date(0));
 
   async function handleSignout() {
     try {
@@ -21,6 +22,14 @@ function Settings({ navigation, firebase }) {
   async function retrieveUser() {
     try {
       const user = await firebase.retrieveUser();
+      // janky hack, data() should be moved into firebase.js
+      setCreatedDate(
+        new Date(
+          (await firebase.retrieveUserDocument(user)).data().createdDate
+            .seconds * 1000
+        )
+      );
+      console.log(createdDate);
       setName(user.displayName);
       setEmail(user.email);
       setUid(user.uid);
@@ -31,10 +40,10 @@ function Settings({ navigation, firebase }) {
 
   useEffect(() => {
     retrieveUser();
-    setReady(true);
+    // setReady(true);
   }, []);
 
-  return !ready ? (
+  return !name ? (
     <View style={styles.container}>
       <Text>loading...</Text>
       <Text>
@@ -45,6 +54,7 @@ function Settings({ navigation, firebase }) {
     <View style={styles.container}>
       <Text>Welcome! You are {name}</Text>
       <Text>Your email is {email}</Text>
+      <Text>Account creation date: {createdDate.toLocaleString("en-GB")}</Text>
       <Text>
         {"\n"}The following information is only for debugging purposes:
       </Text>
