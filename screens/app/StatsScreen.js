@@ -82,11 +82,15 @@ const StatsScreen = ({ firebase }) => {
   }, []);
 
   return loading ? (
-    <ActivityIndicator />
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <ActivityIndicator size="large" />
+    </View>
   ) : new Date().getTime() - accCreatedDate.getTime() <
     1000 * 60 * 60 * 24 * 7 ? (
     <View>
-      <Text>Your account was created on {accCreatedDate.toLocaleString()}</Text>
+      <Text>
+        Your account was created on {format(accCreatedDate, "wo 'of' MMMM, R")}
+      </Text>
       <Text>{"\n"}Sorry!</Text>
       <Text>You can only see stats if your account is older than 1 week.</Text>
       <Text>

@@ -29,7 +29,9 @@ const DiaryEntryScreen = ({ navigation }) => {
   }, []);
 
   return loading ? (
-    <ActivityIndicator />
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <ActivityIndicator size="large" />
+    </View>
   ) : (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 1, height: Dimensions.get("window").height - 50 }}>

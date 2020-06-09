@@ -7,7 +7,9 @@ const NewEntryScreen = ({ navigation }) => {
   const { addDiaryEntry, getDiaryEntries } = useContext(DiaryContext);
   const [loading, setLoading] = useState(false);
   return loading ? (
-    <ActivityIndicator />
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <ActivityIndicator size="large" />
+    </View>
   ) : (
     <View>
       <EntryComponent
