@@ -20,7 +20,9 @@ const DiaryScreen = ({ navigation }) => {
   }, []);
 
   return loading ? (
-    <ActivityIndicator />
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <ActivityIndicator size="large" />
+    </View>
   ) : (
     <View style={{ flex: 1, alignItems: "center" }}>
       <Button
@@ -38,6 +40,7 @@ const DiaryScreen = ({ navigation }) => {
           >
             <Card
               title={item.title}
+              titleNumberOfLines={1}
               dividerStyle={{ marginBottom: 3 }}
               titleStyle={{ marginBottom: 3 }}
               containerStyle={{
