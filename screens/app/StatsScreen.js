@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Text, View, StyleSheet, ActivityIndicator } from "react-native";
 import { Badge } from "react-native-elements";
+import { format, formatDistance } from "date-fns";
 import { Context as DiaryContext } from "../../config/DiaryContext";
 import { withFirebaseHOC } from "../../config/Firebase";
 
@@ -88,10 +89,16 @@ const StatsScreen = ({ firebase }) => {
       <Text>Your account was created on {accCreatedDate.toLocaleString()}</Text>
       <Text>{"\n"}Sorry!</Text>
       <Text>You can only see stats if your account is older than 1 week.</Text>
+      <Text>
+        Your account was created {formatDistance(accCreatedDate, new Date())}{" "}
+        ago.
+      </Text>
     </View>
   ) : (
     <View style={{ flex: 1 }}>
-      <Text>Your account was created on {accCreatedDate.toLocaleString()}</Text>
+      <Text>
+        Your account was created on {format(accCreatedDate, "wo 'of' MMMM, R")}
+      </Text>
       <Text>
         You have contributed {pastWeek.filter((entry) => entry).length} time(s)
         in the past week.
