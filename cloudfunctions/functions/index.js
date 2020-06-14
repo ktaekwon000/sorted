@@ -33,7 +33,7 @@ exports.analyzeSentimentonCreate = functions.firestore
         snap.ref.set(
           {
             sentimentScore: sentiment.score,
-            SentimentMagnitude: sentiment.magnitude,
+            sentimentMagnitude: sentiment.magnitude,
           },
           { merge: true }
         );

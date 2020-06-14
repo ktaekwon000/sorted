@@ -51,11 +51,6 @@ const DiaryScreen = ({ navigation }) => {
             >
               <Text numberOfLines={9}>{item.content}</Text>
             </Card>
-            {/* <ListItem
-              title={item.title}
-              subtitle={new Date(item.createdDate.seconds * 1000).toString()}
-              topDivider
-            /> */}
           </TouchableNativeFeedback>
         )}
         refreshing={loading}
