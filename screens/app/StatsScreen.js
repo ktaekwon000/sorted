@@ -43,7 +43,7 @@ const StatsScreen = ({ firebase }) => {
   ]);
   // index 0 is yesterday, index 1 is the 2 days before, etc...
 
-  async function getAccCreatedDate() {
+  async function getAccCreatedDate(callback) {
     const user = await firebase.retrieveUser();
     setAccCreatedDate(
       new Date(
@@ -51,6 +51,9 @@ const StatsScreen = ({ firebase }) => {
           1000
       )
     );
+    if (callback) {
+      callback();
+    }
   }
 
   const getStats = () => {
@@ -70,14 +73,12 @@ const StatsScreen = ({ firebase }) => {
       pivotDay = dayBefore;
     }
     setPastWeek(newArr);
-    console.log(newArr);
   };
 
   useEffect(() => {
     getAccCreatedDate();
     getDiaryEntries(() => {
-      getStats();
-      setLoading(false);
+      getStats(setLoading(false));
     });
   }, []);
 
