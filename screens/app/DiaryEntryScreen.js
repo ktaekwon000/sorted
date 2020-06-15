@@ -37,9 +37,7 @@ function makeSentimentString(score, magnitude) {
 
 function makeStringFromTimestamp(timestamp) {
   const date = new Date(timestamp.seconds * 1000);
-  console.log(date);
   const formatted = format(date, "do 'of' MMMM, R");
-  console.log(formatted);
   return formatted;
 }
 
