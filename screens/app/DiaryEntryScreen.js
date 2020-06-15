@@ -82,8 +82,10 @@ const DiaryEntryScreen = ({ navigation }) => {
         <Text style={{ marginLeft: 5 }}>
           Created on {makeStringFromTimestamp(entry.createdDate)}
         </Text>
-        {updatedDateStr ? (
-          <Text style={{ marginLeft: 5 }}>Edited on {updatedDateStr}</Text>
+        {"updatedDate" in entry ? (
+          <Text style={{ marginLeft: 5 }}>
+            Edited on {makeStringFromTimestamp(entry.createdDate)}
+          </Text>
         ) : null}
         <ScrollView>
           <Text style={{ margin: 5, fontSize: 24 }}>{entry.content}</Text>
