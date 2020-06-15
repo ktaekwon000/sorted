@@ -8,6 +8,11 @@ import { withFirebaseHOC } from "../../config/Firebase";
 const makeDatefromTimestamp = (timestamp) => new Date(timestamp.seconds * 1000);
 
 const makeDayfromInt = (num) => {
+  const currDay = new Date().getDay();
+  num = num - currDay;
+  if (num < 0) {
+    num += 7;
+  }
   switch (num) {
     case 0:
       return "Monday";
@@ -24,7 +29,23 @@ const makeDayfromInt = (num) => {
     case 6:
       return "Sunday";
     default:
-      console.warn("default case reached in statsscreen");
+      console.warn("default case reached in statsscreen, makeDayfromInt");
+  }
+};
+
+const makeColorFromString = (str) => {
+  switch (str) {
+    case "None":
+      return "#848484";
+    case "Mixed/Neutral":
+      return "#FFBE46";
+    case "Bad":
+      return "#E67C73";
+    case "Good":
+      return "#57BB8A";
+    default:
+      console.log("default case reached in statsscreen, makeColorFromString");
+      return "";
   }
 };
 
@@ -32,15 +53,9 @@ const StatsScreen = ({ firebase }) => {
   const { state, getDiaryEntries } = useContext(DiaryContext);
   const [loading, setLoading] = useState(true);
   const [accCreatedDate, setAccCreatedDate] = useState(new Date(0));
-  const [pastWeek, setPastWeek] = useState([
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ]);
+  const [pastWeek, setPastWeek] = useState([]);
+  const [emotions, setEmotions] = useState([]);
+  const [dailyNumbers, setDailyNumbers] = useState(-1);
   // index 0 is yesterday, index 1 is the 2 days before, etc...
 
   async function getAccCreatedDate(callback) {
@@ -56,15 +71,16 @@ const StatsScreen = ({ firebase }) => {
     }
   }
 
-  const getStats = () => {
+  const getStats = (callback) => {
     let newArr = [];
+
     let pivotDay = new Date();
     pivotDay.setHours(0, 0, 0, 0);
     for (let i = 0; i < 7; i++) {
       let dayBefore = new Date(pivotDay);
       dayBefore.setDate(pivotDay.getDate() - 1);
       newArr.push(
-        state.some(
+        state.filter(
           (elem) =>
             makeDatefromTimestamp(elem.createdDate) >= dayBefore &&
             makeDatefromTimestamp(elem.createdDate) < pivotDay
@@ -72,15 +88,49 @@ const StatsScreen = ({ firebase }) => {
       );
       pivotDay = dayBefore;
     }
-    setPastWeek(newArr);
+    setPastWeek(newArr.reverse());
+
+    let dailyNumbers = [];
+    newArr.forEach((arr) => dailyNumbers.push(arr.length));
+    setDailyNumbers(dailyNumbers.filter((num) => num != 0).length);
+
+    let emotions = [];
+    newArr.forEach((arr) => {
+      let total = 0;
+      arr.forEach((entry) => {
+        if (entry.sentimentScore >= 0.25) {
+          total += 1;
+        } else if (entry.sentimentScore <= -0.25) {
+          total -= 1;
+        }
+      });
+      if (arr.length == 0) {
+        emotions.push("None");
+      } else {
+        if (total == 0) {
+          emotions.push("Mixed/Neutral");
+        } else if (total > 0) {
+          emotions.push("Good");
+        } else {
+          emotions.push("Bad");
+        }
+      }
+    });
+    setEmotions(emotions);
+
+    if (callback) {
+      callback();
+    }
   };
 
   useEffect(() => {
     getAccCreatedDate();
     getDiaryEntries(() => {
-      getStats(setLoading(false));
+      getStats(() => setLoading(false));
     });
   }, []);
+
+  console.log(emotions);
 
   return loading ? (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -100,20 +150,28 @@ const StatsScreen = ({ firebase }) => {
       </Text>
     </View>
   ) : (
-    <View style={{ flex: 1 }}>
-      <Text>
-        Your account was created on {format(accCreatedDate, "wo 'of' MMMM, R")}
+    <View style={{ flex: 1, alignItems: "center" }}>
+      <Text style={{ margin: 5 }}>
+        Your account was created on {format(accCreatedDate, "wo 'of' MMMM, R")}.
       </Text>
-      <Text>
-        You have contributed {pastWeek.filter((entry) => entry).length} time(s)
-        in the past week.
+      <Text style={{ margin: 5, textAlign: "center" }}>
+        In the last week, you wrote diary entries on {dailyNumbers} out of the 7
+        days. {"\n"}
+        {dailyNumbers >= 4 ? "Keep it up!" : "Try writing more!"}
+        {"\n"}
       </Text>
-      <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
-        {pastWeek.map((val, index) => {
+      <Text style={{ textAlign: "center" }}>Stats for the last 7 days:</Text>
+      <View style={{ flexDirection: "column", justifyContent: "space-evenly" }}>
+        {emotions.map((val, index) => {
           return (
-            <View style={{ margin: 3 }}>
+            <View style={{ margin: 8, alignItems: "center" }}>
               <Text>{makeDayfromInt(index)}</Text>
-              <Badge status={val ? "success" : "warning"} />
+              <Badge
+                badgeStyle={{
+                  backgroundColor: makeColorFromString(val),
+                }}
+                value={val}
+              />
             </View>
           );
         })}
