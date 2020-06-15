@@ -44,7 +44,7 @@ const makeColorFromString = (str) => {
     case "Good":
       return "#57BB8A";
     default:
-      console.log("default case reached in statsscreen, makeColorFromString");
+      console.warn("default case reached in statsscreen, makeColorFromString");
       return "";
   }
 };
