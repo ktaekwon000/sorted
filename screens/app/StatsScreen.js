@@ -9,8 +9,8 @@ const makeDatefromTimestamp = (timestamp) => new Date(timestamp.seconds * 1000);
 
 const makeDayfromInt = (num) => {
   const currDay = new Date().getDay();
-  num = num - currDay;
-  if (num < 0) {
+  num = currDay - num - 2;
+  while (num < 0) {
     num += 7;
   }
   switch (num) {
@@ -116,7 +116,7 @@ const StatsScreen = ({ firebase }) => {
         }
       }
     });
-    setEmotions(emotions);
+    setEmotions(emotions.reverse());
 
     if (callback) {
       callback();
@@ -138,7 +138,7 @@ const StatsScreen = ({ firebase }) => {
     1000 * 60 * 60 * 24 * 7 ? (
     <View>
       <Text>
-        Your account was created on {format(accCreatedDate, "wo 'of' MMMM, R")}
+        Your account was created on {format(accCreatedDate, "do 'of' MMMM, R")}
       </Text>
       <Text>{"\n"}Sorry!</Text>
       <Text>You can only see stats if your account is older than 1 week.</Text>
@@ -150,7 +150,7 @@ const StatsScreen = ({ firebase }) => {
   ) : (
     <View style={{ flex: 1, alignItems: "center" }}>
       <Text style={{ margin: 5 }}>
-        Your account was created on {format(accCreatedDate, "wo 'of' MMMM, R")}.
+        Your account was created on {format(accCreatedDate, "do 'of' MMMM, R")}.
       </Text>
       <Text style={{ margin: 5, textAlign: "center" }}>
         In the last week, you wrote diary entries on {dailyNumbers} out of the 7

@@ -37,23 +37,24 @@ function makeSentimentString(score, magnitude) {
 
 function makeStringFromTimestamp(timestamp) {
   const date = new Date(timestamp.seconds * 1000);
-  return format(date, "wo 'of' MMMM, R");
+  console.log(date);
+  const formatted = format(date, "do 'of' MMMM, R");
+  console.log(formatted);
+  return formatted;
 }
 
 const DiaryEntryScreen = ({ navigation }) => {
   const id = navigation.getParam("id");
   const { state, deleteDiaryEntry, getDiaryEntries } = useContext(DiaryContext);
   const entry = state.find((entry) => entry.id === id);
-  const [createdDateStr] = useState(
-    entry ? makeStringFromTimestamp(entry.createdDate) : ""
-  );
-  const [updatedDateStr] = useState(
-    entry
-      ? "updatedDate" in entry
-        ? makeStringFromTimestamp(entry.updatedDate)
-        : ""
+  const [createdDateStr] = entry
+    ? makeStringFromTimestamp(entry.createdDate)
+    : "";
+  const [updatedDateStr] = entry
+    ? "updatedDate" in entry
+      ? makeStringFromTimestamp(entry.updatedDate)
       : ""
-  );
+    : "";
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -78,7 +79,9 @@ const DiaryEntryScreen = ({ navigation }) => {
         <Text h3 style={{ margin: 5 }}>
           {entry.title}
         </Text>
-        <Text style={{ marginLeft: 5 }}>Created on {createdDateStr}</Text>
+        <Text style={{ marginLeft: 5 }}>
+          Created on {makeStringFromTimestamp(entry.createdDate)}
+        </Text>
         {updatedDateStr ? (
           <Text style={{ marginLeft: 5 }}>Edited on {updatedDateStr}</Text>
         ) : null}
