@@ -51,7 +51,12 @@ const editDiaryEntry = (dispatch) => async (id, entry, callback) => {
   const FieldValue = firebase.firestore.FieldValue;
   await entriesCollection()
     .doc(id)
-    .update({ ...entry, updatedDate: FieldValue.serverTimestamp() });
+    .update({
+      ...entry,
+      updatedDate: FieldValue.serverTimestamp(),
+      sentimentMagnitude: FieldValue.delete(),
+      sentimentScore: FieldValue.delete(),
+    });
   if (callback) {
     callback();
   }
