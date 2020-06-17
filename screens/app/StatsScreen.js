@@ -56,6 +56,7 @@ const StatsScreen = ({ firebase }) => {
   const [pastWeek, setPastWeek] = useState([]);
   const [emotions, setEmotions] = useState([]);
   const [dailyNumbers, setDailyNumbers] = useState(-1);
+  const [consecutive, setConsecutive] = useState(-1);
   // index 0 is yesterday, index 1 is the 2 days before, etc...
 
   async function getAccCreatedDate(callback) {
@@ -76,7 +77,7 @@ const StatsScreen = ({ firebase }) => {
 
     let pivotDay = new Date();
     pivotDay.setHours(0, 0, 0, 0);
-    for (let i = 0; i < 7; i++) {
+    while (pivotDay > new Date(2020, 0)) {
       let dayBefore = new Date(pivotDay);
       dayBefore.setDate(pivotDay.getDate() - 1);
       newArr.push(
@@ -88,14 +89,24 @@ const StatsScreen = ({ firebase }) => {
       );
       pivotDay = dayBefore;
     }
-    setPastWeek(newArr.reverse());
+    setPastWeek(newArr);
 
     let dailyNumbers = [];
-    newArr.forEach((arr) => dailyNumbers.push(arr.length));
+    newArr.slice(0, 7).forEach((arr) => dailyNumbers.push(arr.length));
     setDailyNumbers(dailyNumbers.filter((num) => num != 0).length);
 
+    let consecutive = 0;
+    for (let i = 0; i < newArr.length; i++) {
+      if (newArr[i].length > 0) {
+        consecutive++;
+      } else {
+        break;
+      }
+    }
+    setConsecutive(consecutive);
+
     let emotions = [];
-    newArr.forEach((arr) => {
+    newArr.slice(0, 7).forEach((arr) => {
       let total = 0;
       arr.forEach((entry) => {
         if (entry.sentimentScore >= 0.25) {
@@ -116,7 +127,7 @@ const StatsScreen = ({ firebase }) => {
         }
       }
     });
-    setEmotions(emotions.reverse());
+    setEmotions(emotions);
 
     if (callback) {
       callback();
@@ -152,12 +163,13 @@ const StatsScreen = ({ firebase }) => {
       <Text style={{ margin: 5 }}>
         Your account was created on {format(accCreatedDate, "do 'of' MMMM, R")}.
       </Text>
-      <Text style={{ margin: 5, textAlign: "center" }}>
+      {/* <Text style={{ margin: 5, textAlign: "center" }}>
         In the last week, you wrote diary entries on {dailyNumbers} out of the 7
         days. {"\n"}
         {dailyNumbers >= 4 ? "Keep it up!" : "Try writing more!"}
         {"\n"}
-      </Text>
+      </Text> */}
+      <Text>You have written for {consecutive} consecutive days.</Text>
       <Text style={{ textAlign: "center" }}>Stats for the last 7 days:</Text>
       <View style={{ flexDirection: "column", justifyContent: "space-evenly" }}>
         {emotions.map((val, index) => {
