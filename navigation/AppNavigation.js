@@ -1,14 +1,16 @@
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { View } from "react-native";
 import { createStackNavigator } from "react-navigation-stack";
 import { Provider as DiaryProvider } from "../config/DiaryContext";
+import { createAppContainer } from "react-navigation";
+import { Button } from "react-native-elements";
 import SettingsScreen from "../screens/app/SettingsScreen";
 import DiaryScreen from "../screens/app/DiaryScreen";
 import NewEntryScreen from "../screens/app/NewEntryScreen";
 import DiaryEntryScreen from "../screens/app/DiaryEntryScreen";
 import EditScreen from "../screens/app/EditScreen";
-import { createAppContainer } from "react-navigation";
 import StatsScreen from "../screens/app/StatsScreen";
+import ContactsScreen from "../screens/app/ContactsScreen";
 
 const AppNavigation = createStackNavigator(
   {
@@ -23,22 +25,34 @@ const AppNavigation = createStackNavigator(
         headerTitleStyle: {
           textAlign: "center",
           flex: 1,
+          marginLeft: 85,
         },
         headerRight: (
-          <TouchableOpacity
-            style={{ marginRight: 13 }}
+          <Button
+            title="New Entry"
+            type="clear"
+            containerStyle={{ margin: 6 }}
+            titleStyle={{ fontSize: 14 }}
             onPress={() => navigation.navigate("NewEntry")}
-          >
-            <Text style={{ color: "#007AFF" }}>New Entry</Text>
-          </TouchableOpacity>
+          />
         ),
         headerLeft: () => (
-          <TouchableOpacity
-            style={{ marginLeft: 13 }}
-            onPress={() => navigation.navigate("Settings")}
-          >
-            <Text style={{ color: "#007AFF" }}>Settings</Text>
-          </TouchableOpacity>
+          <View style={{ flexDirection: "row" }}>
+            <Button
+              title="Settings"
+              type="clear"
+              containerStyle={{ marginLeft: 6 }}
+              titleStyle={{ fontSize: 14 }}
+              onPress={() => navigation.navigate("Settings")}
+            />
+            <Button
+              title="Helplines"
+              type="clear"
+              containerStyle={{ marginLeft: 6 }}
+              titleStyle={{ fontSize: 14 }}
+              onPress={() => navigation.navigate("Contacts")}
+            />
+          </View>
         ),
       }),
     },
@@ -54,6 +68,11 @@ const AppNavigation = createStackNavigator(
     },
     Stats: {
       screen: StatsScreen,
+      navigationOptions: { title: "Your stats" },
+    },
+    Contacts: {
+      screen: ContactsScreen,
+      navigationOptions: { title: "Helplines" },
     },
   },
 
