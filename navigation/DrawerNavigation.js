@@ -9,10 +9,10 @@ import StatsScreen from "../screens/app/StatsScreen";
 const DrawerNavigation = createDrawerNavigator(
   {
     Diary: { screen: DiaryScreens },
-    Contacts: { screen: ContactsScreen },
+    Helplines: { screen: ContactsScreen },
     Stats: {
       screen: StatsScreen,
-      navigationOptions: { title: "Your stats" },
+      navigationOptions: { title: "Stats" },
     },
   },
   {
