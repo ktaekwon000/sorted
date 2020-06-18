@@ -8,7 +8,7 @@ import StatsScreen from "../screens/app/StatsScreen";
 
 const DrawerNavigation = createDrawerNavigator(
   {
-    DiaryScreens: { screen: DiaryScreens },
+    Diary: { screen: DiaryScreens },
     Contacts: { screen: ContactsScreen },
     Stats: {
       screen: StatsScreen,
@@ -16,7 +16,7 @@ const DrawerNavigation = createDrawerNavigator(
     },
   },
   {
-    initialRouteName: "DiaryScreens",
+    initialRouteName: "Diary",
   }
 );
 

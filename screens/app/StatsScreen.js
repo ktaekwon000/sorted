@@ -1,9 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Text, View, StyleSheet, ActivityIndicator } from "react-native";
-import { Badge } from "react-native-elements";
+import { Badge, Button } from "react-native-elements";
+import { Ionicons } from "@expo/vector-icons";
 import { format, formatDistance } from "date-fns";
 import { Context as DiaryContext } from "../../config/DiaryContext";
 import { withFirebaseHOC } from "../../config/Firebase";
+import { createStackNavigator } from "react-navigation-stack";
 
 const makeDatefromTimestamp = (timestamp) => new Date(timestamp.seconds * 1000);
 
@@ -49,7 +51,7 @@ const makeColorFromString = (str) => {
   }
 };
 
-const StatsScreen = ({ firebase }) => {
+const StatsScreen = ({ firebase, navigation }) => {
   const { state, getDiaryEntries } = useContext(DiaryContext);
   const [loading, setLoading] = useState(true);
   const [accCreatedDate, setAccCreatedDate] = useState(new Date(0));
@@ -89,7 +91,6 @@ const StatsScreen = ({ firebase }) => {
       );
       pivotDay = dayBefore;
     }
-    console.log(state);
     setPastWeek(newArr);
 
     let dailyNumbers = [];
@@ -130,13 +131,21 @@ const StatsScreen = ({ firebase }) => {
     });
     setEmotions(emotions);
 
-    console.log(state);
     if (callback) {
       callback();
     }
   };
 
   useEffect(() => {
+    navigation.setParams({
+      refresh: () => {
+        setLoading(true);
+        getDiaryEntries(() => {
+          getStats(() => setLoading(false));
+        });
+      },
+    });
+
     getAccCreatedDate(() =>
       getDiaryEntries(() => {
         getStats(() => setLoading(false));
@@ -195,4 +204,54 @@ const StatsScreen = ({ firebase }) => {
 
 const styles = StyleSheet.create({});
 
-export default withFirebaseHOC(StatsScreen);
+const StatsWithFirebase = withFirebaseHOC(StatsScreen);
+
+StatsWithFirebase.navigationOptions = ({ navigation }) => {
+  console.log(navigation.params);
+  return {
+    title: "Stats",
+    headerLeft: () => (
+      <Button
+        icon={<Ionicons name="md-menu" size={24} color="black" />}
+        type="clear"
+        containerStyle={{ marginLeft: 6 }}
+        titleStyle={{ fontSize: 14 }}
+        onPress={() => navigation.openDrawer()}
+      />
+    ),
+    headerRight: (
+      <Button
+        icon={<Ionicons name="md-refresh" size={24} color="black" />}
+        type="clear"
+        containerStyle={{ marginLeft: 6 }}
+        titleStyle={{ fontSize: 14 }}
+        onPress={navigation.getParam("refresh", () => alert("Bug"))}
+      />
+    ),
+  };
+};
+
+const StatsNavigation = createStackNavigator(
+  {
+    Stats: {
+      screen: StatsWithFirebase,
+      // navigationOptions: ({ navigation }) => ({
+      //   // title: "Stats",
+      //   headerLeft: () => (
+      //     <Button
+      //       icon={<Ionicons name="md-menu" size={24} color="black" />}
+      //       type="clear"
+      //       containerStyle={{ marginLeft: 6 }}
+      //       titleStyle={{ fontSize: 14 }}
+      //       onPress={() => navigation.openDrawer()}
+      //     />
+      //   ),
+      // }),
+    },
+  },
+  {
+    initialRouteName: "Stats",
+  }
+);
+
+export default StatsNavigation;

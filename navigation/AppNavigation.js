@@ -21,8 +21,8 @@ const AppNavigation = createStackNavigator(
       navigationOptions: ({ navigation }) => ({
         title: "Your entries",
         headerTitleStyle: {
-          textAlign: "center",
-          flex: 1,
+          // textAlign: "center",
+          // flex: 1,
         },
         headerRight: (
           <Button
