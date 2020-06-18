@@ -89,6 +89,7 @@ const StatsScreen = ({ firebase }) => {
       );
       pivotDay = dayBefore;
     }
+    console.log(state);
     setPastWeek(newArr);
 
     let dailyNumbers = [];
@@ -129,16 +130,18 @@ const StatsScreen = ({ firebase }) => {
     });
     setEmotions(emotions);
 
+    console.log(state);
     if (callback) {
       callback();
     }
   };
 
   useEffect(() => {
-    getAccCreatedDate();
-    getDiaryEntries(() => {
-      getStats(() => setLoading(false));
-    });
+    getAccCreatedDate(() =>
+      getDiaryEntries(() => {
+        getStats(() => setLoading(false));
+      })
+    );
   }, []);
 
   return loading ? (
@@ -174,7 +177,7 @@ const StatsScreen = ({ firebase }) => {
       <View style={{ flexDirection: "column", justifyContent: "space-evenly" }}>
         {emotions.map((val, index) => {
           return (
-            <View style={{ margin: 8, alignItems: "center" }}>
+            <View style={{ margin: 8, alignItems: "center" }} key={index}>
               <Text>{makeDayfromInt(index)}</Text>
               <Badge
                 badgeStyle={{
