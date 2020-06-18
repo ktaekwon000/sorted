@@ -25,11 +25,6 @@ const DiaryScreen = ({ navigation }) => {
     </View>
   ) : (
     <View style={{ flex: 1, alignItems: "center" }}>
-      <Button
-        title="View stats"
-        type="clear"
-        onPress={() => navigation.navigate("Stats")}
-      />
       <FlatList
         numColumns={2}
         data={state}
