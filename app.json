@@ -2,7 +2,9 @@
   "expo": {
     "name": "Sorted",
     "slug": "sorted",
-    "platforms": ["android"],
+    "platforms": [
+      "android"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/sorted_icon_black_whitebg.png",
@@ -14,6 +16,10 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"]
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "description": "",
+    "githubUrl": "https://github.com/delicious-chocomint/sorted"
   }
 }
