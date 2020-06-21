@@ -207,7 +207,6 @@ const styles = StyleSheet.create({});
 const StatsWithFirebase = withFirebaseHOC(StatsScreen);
 
 StatsWithFirebase.navigationOptions = ({ navigation }) => {
-  console.log(navigation.params);
   return {
     title: "Stats",
     headerLeft: () => (
