@@ -3,6 +3,7 @@ import AppContainer from "./navigation";
 import Firebase, { FirebaseProvider } from "./config/Firebase";
 
 //fix firebase issues
+import TimerFix from "./config/Firebase/TimerFix"; //do not remove, fixes firebase
 import { decode, encode } from "base-64";
 if (!global.btoa) {
   global.btoa = encode;
