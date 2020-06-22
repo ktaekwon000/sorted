@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-elements";
 import { withFirebaseHOC } from "../../config/Firebase";
+import { createStackNavigator } from "react-navigation-stack";
+import { Ionicons } from "@expo/vector-icons";
+import * as Linking from "expo-linking";
 
 function Settings({ navigation, firebase }) {
   const [ready, setReady] = useState(false);
@@ -71,4 +74,40 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withFirebaseHOC(Settings);
+const SettingsWithFirebase = withFirebaseHOC(Settings);
+
+const SettingsNavigation = createStackNavigator(
+  {
+    Settings: {
+      screen: SettingsWithFirebase,
+      navigationOptions: ({ navigation }) => ({
+        title: "Account Settings",
+        headerLeft: (
+          <View style={{ flexDirection: "row" }}>
+            <Button
+              icon={<Ionicons name="md-menu" size={24} color="black" />}
+              type="clear"
+              containerStyle={{ marginLeft: 6 }}
+              titleStyle={{ fontSize: 14 }}
+              onPress={() => navigation.openDrawer()}
+            />
+          </View>
+        ),
+        headerRight: (
+          <Button
+            title="Contact developers"
+            type="clear"
+            containerStyle={{ marginRight: 6 }}
+            titleStyle={{ fontSize: 14 }}
+            onPress={() => Linking.openURL("mailto: ktaekwon000@gmail.com")}
+          />
+        ),
+      }),
+    },
+  },
+  {
+    initialRouteName: "Settings",
+  }
+);
+
+export default SettingsNavigation;
