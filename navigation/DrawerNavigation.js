@@ -6,6 +6,7 @@ import { Provider as DiaryProvider } from "../config/DiaryContext";
 import DiaryScreens from "./AppNavigation";
 import ContactsScreen from "../screens/app/ContactsScreen";
 import StatsScreen from "../screens/app/StatsScreen";
+import SettingsScreen from "../screens/app/SettingsScreen";
 
 const DrawerNavigation = createDrawerNavigator(
   {
@@ -25,6 +26,13 @@ const DrawerNavigation = createDrawerNavigator(
       screen: StatsScreen,
       navigationOptions: {
         drawerIcon: <Ionicons name="md-stats" size={24} />,
+      },
+    },
+    Account: {
+      screen: SettingsScreen,
+      navigationOptions: {
+        title: "Account Settings",
+        drawerIcon: <Ionicons name="md-person" size={24} />,
       },
     },
   },

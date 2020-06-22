@@ -234,18 +234,6 @@ const StatsNavigation = createStackNavigator(
   {
     Stats: {
       screen: StatsWithFirebase,
-      // navigationOptions: ({ navigation }) => ({
-      //   // title: "Stats",
-      //   headerLeft: () => (
-      //     <Button
-      //       icon={<Ionicons name="md-menu" size={24} color="black" />}
-      //       type="clear"
-      //       containerStyle={{ marginLeft: 6 }}
-      //       titleStyle={{ fontSize: 14 }}
-      //       onPress={() => navigation.openDrawer()}
-      //     />
-      //   ),
-      // }),
     },
   },
   {

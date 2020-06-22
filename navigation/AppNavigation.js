@@ -12,10 +12,6 @@ import EditScreen from "../screens/app/EditScreen";
 
 const AppNavigation = createStackNavigator(
   {
-    Settings: {
-      screen: SettingsScreen,
-      navigationOptions: { title: "Settings" },
-    },
     Diary: {
       screen: DiaryScreen,
       navigationOptions: ({ navigation }) => ({
