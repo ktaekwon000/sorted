@@ -52,8 +52,9 @@ exports.analyzeSentimentonUpdate = functions.firestore
     const previousData = change.before.data();
 
     if (
-      "updatedDate" in previousData &&
-      data.updatedDate.nanoseconds == previousData.updatedDate.nanoseconds
+      !("updatedDate" in data) ||
+      ("updatedDate" in previousData &&
+        data.updatedDate.nanoseconds == previousData.updatedDate.nanoseconds)
     ) {
       return null;
     }
