@@ -5,6 +5,7 @@ import { withFirebaseHOC } from "../../config/Firebase";
 import { createStackNavigator } from "react-navigation-stack";
 import { Ionicons } from "@expo/vector-icons";
 import * as Linking from "expo-linking";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 function Settings({ navigation, firebase }) {
   const [ready, setReady] = useState(false);
@@ -52,7 +53,6 @@ function Settings({ navigation, firebase }) {
         {"\n"}The following information is only for debugging purposes:
       </Text>
       <Text>uid: {uid}</Text>
-      <Text></Text>
       <Button
         title="Signout"
         onPress={handleSignout}
@@ -61,6 +61,18 @@ function Settings({ navigation, firebase }) {
         }}
         type="clear"
       />
+      <TouchableOpacity
+        onPress={() =>
+          Linking.openURL(
+            "https://www.digitaltrends.com/android/how-to-turn-off-notifications-in-android/"
+          )
+        }
+      >
+        <Text style={{ textAlign: "center", margin: 8 }}>
+          If you wish to turn off notifications for this app, tap this text to
+          be directed to a website with instructions.
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 }
