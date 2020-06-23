@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Button } from "react-native-elements";
 import { withFirebaseHOC } from "../../config/Firebase";
 import { createStackNavigator } from "react-navigation-stack";
 import { Ionicons } from "@expo/vector-icons";
 import * as Linking from "expo-linking";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 function Settings({ navigation, firebase }) {
   const [ready, setReady] = useState(false);
