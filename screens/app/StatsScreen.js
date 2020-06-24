@@ -175,14 +175,18 @@ const StatsScreen = ({ firebase, navigation }) => {
       <Text style={{ margin: 5 }}>
         Your account was created on {format(accCreatedDate, "do 'of' MMMM, R")}.
       </Text>
-      {/* <Text style={{ margin: 5, textAlign: "center" }}>
-        In the last week, you wrote diary entries on {dailyNumbers} out of the 7
-        days. {"\n"}
-        {dailyNumbers >= 4 ? "Keep it up!" : "Try writing more!"}
-        {"\n"}
-      </Text> */}
-      <Text>You have written for {consecutive} consecutive days.</Text>
-      <Text style={{ textAlign: "center" }}>Stats for the last 7 days:</Text>
+      <Text style={{ textAlign: "center", margin: 10 }}>
+        {consecutive <= 0
+          ? "Looks like you haven't written an entry yesterday. Try restarting your streak today!"
+          : `You have written for ${consecutive} consecutive days.\n` +
+            (consecutive <= 3
+              ? "You're writing entries pretty often. Keep it up!"
+              : "😊 Wow, you're writing entries pretty often. Keep it up!")}
+      </Text>
+      <View style={{ margin: 10 }} />
+      <Text style={{ textAlign: "center", marginTop: 5 }}>
+        Stats for the last 7 days:
+      </Text>
       <View style={{ flexDirection: "column", justifyContent: "space-evenly" }}>
         {emotions.map((val, index) => {
           return (
