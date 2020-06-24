@@ -40,7 +40,12 @@ const CustomDrawerContentComponent = ({ firebase, ...props }) => {
             // backgroundColor: "#DCDCDC",
           }}
         >
-          <Text>{`Welcome ${name}.`}</Text>
+          <Text>
+            {name
+              ? `Welcome ${name}.`
+              : `Your account is in the process of being set up.
+You may have to restart the app for your name to show here.`}
+          </Text>
           <Text>Have a nice day today 😊</Text>
           {/* <Text>{`${email}`}</Text> */}
         </View>
