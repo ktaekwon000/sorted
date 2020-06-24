@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   ScrollView,
+  Text,
 } from "react-native";
 import { Button, CheckBox } from "react-native-elements";
 import { Ionicons } from "@expo/vector-icons";
@@ -183,6 +184,13 @@ function Signup({ navigation, firebase }) {
                 checked={values.check}
                 onPress={() => setFieldValue("check", !values.check)}
               />
+              <Text style={{ textAlign: "center", margin: 13 }}>
+                Your email will only be used if you wish to reset your password.
+                {"\n\n"}
+                If you do not want to give us your details, feel free to use a
+                fake email/name but please note that you will not be able to
+                reset your password in that case.
+              </Text>
               <View style={styles.buttonContainer}>
                 <FormButton
                   buttonType="outline"
