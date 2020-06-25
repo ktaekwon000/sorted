@@ -115,6 +115,7 @@ function Login({ navigation, firebase }) {
                 </TouchableOpacity>
               }
               ref={passwordInput}
+              blurOnSubmit={true}
               onSubmitEditing={
                 !isValid || isSubmitting
                   ? () => alert("Please check your inputs and try again.")
