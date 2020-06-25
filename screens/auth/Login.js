@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { StyleSheet, SafeAreaView, View, TouchableOpacity } from "react-native";
 import { Button } from "react-native-elements";
 import { Ionicons } from "@expo/vector-icons";
@@ -25,6 +25,9 @@ const validationSchema = Yup.object().shape({
 function Login({ navigation, firebase }) {
   const [passwordVisibility, setPasswordVisibility] = useState(true);
   const [rightIcon, setRightIcon] = useState("ios-eye");
+
+  const emailInput = useRef(null);
+  const passwordInput = useRef(null);
 
   function goToSignup() {
     return navigation.navigate("Signup");
@@ -92,6 +95,9 @@ function Login({ navigation, firebase }) {
               iconName="ios-mail"
               iconColor="#2C384A"
               onBlur={handleBlur("email")}
+              ref={emailInput}
+              onSubmitEditing={() => passwordInput.current.focus()}
+              blurOnSubmit={false}
             />
             <ErrorMessage errorValue={touched.email && errors.email} />
             <FormInput
@@ -107,6 +113,12 @@ function Login({ navigation, firebase }) {
                 <TouchableOpacity onPress={handlePasswordVisibility}>
                   <Ionicons name={rightIcon} size={28} color="grey" />
                 </TouchableOpacity>
+              }
+              ref={passwordInput}
+              onSubmitEditing={
+                !isValid || isSubmitting
+                  ? () => alert("Please check your inputs and try again.")
+                  : handleSubmit
               }
             />
             <ErrorMessage errorValue={touched.password && errors.password} />
