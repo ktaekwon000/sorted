@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, createRef } from "react";
 import {
   StyleSheet,
   View,
@@ -42,6 +42,11 @@ function Signup({ navigation, firebase }) {
   const [confirmPasswordVisibility, setConfirmPasswordVisibility] = useState(
     true
   );
+
+  const nameInput = createRef(null);
+  const emailInput = createRef(null);
+  const passwordInput = createRef(null);
+  const passwordConfirmInput = createRef(null);
 
   function goToLogin() {
     return navigation.navigate("Login");
@@ -123,6 +128,9 @@ function Signup({ navigation, firebase }) {
                 iconName="md-person"
                 iconColor="#2C384A"
                 onBlur={handleBlur("name")}
+                ref={nameInput}
+                onSubmitEditing={() => emailInput.current.focus()}
+                blurOnSubmit={false}
               />
               <ErrorMessage errorValue={touched.name && errors.name} />
               <FormInput
@@ -134,6 +142,9 @@ function Signup({ navigation, firebase }) {
                 iconName="ios-mail"
                 iconColor="#2C384A"
                 onBlur={handleBlur("email")}
+                ref={emailInput}
+                onSubmitEditing={() => passwordInput.current.focus()}
+                blurOnSubmit={false}
               />
               <ErrorMessage errorValue={touched.email && errors.email} />
               <FormInput
@@ -150,6 +161,9 @@ function Signup({ navigation, firebase }) {
                     <Ionicons name={passwordIcon} size={28} color="grey" />
                   </TouchableOpacity>
                 }
+                ref={passwordInput}
+                onSubmitEditing={() => passwordConfirmInput.current.focus()}
+                blurOnSubmit={false}
               />
               <ErrorMessage errorValue={touched.password && errors.password} />
               <FormInput
@@ -169,6 +183,12 @@ function Signup({ navigation, firebase }) {
                       color="grey"
                     />
                   </TouchableOpacity>
+                }
+                ref={passwordConfirmInput}
+                onSubmitEditing={
+                  !isValid || isSubmitting
+                    ? () => alert("Please check your inputs and try again.")
+                    : handleSubmit
                 }
               />
               <ErrorMessage
