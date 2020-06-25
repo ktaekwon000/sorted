@@ -29,7 +29,7 @@ const EntryComponent = ({
               onChangeText={handleChange("content")}
             />
           </View>
-          <View padding={20} />
+          <View padding={2} />
           <Button title="Submit" onPress={handleSubmit} />
         </View>
       )}
