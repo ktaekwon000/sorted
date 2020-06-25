@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, SafeAreaView, View, StyleSheet } from "react-native";
+import { Button } from "react-native-elements";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import FormInput from "../../components/FormInput";
@@ -26,6 +27,10 @@ function ForgotPassword({ navigation, firebase }) {
     } catch (error) {
       actions.setFieldError("general", error.message);
     }
+  }
+
+  function goToLogin() {
+    return navigation.navigate("Login");
   }
 
   return (
@@ -73,6 +78,14 @@ function ForgotPassword({ navigation, firebase }) {
           </>
         )}
       </Formik>
+      <Button
+        title="Remembered your password? Login"
+        onPress={goToLogin}
+        titleStyle={{
+          color: "#039BE5",
+        }}
+        type="clear"
+      />
     </SafeAreaView>
   );
 }
