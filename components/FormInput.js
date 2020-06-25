@@ -1,17 +1,20 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { Input } from "react-native-elements";
 import { StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-const FormInput = ({
-  iconName,
-  iconColor,
-  returnKeyType,
-  keyboardType,
-  name,
-  placeholder,
-  ...rest
-}) => (
+const FormInput = (
+  {
+    iconName,
+    iconColor,
+    returnKeyType,
+    keyboardType,
+    name,
+    placeholder,
+    ...rest
+  },
+  ref
+) => (
   <View style={styles.inputContainer}>
     <Input
       {...rest}
@@ -21,17 +24,18 @@ const FormInput = ({
       name={name}
       placeholder={placeholder}
       style={styles.input}
+      ref={ref}
     />
   </View>
 );
 
 const styles = StyleSheet.create({
   inputContainer: {
-    margin: 15
+    margin: 15,
   },
   iconStyle: {
-    marginRight: 10
-  }
+    marginRight: 10,
+  },
 });
 
-export default FormInput;
+export default forwardRef(FormInput);
