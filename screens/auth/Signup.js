@@ -1,4 +1,4 @@
-import React, { useState, createRef } from "react";
+import React, { useState, useRef } from "react";
 import {
   StyleSheet,
   View,
@@ -43,10 +43,10 @@ function Signup({ navigation, firebase }) {
     true
   );
 
-  const nameInput = createRef(null);
-  const emailInput = createRef(null);
-  const passwordInput = createRef(null);
-  const passwordConfirmInput = createRef(null);
+  const nameInput = useRef(null);
+  const emailInput = useRef(null);
+  const passwordInput = useRef(null);
+  const passwordConfirmInput = useRef(null);
 
   function goToLogin() {
     return navigation.navigate("Login");
