@@ -52,7 +52,7 @@ const helplines = {
       time: "Monday – Friday, 9.00am to 1.00pm and 2.00pm to 6.00pm",
     },
     {
-      name: "Emergency Helpline (IMH)",
+      name: "Emergency Helpline (IMH) (Phone)",
       contact: "tel:63892222",
       time: "Daily, 24 hours",
     },
