@@ -1,12 +1,18 @@
 # sorted
-
+![Poster Image](https://github.com/delicious-chocomint/sorted/blob/master/img/milestone2_poster.png)
 Orbital 2020 project by Kim Tae Kwon and Kim Sangwoo
+
+The following are links to Milestone 2 documents:
+| README | Poster | Video |
+| :----: |:------:|:-----:|
+| [Google Docs](https://docs.google.com/document/d/1SLPb2OJOF4XCtag-7TVqmqevsQZ7x8REouIweSJDAIU/edit?usp=sharing) | [Image](https://i.imgur.com/mAwQgxJ.png) | Youtube |
 
 # Installation
 
-1. Rename the file example.firebaseConfig.js to firebaseConfig.js and replace with own keys.
-2. Run `npm start` then connect using Expo app.
-3. Follow instructions in [cloudfunctions](cloudfunctions) to set up google cloud functions.
+1. Clone the repo.
+1. Rename the file `config/Firebase/example.firebaseConfig.js` to `firebaseConfig.js` and replace with own keys.
+1. Follow instructions in [cloudfunctions](cloudfunctions) to set up google cloud functions.
+1. Run `npm start` then connect using Expo app.
 
 # Credits
 
