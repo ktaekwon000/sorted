@@ -52,6 +52,7 @@ const makeColorFromString = (str) => {
 };
 
 const StatsScreen = ({ firebase, navigation }) => {
+  // TODO: clean these up...
   const { state, getDiaryEntries } = useContext(DiaryContext);
   const [loading, setLoading] = useState(true);
   const [accCreatedDate, setAccCreatedDate] = useState(new Date(0));
@@ -157,8 +158,8 @@ const StatsScreen = ({ firebase, navigation }) => {
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <ActivityIndicator size="large" />
     </View>
-  ) : new Date().getTime() - accCreatedDate.getTime() <
-    1000 * 60 * 60 * 24 * 7 ? (
+  ) : // new Date().getTime() - accCreatedDate.getTime() <1000 * 60 * 60 * 24 * 7
+  false ? (
     <View>
       <Text>
         Your account was created on {format(accCreatedDate, "do 'of' MMMM, R")}
