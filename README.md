@@ -1,5 +1,5 @@
 # sorted
-![Poster Image](https://github.com/delicious-chocomint/sorted/blob/master/img/milestone2_poster.png)
+![Poster Image](https://i.imgur.com/mAwQgxJ.png)
 Orbital 2020 project by Kim Tae Kwon and Kim Sangwoo
 
 The following are links to Milestone 2 documents:
