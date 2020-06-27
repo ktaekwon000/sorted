@@ -5,7 +5,7 @@ Orbital 2020 project by Kim Tae Kwon and Kim Sangwoo
 The following are links to Milestone 2 documents:
 | README | Poster | Video |
 | :----: |:------:|:-----:|
-| [Google Docs](https://docs.google.com/document/d/1SLPb2OJOF4XCtag-7TVqmqevsQZ7x8REouIweSJDAIU/edit?usp=sharing) | [Image](https://i.imgur.com/mAwQgxJ.png) | Youtube |
+| [Google Docs](https://docs.google.com/document/d/1SLPb2OJOF4XCtag-7TVqmqevsQZ7x8REouIweSJDAIU/edit?usp=sharing) | [Image](https://i.imgur.com/mAwQgxJ.png) | [Youtube](https://youtu.be/zhIUkcr6UsY) |
 
 # Installation
 
