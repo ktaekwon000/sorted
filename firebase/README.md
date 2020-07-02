@@ -1,4 +1,4 @@
-# cloudfunctions for sorted
+# firebase for sorted
 
 # Setup
 
