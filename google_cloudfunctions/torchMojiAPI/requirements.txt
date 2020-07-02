@@ -1,0 +1,10 @@
+future~=0.18.2
+numpy~=1.14.6
+pillow~=7.2.0
+https://download.pytorch.org/whl/cpu/torch-1.5.1%2Bcpu-cp37-cp37m-linux_x86_64.whl
+https://download.pytorch.org/whl/cpu/torchvision-0.6.1%2Bcpu-cp37-cp37m-linux_x86_64.whl
+emoji~=0.4.5
+scipy~=1.1.0
+scikit-learn~=0.19.2
+text-unidecode~=1.0
+flask~=1.1.2
