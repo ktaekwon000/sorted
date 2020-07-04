@@ -1,9 +1,10 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
+const axios = require("axios");
+const url = require("./apiURL.json");
+const language = require("@google-cloud/language");
 
 async function analyzeSentiment(txt) {
-  const language = require("@google-cloud/language");
-
   const client = new language.LanguageServiceClient();
 
   const text = txt;
@@ -16,7 +17,19 @@ async function analyzeSentiment(txt) {
   const [result] = await client.analyzeSentiment({ document: document });
   const sentiment = result.documentSentiment;
 
-  return { score: sentiment.score, magnitude: sentiment.magnitude };
+  const request = await axios.create(url).get("/textToEmoji", {
+    params: {
+      text: txt,
+    },
+  });
+
+  const emotions = request.data;
+
+  return {
+    sentimentScore: sentiment.score,
+    sentimentMagnitude: sentiment.magnitude,
+    emotions,
+  };
 }
 
 exports.analyzeSentimentonCreate = functions.firestore
@@ -32,13 +45,7 @@ exports.analyzeSentimentonCreate = functions.firestore
       .then((sentiment) => {
         console.log(sentiment);
         console.log(snap.ref.id);
-        snap.ref.set(
-          {
-            sentimentScore: sentiment.score,
-            sentimentMagnitude: sentiment.magnitude,
-          },
-          { merge: true }
-        );
+        snap.ref.set(sentiment, { merge: true });
         return sentiment;
       })
       .catch((err) => console.log(err));
@@ -67,13 +74,7 @@ exports.analyzeSentimentonUpdate = functions.firestore
       .then((sentiment) => {
         console.log(sentiment);
         console.log(change.after.ref.id);
-        change.after.ref.set(
-          {
-            sentimentScore: sentiment.score,
-            sentimentMagnitude: sentiment.magnitude,
-          },
-          { merge: true }
-        );
+        change.after.ref.set(sentiment, { merge: true });
         return sentiment;
       })
       .catch((err) => console.log(err));
