@@ -1,38 +1,35 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from 'react';
 import {
   View,
-  StyleSheet,
   ActivityIndicator,
   TouchableOpacity,
   Dimensions,
-} from "react-native";
-import { Button, Text } from "react-native-elements";
-import { format } from "date-fns";
-import { Context as DiaryContext } from "../../config/DiaryContext";
-import { ScrollView } from "react-native-gesture-handler";
+} from 'react-native';
+import { Button, Text } from 'react-native-elements';
+import { format } from 'date-fns';
+import { ScrollView } from 'react-native-gesture-handler';
+import { Context as DiaryContext } from '../../config/DiaryContext';
 
 function makeSentimentString(score, magnitude) {
   let str = "Google's algorithms think that your feelings are ";
   if (score > -0.2 && score < 0.2) {
     if (magnitude < 1) {
-      str += "neutral";
+      str += 'neutral';
     } else {
-      str += "mixed";
+      str += 'mixed';
     }
   } else if (score >= 0.2) {
     if (magnitude < 0.7) {
-      str += "positive";
+      str += 'positive';
     } else {
-      str += "very positive";
+      str += 'very positive';
     }
+  } else if (magnitude > -0.7) {
+    str += 'negative';
   } else {
-    if (magnitude > -0.7) {
-      str += "negative";
-    } else {
-      str += "very negative";
-    }
+    str += 'very negative';
   }
-  return str + ".";
+  return `${str}.`;
 }
 
 function makeStringFromTimestamp(timestamp) {
@@ -42,23 +39,15 @@ function makeStringFromTimestamp(timestamp) {
 }
 
 const DiaryEntryScreen = ({ navigation }) => {
-  const id = navigation.getParam("id");
+  const id = navigation.getParam('id');
   const { state, deleteDiaryEntry, getDiaryEntries } = useContext(DiaryContext);
-  const entry = state.find((entry) => entry.id === id);
-  const [createdDateStr] = entry
-    ? makeStringFromTimestamp(entry.createdDate)
-    : "";
-  const [updatedDateStr] = entry
-    ? "updatedDate" in entry
-      ? makeStringFromTimestamp(entry.updatedDate)
-      : ""
-    : "";
+  const entry = state.find((x) => x.id === id);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     navigation.setParams({ title: entry.title, entry });
 
-    const listener = navigation.addListener("didFocus", () => {
+    const listener = navigation.addListener('didFocus', () => {
       navigation.setParams({ title: entry.title, entry });
     });
 
@@ -68,19 +57,19 @@ const DiaryEntryScreen = ({ navigation }) => {
   }, []);
 
   return loading ? (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <ActivityIndicator size="large" />
     </View>
   ) : (
     <View style={{ flex: 1 }}>
-      <View style={{ flex: 1, height: Dimensions.get("window").height - 50 }}>
+      <View style={{ flex: 1, height: Dimensions.get('window').height - 50 }}>
         <Text h3 style={{ margin: 5 }}>
           {entry.title}
         </Text>
         <Text style={{ marginLeft: 5 }}>
           Created on {makeStringFromTimestamp(entry.createdDate)}
         </Text>
-        {"updatedDate" in entry ? (
+        {'updatedDate' in entry ? (
           <Text style={{ marginLeft: 5 }}>
             Edited on {makeStringFromTimestamp(entry.createdDate)}
           </Text>
@@ -88,14 +77,14 @@ const DiaryEntryScreen = ({ navigation }) => {
         <ScrollView>
           <Text style={{ margin: 5, fontSize: 24 }}>{entry.content}</Text>
         </ScrollView>
-        {"sentimentScore" in entry && "sentimentMagnitude" in entry ? (
-          <View style={{ flexDirection: "row" }}>
+        {'sentimentScore' in entry && 'sentimentMagnitude' in entry ? (
+          <View style={{ flexDirection: 'row' }}>
             <Text
               style={{
                 flex: 9,
                 margin: 5,
                 marginHorizontal: 30,
-                textAlign: "center",
+                textAlign: 'center',
               }}
             >
               {makeSentimentString(
@@ -103,13 +92,13 @@ const DiaryEntryScreen = ({ navigation }) => {
                 entry.sentimentMagnitude
               )}
             </Text>
-            {"emotions" in entry ? (
+            {'emotions' in entry ? (
               <Button
                 title="Emotions"
                 type="clear"
                 style={{ flex: 1, margin: 5 }}
                 onPress={() =>
-                  navigation.navigate("Emoji", { emotions: entry.emotions })
+                  navigation.navigate('Emoji', { emotions: entry.emotions })
                 }
               />
             ) : null}
@@ -133,11 +122,11 @@ const DiaryEntryScreen = ({ navigation }) => {
           onPress={() => {
             setLoading(true);
             deleteDiaryEntry(id, () => {
-              getDiaryEntries(() => navigation.navigate("Diary"));
+              getDiaryEntries(() => navigation.navigate('Diary'));
             });
           }}
           style={{
-            alignSelf: "center",
+            alignSelf: 'center',
           }}
         />
       </View>
@@ -146,18 +135,17 @@ const DiaryEntryScreen = ({ navigation }) => {
 };
 
 DiaryEntryScreen.navigationOptions = ({ navigation }) => ({
-  title: navigation.getParam("title", "Loading..."),
+  title: navigation.getParam('title', 'Loading...'),
   headerRight: (
     <TouchableOpacity
       style={{ marginRight: 13 }}
       onPress={() =>
-        navigation.navigate("Edit", { entry: navigation.getParam("entry") })
+        navigation.navigate('Edit', { entry: navigation.getParam('entry') })
       }
     >
-      <Text style={{ color: "#007AFF" }}>Edit</Text>
+      <Text style={{ color: '#007AFF' }}>Edit</Text>
     </TouchableOpacity>
   ),
 });
-const styles = StyleSheet.create({});
 
 export default DiaryEntryScreen;

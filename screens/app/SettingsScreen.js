@@ -1,21 +1,30 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import { Button } from "react-native-elements";
-import { withFirebaseHOC } from "../../config/Firebase";
-import { createStackNavigator } from "react-navigation-stack";
-import { Ionicons } from "@expo/vector-icons";
-import * as Linking from "expo-linking";
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Button } from 'react-native-elements';
+import { createStackNavigator } from 'react-navigation-stack';
+import { Ionicons } from '@expo/vector-icons';
+import * as Linking from 'expo-linking';
+import { withFirebaseHOC } from '../../config/Firebase';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 function Settings({ navigation, firebase }) {
   const [ready, setReady] = useState(false);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [uid, setUid] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [uid, setUid] = useState('');
 
   async function handleSignout() {
     try {
       await firebase.signOut();
-      navigation.navigate("Auth");
+      navigation.navigate('Auth');
     } catch (error) {
       console.warn(error);
     }
@@ -49,29 +58,20 @@ function Settings({ navigation, firebase }) {
       <Text>Welcome! You are {name}</Text>
       <Text>Your email is {email}</Text>
       <Text>
-        {"\n"}The following information is only for debugging purposes:
+        {'\n'}The following information is only for debugging purposes:
       </Text>
       <Text>uid: {uid}</Text>
       <Button
         title="Signout"
         onPress={handleSignout}
         titleStyle={{
-          color: "#F57C00",
+          color: '#F57C00',
         }}
         type="clear"
       />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
 
 const SettingsWithFirebase = withFirebaseHOC(Settings);
 
@@ -80,9 +80,9 @@ const SettingsNavigation = createStackNavigator(
     Settings: {
       screen: SettingsWithFirebase,
       navigationOptions: ({ navigation }) => ({
-        title: "Account Settings",
+        title: 'Account Settings',
         headerLeft: (
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: 'row' }}>
             <Button
               icon={<Ionicons name="md-menu" size={24} color="black" />}
               type="clear"
@@ -98,14 +98,14 @@ const SettingsNavigation = createStackNavigator(
             type="clear"
             containerStyle={{ marginRight: 6 }}
             titleStyle={{ fontSize: 14 }}
-            onPress={() => Linking.openURL("mailto: ktaekwon000@gmail.com")}
+            onPress={() => Linking.openURL('mailto: ktaekwon000@gmail.com')}
           />
         ),
       }),
     },
   },
   {
-    initialRouteName: "Settings",
+    initialRouteName: 'Settings',
   }
 );
 

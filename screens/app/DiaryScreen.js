@@ -1,15 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from 'react';
 import {
   View,
-  StyleSheet,
   FlatList,
   ActivityIndicator,
   TouchableNativeFeedback,
   Text,
   Dimensions,
-} from "react-native";
-import { Card, Button } from "react-native-elements";
-import { Context as DiaryContext } from "../../config/DiaryContext";
+} from 'react-native';
+import { Card } from 'react-native-elements';
+import { Context as DiaryContext } from '../../config/DiaryContext';
 
 const DiaryScreen = ({ navigation }) => {
   const { state, getDiaryEntries } = useContext(DiaryContext);
@@ -20,18 +19,18 @@ const DiaryScreen = ({ navigation }) => {
   }, []);
 
   return loading ? (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <ActivityIndicator size="large" />
     </View>
   ) : (
-    <View style={{ flex: 1, alignItems: "center" }}>
+    <View style={{ flex: 1, alignItems: 'center' }}>
       <FlatList
         numColumns={2}
         data={state}
         keyExtractor={(entry) => entry.id}
         renderItem={({ item }) => (
           <TouchableNativeFeedback
-            onPress={() => navigation.navigate("DiaryEntry", { id: item.id })}
+            onPress={() => navigation.navigate('DiaryEntry', { id: item.id })}
           >
             <Card
               title={item.title}
@@ -40,8 +39,8 @@ const DiaryScreen = ({ navigation }) => {
               titleStyle={{ marginBottom: 3 }}
               containerStyle={{
                 paddingTop: 3,
-                width: Dimensions.get("window").width * 0.42,
-                height: Dimensions.get("window").height * 0.25,
+                width: Dimensions.get('window').width * 0.42,
+                height: Dimensions.get('window').height * 0.25,
               }}
             >
               <Text numberOfLines={9}>{item.content}</Text>
@@ -57,7 +56,5 @@ const DiaryScreen = ({ navigation }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default DiaryScreen;

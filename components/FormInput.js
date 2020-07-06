@@ -1,7 +1,16 @@
-import React, { forwardRef } from "react";
-import { Input } from "react-native-elements";
-import { StyleSheet, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import React, { forwardRef } from 'react';
+import { Input } from 'react-native-elements';
+import { StyleSheet, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+
+const styles = StyleSheet.create({
+  inputContainer: {
+    margin: 15,
+  },
+  iconStyle: {
+    marginRight: 10,
+  },
+});
 
 const FormInput = (
   {
@@ -28,14 +37,5 @@ const FormInput = (
     />
   </View>
 );
-
-const styles = StyleSheet.create({
-  inputContainer: {
-    margin: 15,
-  },
-  iconStyle: {
-    marginRight: 10,
-  },
-});
 
 export default forwardRef(FormInput);

@@ -1,9 +1,9 @@
-import { Platform, InteractionManager } from "react-native";
+import { Platform, InteractionManager } from 'react-native';
 
-const _setTimeout = global.setTimeout;
-const _clearTimeout = global.clearTimeout;
+const { setTimeout } = global;
+const { clearTimeout } = global;
 const MAX_TIMER_DURATION_MS = 60 * 1000;
-if (Platform.OS === "android") {
+if (Platform.OS === 'android') {
   // Work around issue `Setting a timer for long time`
   // see: https://github.com/firebase/firebase-js-sdk/issues/97
   const timerFix = {};
@@ -21,25 +21,25 @@ if (Platform.OS === "android") {
     }
 
     const afterTime = Math.min(waitingTime, MAX_TIMER_DURATION_MS);
-    timerFix[id] = _setTimeout(() => runTask(id, fn, ttl, args), afterTime);
+    timerFix[id] = setTimeout(() => runTask(id, fn, ttl, args), afterTime);
   };
 
   global.setTimeout = (fn, time, ...args) => {
     if (MAX_TIMER_DURATION_MS < time) {
       const ttl = Date.now() + time;
-      const id = "_lt_" + Object.keys(timerFix).length;
+      const id = `_lt_${Object.keys(timerFix).length}`;
       runTask(id, fn, ttl, args);
       return id;
     }
-    return _setTimeout(fn, time, ...args);
+    return setTimeout(fn, time, ...args);
   };
 
   global.clearTimeout = (id) => {
-    if (typeof id === "string" && id.startsWith("_lt_")) {
-      _clearTimeout(timerFix[id]);
+    if (typeof id === 'string' && id.startsWith('_lt_')) {
+      clearTimeout(timerFix[id]);
       delete timerFix[id];
       return;
     }
-    _clearTimeout(id);
+    clearTimeout(id);
   };
 }

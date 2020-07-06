@@ -1,36 +1,35 @@
-import createDataContext from "./createDataContext";
-import { firebase } from "./Firebase/firebase";
+import createDataContext from './createDataContext';
+import { firebase } from './Firebase/firebase';
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "getDiaryEntries":
+    case 'getDiaryEntries':
       return action.payload;
     default:
-      console.log(`Default case reached with action type ${action.type}`);
       return state;
   }
 };
 
 const uid = () => firebase.auth().currentUser.uid;
 const entriesCollection = () =>
-  firebase.firestore().collection("users").doc(uid()).collection("entries");
+  firebase.firestore().collection('users').doc(uid()).collection('entries');
 
 const getDiaryEntries = (dispatch) => async (callback) => {
   const results = [];
   const orderedEntries = await entriesCollection()
-    .orderBy("createdDate", "desc")
+    .orderBy('createdDate', 'desc')
     .get();
   orderedEntries.forEach((entry) =>
     results.push({ ...entry.data(), id: entry.id })
   );
-  dispatch({ type: "getDiaryEntries", payload: results });
+  dispatch({ type: 'getDiaryEntries', payload: results });
   if (callback) {
     callback();
   }
 };
 
-const addDiaryEntry = (dispatch) => async (entry, callback) => {
-  const FieldValue = firebase.firestore.FieldValue;
+const addDiaryEntry = () => async (entry, callback) => {
+  const { FieldValue } = firebase.firestore;
   await entriesCollection().add({
     ...entry,
     createdDate: FieldValue.serverTimestamp(),
@@ -40,15 +39,15 @@ const addDiaryEntry = (dispatch) => async (entry, callback) => {
   }
 };
 
-const deleteDiaryEntry = (dispatch) => async (id, callback) => {
+const deleteDiaryEntry = () => async (id, callback) => {
   await entriesCollection().doc(id).delete();
   if (callback) {
     callback();
   }
 };
 
-const editDiaryEntry = (dispatch) => async (id, entry, callback) => {
-  const FieldValue = firebase.firestore.FieldValue;
+const editDiaryEntry = () => async (id, entry, callback) => {
+  const { FieldValue } = firebase.firestore;
   await entriesCollection()
     .doc(id)
     .update({

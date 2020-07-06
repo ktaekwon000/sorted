@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@expo/vector-icons": "^10.2.0",
     "@firebase/app": "^0.6.4",
     "@firebase/auth": "^0.14.6",
     "@firebase/firestore": "^1.14.5",

@@ -1,10 +1,10 @@
-import React from "react";
-import { View, Dimensions } from "react-native";
-import { Button, Input } from "react-native-elements";
-import { Formik, Form, Field } from "formik";
+import React from 'react';
+import { View, Dimensions } from 'react-native';
+import { Button, Input } from 'react-native-elements';
+import { Formik } from 'formik';
 
 const EntryComponent = ({
-  initialValues = { title: "", content: "" },
+  initialValues = { title: '', content: '' },
   onSubmit,
 }) => {
   return (
@@ -14,11 +14,11 @@ const EntryComponent = ({
           <Input
             placeholder="Title"
             value={values.title}
-            onChangeText={handleChange("title")}
+            onChangeText={handleChange('title')}
           />
           <View padding={10} />
           {/* //TODO: fix the design */}
-          <View style={{ height: Dimensions.get("window").height * 0.28 }}>
+          <View style={{ height: Dimensions.get('window').height * 0.28 }}>
             <Input
               placeholder="Content"
               multiline
@@ -26,7 +26,7 @@ const EntryComponent = ({
               numberOfLines={10}
               textAlignVertical="top"
               value={values.content}
-              onChangeText={handleChange("content")}
+              onChangeText={handleChange('content')}
             />
           </View>
           <View padding={2} />
