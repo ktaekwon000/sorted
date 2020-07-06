@@ -60,18 +60,6 @@ function Settings({ navigation, firebase }) {
         }}
         type="clear"
       />
-      <TouchableOpacity
-        onPress={() =>
-          Linking.openURL(
-            "https://www.digitaltrends.com/android/how-to-turn-off-notifications-in-android/"
-          )
-        }
-      >
-        <Text style={{ textAlign: "center", margin: 8 }}>
-          If you wish to turn off notifications for this app, tap this text to
-          be directed to a website with instructions.
-        </Text>
-      </TouchableOpacity>
     </View>
   );
 }
