@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Text, View, StyleSheet, ActivityIndicator } from "react-native";
-import { Badge, Button } from "react-native-elements";
+import { View, StyleSheet, ActivityIndicator, Alert } from "react-native";
+import { Text, Badge, Button } from "react-native-elements";
 import { Ionicons } from "@expo/vector-icons";
 import { format, formatDistance } from "date-fns";
 import { Context as DiaryContext } from "../../config/DiaryContext";
@@ -56,20 +56,31 @@ const StatsScreen = ({ firebase, navigation }) => {
   const { state, getDiaryEntries } = useContext(DiaryContext);
   const [loading, setLoading] = useState(true);
   const [accCreatedDate, setAccCreatedDate] = useState(new Date(0));
+  let lastNotifiedDate = 0;
+  const [badDays, setBadDays] = useState(0);
   const [pastWeek, setPastWeek] = useState([]);
   const [emotions, setEmotions] = useState([]);
-  const [dailyNumbers, setDailyNumbers] = useState(-1);
   const [consecutive, setConsecutive] = useState(-1);
   // index 0 is yesterday, index 1 is the 2 days before, etc...
 
-  async function getAccCreatedDate(callback) {
+  async function getUserInfo(callback) {
     const user = await firebase.retrieveUser();
-    setAccCreatedDate(
-      new Date(
-        (await firebase.retrieveUserDocument(user)).data().createdDate.seconds *
-          1000
-      )
-    );
+    const userData = (await firebase.retrieveUserDocument(user)).data();
+
+    setAccCreatedDate(new Date(userData.createdDate.seconds * 1000));
+    lastNotifiedDate =
+      "notifiedDate" in userData
+        ? new Date(userData.notifiedDate.seconds * 1000)
+        : new Date(0);
+
+    if (callback) {
+      callback();
+    }
+  }
+
+  async function setNotifiedDate(callback) {
+    const user = await firebase.retrieveUser();
+    await firebase.updateNotifiedDate(user);
     if (callback) {
       callback();
     }
@@ -94,10 +105,6 @@ const StatsScreen = ({ firebase, navigation }) => {
     }
     setPastWeek(newArr);
 
-    let dailyNumbers = [];
-    newArr.slice(0, 7).forEach((arr) => dailyNumbers.push(arr.length));
-    setDailyNumbers(dailyNumbers.filter((num) => num != 0).length);
-
     let consecutive = 0;
     for (let i = 0; i < newArr.length; i++) {
       if (newArr[i].length > 0) {
@@ -112,9 +119,9 @@ const StatsScreen = ({ firebase, navigation }) => {
     newArr.slice(0, 7).forEach((arr) => {
       let total = 0;
       arr.forEach((entry) => {
-        if (entry.sentimentScore >= 0.25) {
+        if (entry.sentimentScore >= 0.2) {
           total += 1;
-        } else if (entry.sentimentScore <= -0.25) {
+        } else if (entry.sentimentScore <= -0.2) {
           total -= 1;
         }
       });
@@ -132,6 +139,36 @@ const StatsScreen = ({ firebase, navigation }) => {
     });
     setEmotions(emotions);
 
+    let badDays = 0;
+    emotions.forEach((txt) => (txt == "Bad" ? badDays++ : null));
+    setBadDays(badDays);
+
+    if (badDays >= 4 && new Date() - lastNotifiedDate > 1000 * 60 * 60 * 24) {
+      Alert.alert(
+        "Alert",
+        "It appears that you haven't been feeling too well recently. Keep in " +
+          "mind that you always will have someone to talk to. Press Helplines" +
+          " to bring you to the list of helplines, or press Cancel to go back" +
+          " to the Stats screen. If you press Cancel, you won't see this for " +
+          "the nest 24 hours.",
+        [
+          {
+            text: "Cancel",
+            onPress: () => {
+              setNotifiedDate();
+            },
+            style: "cancel",
+          },
+          {
+            text: "Helplines",
+            onPress: () => {
+              navigation.navigate("Helplines");
+            },
+          },
+        ]
+      );
+    }
+
     if (callback) {
       callback();
     }
@@ -147,7 +184,7 @@ const StatsScreen = ({ firebase, navigation }) => {
       },
     });
 
-    getAccCreatedDate(() =>
+    getUserInfo(() =>
       getDiaryEntries(() => {
         getStats(() => setLoading(false));
       })
@@ -176,7 +213,7 @@ const StatsScreen = ({ firebase, navigation }) => {
       <Text style={{ margin: 5 }}>
         Your account was created on {format(accCreatedDate, "do 'of' MMMM, R")}.
       </Text>
-      <Text style={{ textAlign: "center", margin: 10 }}>
+      <Text style={{ textAlign: "center", margin: 10, marginVertical: 20 }}>
         {consecutive <= 0
           ? "Looks like you haven't written an entry yesterday. Try restarting your streak today!"
           : `You have written for ${consecutive} consecutive days.\n` +
@@ -184,7 +221,16 @@ const StatsScreen = ({ firebase, navigation }) => {
               ? "You're writing entries pretty often. Keep it up!"
               : "😊 Wow, you're writing entries pretty often. Keep it up!")}
       </Text>
-      <View style={{ margin: 10 }} />
+      <View style={{ padding: 10 }} />
+      {/* {badDays >= 4 ? (
+        <Text h4 style={{ textAlign: "center", margin: 5 }}>
+          It appears that you haven't been feeling too well recently. Keep in
+          mind that you always will have someone to talk to. Press this text to
+          be brought to a list of helplines.
+        </Text>
+      ) : (
+        <View style={{ padding: 10 }} />
+      )} */}
       <Text style={{ textAlign: "center", marginTop: 5 }}>
         Stats for the last 7 days:
       </Text>
