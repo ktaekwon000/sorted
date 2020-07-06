@@ -51,6 +51,14 @@ const Firebase = {
       .doc(`${userData.uid}`)
       .get();
   },
+  updateNotifiedDate: (userData) => {
+    const FieldValue = firebase.firestore.FieldValue;
+    return firebase
+      .firestore()
+      .collection("users")
+      .doc(`${userData.uid}`)
+      .update({ notifiedDate: FieldValue.serverTimestamp() });
+  },
 };
 
 export default Firebase;

@@ -13,13 +13,13 @@ import { ScrollView } from "react-native-gesture-handler";
 
 function makeSentimentString(score, magnitude) {
   let str = "Google's algorithms think that your feelings are ";
-  if (score > -0.25 && score < 0.25) {
+  if (score > -0.2 && score < 0.2) {
     if (magnitude < 1) {
       str += "neutral";
     } else {
       str += "mixed";
     }
-  } else if (score >= 0.25) {
+  } else if (score >= 0.2) {
     if (magnitude < 0.7) {
       str += "positive";
     } else {
