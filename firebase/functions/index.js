@@ -1,8 +1,7 @@
-const functions = require("firebase-functions");
-const admin = require("firebase-admin");
-const axios = require("axios");
-const url = require("./apiURL.json");
-const language = require("@google-cloud/language");
+const functions = require('firebase-functions');
+const axios = require('axios');
+const language = require('@google-cloud/language');
+const url = require('./apiURL.json');
 
 async function analyzeSentiment(txt) {
   const client = new language.LanguageServiceClient();
@@ -11,13 +10,13 @@ async function analyzeSentiment(txt) {
 
   const document = {
     content: text,
-    type: "PLAIN_TEXT",
+    type: 'PLAIN_TEXT',
   };
 
-  const [result] = await client.analyzeSentiment({ document: document });
+  const [result] = await client.analyzeSentiment({ document });
   const sentiment = result.documentSentiment;
 
-  const request = await axios.create(url).get("/textToEmoji", {
+  const request = await axios.create(url).get('/textToEmoji', {
     params: {
       text: txt,
     },
@@ -33,7 +32,7 @@ async function analyzeSentiment(txt) {
 }
 
 exports.analyzeSentimentonCreate = functions.firestore
-  .document("/users/{userId}/entries/{entryId}")
+  .document('/users/{userId}/entries/{entryId}')
   .onCreate((snap, context) => {
     const entry = snap.data();
 
@@ -53,15 +52,15 @@ exports.analyzeSentimentonCreate = functions.firestore
   });
 
 exports.analyzeSentimentonUpdate = functions.firestore
-  .document("/users/{userId}/entries/{entryId}")
+  .document('/users/{userId}/entries/{entryId}')
   .onUpdate((change, context) => {
     const data = change.after.data();
     const previousData = change.before.data();
 
     if (
-      !("updatedDate" in data) ||
-      ("updatedDate" in previousData &&
-        data.updatedDate.nanoseconds == previousData.updatedDate.nanoseconds)
+      !('updatedDate' in data) ||
+      ('updatedDate' in previousData &&
+        data.updatedDate.nanoseconds === previousData.updatedDate.nanoseconds)
     ) {
       return null;
     }

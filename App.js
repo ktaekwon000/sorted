@@ -1,10 +1,11 @@
-import React from "react";
-import AppContainer from "./navigation";
-import Firebase, { FirebaseProvider } from "./config/Firebase";
+import React from 'react';
+import { decode, encode } from 'base-64';
+import AppContainer from './navigation';
+import Firebase, { FirebaseProvider } from './config/Firebase';
 
-//fix firebase issues
-import TimerFix from "./config/Firebase/TimerFix"; //do not remove, fixes firebase
-import { decode, encode } from "base-64";
+// fix firebase issues
+import TimerFix from './config/Firebase/TimerFix'; // eslint-disable-line
+// do not remove, fixes firebase
 if (!global.btoa) {
   global.btoa = encode;
 }

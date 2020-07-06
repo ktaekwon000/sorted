@@ -1,48 +1,63 @@
-import React, { useState, useRef } from "react";
-import { StyleSheet, SafeAreaView, View, TouchableOpacity } from "react-native";
-import { Button } from "react-native-elements";
-import { Ionicons } from "@expo/vector-icons";
-import { Formik } from "formik";
-import * as Yup from "yup";
-import { HideWithKeyboard } from "react-native-hide-with-keyboard";
-import FormInput from "../../components/FormInput";
-import FormButton from "../../components/FormButton";
-import ErrorMessage from "../../components/ErrorMessage";
-import AppLogo from "../../components/AppLogo";
-import { withFirebaseHOC } from "../../config/Firebase";
+import React, { useState, useRef } from 'react';
+import { StyleSheet, SafeAreaView, View, TouchableOpacity } from 'react-native';
+import { Button } from 'react-native-elements';
+import { Ionicons } from '@expo/vector-icons';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import { HideWithKeyboard } from 'react-native-hide-with-keyboard';
+import FormInput from '../../components/FormInput';
+import FormButton from '../../components/FormButton';
+import ErrorMessage from '../../components/ErrorMessage';
+import AppLogo from '../../components/AppLogo';
+import { withFirebaseHOC } from '../../config/Firebase';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    marginTop: 50,
+  },
+  logoContainer: {
+    marginBottom: 15,
+    alignItems: 'center',
+  },
+  buttonContainer: {
+    margin: 25,
+  },
+});
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
-    .label("Email")
-    .email("Enter a valid email")
-    .required("Please enter a registered email"),
+    .label('Email')
+    .email('Enter a valid email')
+    .required('Please enter a registered email'),
   password: Yup.string()
-    .label("Password")
+    .label('Password')
     .required()
-    .min(6, "Password must have at least 6 characters "),
+    .min(6, 'Password must have at least 6 characters '),
 });
 
 function Login({ navigation, firebase }) {
   const [passwordVisibility, setPasswordVisibility] = useState(true);
-  const [rightIcon, setRightIcon] = useState("ios-eye");
+  const [rightIcon, setRightIcon] = useState('ios-eye');
 
   const emailInput = useRef(null);
   const passwordInput = useRef(null);
 
   function goToSignup() {
-    return navigation.navigate("Signup");
+    return navigation.navigate('Signup');
   }
 
   function goToForgotPassword() {
-    return navigation.navigate("ForgotPassword");
+    return navigation.navigate('ForgotPassword');
   }
 
   function handlePasswordVisibility() {
-    if (rightIcon === "ios-eye") {
-      setRightIcon("ios-eye-off");
+    if (rightIcon === 'ios-eye') {
+      setRightIcon('ios-eye-off');
       setPasswordVisibility(!passwordVisibility);
-    } else if (rightIcon === "ios-eye-off") {
-      setRightIcon("ios-eye");
+    } else if (rightIcon === 'ios-eye-off') {
+      setRightIcon('ios-eye');
       setPasswordVisibility(!passwordVisibility);
     }
   }
@@ -54,10 +69,10 @@ function Login({ navigation, firebase }) {
       const response = await firebase.loginWithEmail(email, password);
 
       if (response.user) {
-        navigation.navigate("App");
+        navigation.navigate('App');
       }
     } catch (error) {
-      actions.setFieldError("general", error.message);
+      actions.setFieldError('general', error.message);
     } finally {
       actions.setSubmitting(false);
     }
@@ -69,7 +84,7 @@ function Login({ navigation, firebase }) {
         <AppLogo />
       </HideWithKeyboard>
       <Formik
-        initialValues={{ email: "", password: "" }}
+        initialValues={{ email: '', password: '' }}
         onSubmit={(values, actions) => {
           handleOnLogin(values, actions);
         }}
@@ -89,12 +104,12 @@ function Login({ navigation, firebase }) {
             <FormInput
               name="email"
               value={values.email}
-              onChangeText={handleChange("email")}
+              onChangeText={handleChange('email')}
               placeholder="Enter email"
               autoCapitalize="none"
               iconName="ios-mail"
               iconColor="#2C384A"
-              onBlur={handleBlur("email")}
+              onBlur={handleBlur('email')}
               ref={emailInput}
               onSubmitEditing={() => passwordInput.current.focus()}
               blurOnSubmit={false}
@@ -103,22 +118,22 @@ function Login({ navigation, firebase }) {
             <FormInput
               name="password"
               value={values.password}
-              onChangeText={handleChange("password")}
+              onChangeText={handleChange('password')}
               placeholder="Enter password"
               secureTextEntry={passwordVisibility}
               iconName="ios-lock"
               iconColor="#2C384A"
-              onBlur={handleBlur("password")}
+              onBlur={handleBlur('password')}
               rightIcon={
                 <TouchableOpacity onPress={handlePasswordVisibility}>
                   <Ionicons name={rightIcon} size={28} color="grey" />
                 </TouchableOpacity>
               }
               ref={passwordInput}
-              blurOnSubmit={true}
+              blurOnSubmit
               onSubmitEditing={
                 !isValid || isSubmitting
-                  ? () => alert("Please check your inputs and try again.")
+                  ? () => alert('Please check your inputs and try again.')
                   : handleSubmit
               }
             />
@@ -141,7 +156,7 @@ function Login({ navigation, firebase }) {
         title="Don't have an account? Sign Up"
         onPress={goToSignup}
         titleStyle={{
-          color: "#F57C00",
+          color: '#F57C00',
         }}
         type="clear"
       />
@@ -149,27 +164,12 @@ function Login({ navigation, firebase }) {
         title="Forgot Password?"
         onPress={goToForgotPassword}
         titleStyle={{
-          color: "#039BE5",
+          color: '#039BE5',
         }}
         type="clear"
       />
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    marginTop: 50,
-  },
-  logoContainer: {
-    marginBottom: 15,
-    alignItems: "center",
-  },
-  buttonContainer: {
-    margin: 25,
-  },
-});
 
 export default withFirebaseHOC(Login);

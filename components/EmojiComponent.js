@@ -1,7 +1,6 @@
-import React from "react";
-import { StyleSheet } from "react-native";
-import { Button } from "react-native-elements";
-import { withNavigation } from "react-navigation";
+import React from 'react';
+import { Button } from 'react-native-elements';
+import { withNavigation } from 'react-navigation';
 
 const EmojiComponent = ({ emoji, emotion, navigation }) => (
   <Button
@@ -10,11 +9,9 @@ const EmojiComponent = ({ emoji, emotion, navigation }) => (
     type="outline"
     titleStyle={{ fontSize: 36, margin: 10 }}
     onPress={() =>
-      navigation.navigate("Emotions", { emotion: { emoji, emotion } })
+      navigation.navigate('Emotions', { emotion: { emoji, emotion } })
     }
   />
 );
-
-const styles = StyleSheet.create({});
 
 export default withNavigation(EmojiComponent);

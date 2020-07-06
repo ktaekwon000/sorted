@@ -1,18 +1,34 @@
-import React from "react";
-import { Text, SafeAreaView, View, StyleSheet } from "react-native";
-import { Button } from "react-native-elements";
-import { Formik } from "formik";
-import * as Yup from "yup";
-import FormInput from "../../components/FormInput";
-import FormButton from "../../components/FormButton";
-import ErrorMessage from "../../components/ErrorMessage";
-import { withFirebaseHOC } from "../../config/Firebase";
+import React from 'react';
+import { Text, SafeAreaView, View, StyleSheet } from 'react-native';
+import { Button } from 'react-native-elements';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import FormInput from '../../components/FormInput';
+import FormButton from '../../components/FormButton';
+import ErrorMessage from '../../components/ErrorMessage';
+import { withFirebaseHOC } from '../../config/Firebase';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    marginTop: 150,
+  },
+  text: {
+    color: '#333',
+    fontSize: 24,
+    marginLeft: 25,
+  },
+  buttonContainer: {
+    margin: 25,
+  },
+});
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
-    .label("Email")
-    .email("Enter a valid email")
-    .required("Please enter a registered email"),
+    .label('Email')
+    .email('Enter a valid email')
+    .required('Please enter a registered email'),
 });
 
 function ForgotPassword({ navigation, firebase }) {
@@ -22,22 +38,22 @@ function ForgotPassword({ navigation, firebase }) {
     try {
       await firebase.passwordReset(email);
       console.log(`Password reset email sent successfully for ${email}`);
-      alert("Password reset email sent successfully!");
-      navigation.navigate("Login");
+      alert('Password reset email sent successfully!');
+      navigation.navigate('Login');
     } catch (error) {
-      actions.setFieldError("general", error.message);
+      actions.setFieldError('general', error.message);
     }
   }
 
   function goToLogin() {
-    return navigation.navigate("Login");
+    return navigation.navigate('Login');
   }
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.text}>Forgot Password?</Text>
       <Formik
-        initialValues={{ email: "" }}
+        initialValues={{ email: '' }}
         onSubmit={(values, actions) => {
           handlePasswordReset(values, actions);
         }}
@@ -57,12 +73,12 @@ function ForgotPassword({ navigation, firebase }) {
             <FormInput
               name="email"
               value={values.email}
-              onChangeText={handleChange("email")}
+              onChangeText={handleChange('email')}
               placeholder="Enter email"
               autoCapitalize="none"
               iconName="ios-mail"
               iconColor="#2C384A"
-              onBlur={handleBlur("email")}
+              onBlur={handleBlur('email')}
             />
             <ErrorMessage errorValue={touched.email && errors.email} />
             <View style={styles.buttonContainer}>
@@ -82,28 +98,12 @@ function ForgotPassword({ navigation, firebase }) {
         title="Remembered your password? Login"
         onPress={goToLogin}
         titleStyle={{
-          color: "#039BE5",
+          color: '#039BE5',
         }}
         type="clear"
       />
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    marginTop: 150,
-  },
-  text: {
-    color: "#333",
-    fontSize: 24,
-    marginLeft: 25,
-  },
-  buttonContainer: {
-    margin: 25,
-  },
-});
 
 export default withFirebaseHOC(ForgotPassword);

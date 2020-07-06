@@ -1,24 +1,27 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, ScrollView, Text, View } from "react-native";
-import { createDrawerNavigator } from "react-navigation-drawer";
-import { createAppContainer } from "react-navigation";
-import { Ionicons } from "@expo/vector-icons";
-import SafeAreaView from "react-native-safe-area-view";
-import { DrawerItems } from "react-navigation-drawer";
-import { withFirebaseHOC } from "../config/Firebase";
-import { Provider as DiaryProvider } from "../config/DiaryContext";
-import DiaryScreens from "./AppNavigation";
-import ContactsScreen from "../screens/app/ContactsScreen";
-import StatsScreen from "../screens/app/StatsScreen";
-import SettingsScreen from "../screens/app/SettingsScreen";
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, ScrollView, Text, View, SafeAreaView } from 'react-native';
+import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
+import { createAppContainer } from 'react-navigation';
+import { Ionicons } from '@expo/vector-icons';
+
+import { withFirebaseHOC } from '../config/Firebase';
+import { Provider as DiaryProvider } from '../config/DiaryContext';
+import DiaryScreens from './AppNavigation';
+import ContactsScreen from '../screens/app/ContactsScreen';
+import StatsScreen from '../screens/app/StatsScreen';
+import SettingsScreen from '../screens/app/SettingsScreen';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 const CustomDrawerContentComponent = ({ firebase, ...props }) => {
-  const [name, setName] = useState("loading...");
-  const [email, setEmail] = useState("loading...");
+  const [name, setName] = useState('loading...');
   async function getUserInfo() {
     const user = await firebase.retrieveUser();
     setName(user.displayName);
-    setEmail(user.email);
   }
 
   useEffect(() => {
@@ -29,15 +32,15 @@ const CustomDrawerContentComponent = ({ firebase, ...props }) => {
     <ScrollView>
       <SafeAreaView
         style={styles.container}
-        forceInset={{ top: "always", horizontal: "never" }}
+        forceInset={{ top: 'always', horizontal: 'never' }}
       >
         <View
           style={{
-            justifyContent: "center",
-            alignItems: "center",
+            justifyContent: 'center',
+            alignItems: 'center',
             marginHorizontal: 30,
             marginVertical: 10,
-            // backgroundColor: "#DCDCDC",
+            marginTop: 30,
           }}
         >
           <Text>
@@ -78,22 +81,16 @@ const DrawerNavigation = createDrawerNavigator(
     Account: {
       screen: SettingsScreen,
       navigationOptions: {
-        title: "Account Settings",
+        title: 'Account Settings',
         drawerIcon: <Ionicons name="md-person" size={24} />,
       },
     },
   },
   {
-    initialRouteName: "Diary",
+    initialRouteName: 'Diary',
     contentComponent: withFirebaseHOC(CustomDrawerContentComponent),
   }
 );
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
 const AppContainer = createAppContainer(DrawerNavigation);
 

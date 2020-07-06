@@ -1,7 +1,7 @@
-import firebase from "firebase";
-import "@firebase/auth";
-import "@firebase/firestore";
-import firebaseConfig from "./firebaseConfig";
+import firebase from 'firebase';
+import '@firebase/auth';
+import '@firebase/firestore';
+import firebaseConfig from './firebaseConfig';
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -19,9 +19,7 @@ const Firebase = {
     return firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then((result) =>
-        firebase.auth().currentUser.updateProfile({ displayName })
-      );
+      .then(() => firebase.auth().currentUser.updateProfile({ displayName }));
   },
   signOut: () => {
     return firebase.auth().signOut();
@@ -37,25 +35,25 @@ const Firebase = {
   },
   // firestore
   createNewUser: (userData) => {
-    const FieldValue = firebase.firestore.FieldValue;
+    const { FieldValue } = firebase.firestore;
     return firebase
       .firestore()
-      .collection("users")
+      .collection('users')
       .doc(`${userData.uid}`)
       .set({ ...userData, createdDate: FieldValue.serverTimestamp() });
   },
   retrieveUserDocument: (userData) => {
     return firebase
       .firestore()
-      .collection("users")
+      .collection('users')
       .doc(`${userData.uid}`)
       .get();
   },
   updateNotifiedDate: (userData) => {
-    const FieldValue = firebase.firestore.FieldValue;
+    const { FieldValue } = firebase.firestore;
     return firebase
       .firestore()
-      .collection("users")
+      .collection('users')
       .doc(`${userData.uid}`)
       .update({ notifiedDate: FieldValue.serverTimestamp() });
   },

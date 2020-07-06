@@ -1,17 +1,16 @@
-import { createSwitchNavigator, createAppContainer } from "react-navigation";
-import Initial from "../screens/Initial";
-import AuthNavigation from "./AuthNavigation";
-import AppNavigation from "./AppNavigation";
-import DrawerNavigation from "./DrawerNavigation";
+import { createSwitchNavigator, createAppContainer } from 'react-navigation';
+import Initial from '../screens/Initial';
+import AuthNavigation from './AuthNavigation';
+import DrawerNavigation from './DrawerNavigation';
 
 const SwitchNavigator = createSwitchNavigator(
   {
-    Initial: Initial,
+    Initial,
     Auth: AuthNavigation,
     App: DrawerNavigation,
   },
   {
-    initialRouteName: "Initial",
+    initialRouteName: 'Initial',
   }
 );
 

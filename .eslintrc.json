@@ -20,6 +20,8 @@
     "prettier"
   ],
   "rules": {
+    "react/prop-types": 1,
+    "react/jsx-props-no-spreading": 0,
     "react/jsx-filename-extension": [
       1,
       {
@@ -34,9 +36,10 @@
       {
         "trailingComma": "es5",
         "singleQuote": true,
-        "printWidth": 100,
+        "printWidth": 80,
         "endOfLine": "auto"
       }
-    ]
+    ],
+    "jsx-a11y/accessible-emoji": 0
   }
 }

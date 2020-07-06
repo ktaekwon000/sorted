@@ -1,9 +1,9 @@
-import React from "react";
-import { Image } from "react-native-elements";
+import React from 'react';
+import { Image } from 'react-native-elements';
 
 const AppLogo = () => (
   <Image
-    source={require("../assets/sorted_icon_black_whitebg.png")}
+    source={require('../assets/sorted_icon_black_whitebg.png')}
     style={{ width: 213, height: 204 }}
   />
 );
