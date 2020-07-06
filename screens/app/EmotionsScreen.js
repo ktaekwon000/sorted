@@ -40,6 +40,13 @@ const EMOTIONS_TO_DATA = {
     ],
     link: "https://adaa.org/tips",
   },
+  Apppreciation: {
+    activities: [
+      "It's great that you are appreciating the situation or those around you. How about sharing this positivity on Instagram?",
+      "If you are appreciating a special someone, why not send them a message over Whatsapp?",
+      "If you're appreciating a special someone, how about sending them a small but special present?",
+    ],
+  },
   Boredom: {
     activities: [
       "Try watching some live streams of animals online, to feel like you're really there!",
@@ -94,7 +101,7 @@ const EMOTIONS_TO_DATA = {
     activities: [
       "Try focusing on what you want to have. It may give you some hope to bear through the situation.",
       "Try concentrating and accepting your situation right now. You may be feeling worse by not accepting your situation right now.",
-      "Try talking to your friends or family. Remember that there is someone around to support you.",
+      "Try talking to your friends or family. Remember that there is always someone around to support you.",
     ],
     link:
       "https://www.psychologytoday.com/sg/blog/out-the-ivory-tower/201905/5-ways-deal-distress",
@@ -107,58 +114,87 @@ const EMOTIONS_TO_DATA = {
     ],
     link: "https://www.wikihow.com/Deal-With-Embarrassment",
   },
-  // Hatred: {
-  //   activities: [""],
-  //   link: "",
-  // },
-  // Interest: {
-  //   activities: [""],
-  //   link: "",
-  // },
-  // Joy: {
-  //   activities: [""],
-  //   link: "",
-  // },
-  // Love: {
-  //   activities: [""],
-  //   link: "",
-  // },
-  // Morbidness: {
-  //   activities: [""],
-  //   link: "",
-  // },
-  // Optimism: {
-  //   activities: [""],
-  //   link: "",
-  // },
-  // Outrage: {
-  //   activities: [""],
-  //   link: "",
-  // },
-  // Pensiveness: {
-  //   activities: [""],
-  //   link: "",
-  // },
-  // Pessimism: {
-  //   activities: [""],
-  //   link: "",
-  // },
-  // Pride: {
-  //   activities: [""],
-  //   link: "",
-  // },
-  // Sadness: {
-  //   activities: [""],
-  //   link: "",
-  // },
-  // Serenity: {
-  //   activities: [""],
-  //   link: "",
-  // },
-  // Wariness: {
-  //   activities: [""],
-  //   link: "",
-  // },
+  Hatred: {
+    activities: [
+      "Try thinking over the situation and asking yourself if that hatred is deserved. WHen given some time, you might realise that the hatred might have been for something small.",
+      "Breathe slowly and deeply when you feel hatred. When you calm down, you might realise that the hatred you felt might have been exaggerated.",
+      "Try asking someone to be a meditator between you and the person you hate. You might end up coming to a civil agreement with the person you hate.",
+    ],
+    link: "https://www.wikihow.com/Stop-Hating-Someone",
+  },
+  Interest: {
+    activities: [
+      "What interested you so much? Share it with your friends on Instagram!",
+      "Have you shared the interesting thing with your friend yet? Try calling your friends to see if they will join you!",
+      "Whatsapp your friends to share what interested you so much!",
+    ],
+  },
+  Joy: {
+    activities: [
+      "Try sharing your happy moments on Instagram!",
+      "Follow up on your happiness with a quick full-body workout exercise!",
+      "How about expressing your feelings as a drawing?",
+    ],
+    link:
+      "https://www.quora.com/What-is-the-best-thing-to-do-when-very-happy-or-excited",
+  },
+  Love: {
+    activities: [
+      "It's great that you found a thing you love! How about sharing it with your friends on Instagram!",
+      "Is it love for that special someone? Send them a message to express your feelings!",
+      "Is it love for that special someone? How about treating them to a dessert?",
+    ],
+  },
+  Morbidness: {
+    activities: [
+      "Try focusing on what you want to have. It may give you some hope to bear through the situation.",
+      "Try concentrating and accepting your situation right now. You may be feeling worse by not accepting your situation right now.",
+      "Try talking to your friends or family. Remember that there is always someone around to support you.",
+    ],
+    link:
+      "https://www.psychologytoday.com/sg/blog/out-the-ivory-tower/201905/5-ways-deal-distress",
+  },
+  Optimism: {
+    activities: [
+      "It's great that you're looking forward to something! How about sharing the news with friends?",
+      "Are you optimistic about a future event? How about noting it down on your calendar?",
+      "It's great that you're looking forward to something? How about sharing the positivity on Instagram?",
+    ],
+  },
+  Outrage: {
+    activities: [
+      "If you are angry, try thinking before you speak. Saying something impulsefully might worsen the situation.",
+      "Try some exercise. Exercise is known to help relieve anger in some people, and it also serves as a distraction from the current situation.",
+      "Breathe slowly and deeply when you feel anger. When you calm down, you might realise that the anger you felt might have been exaggerated.",
+    ],
+    link:
+      "https://www.mayoclinic.org/healthy-lifestyle/adult-health/in-depth/anger-management/art-20045434",
+  },
+  Pessimism: {
+    activities: [
+      "Try writing down the good things that have happened to you in the past few days, no matter how small. It might help you reliase that things will turn out fine.",
+      "Try introducing some exercise into your routine. It is known that exercise can help to release inner tension and stress.",
+      "Take a step back, and think carefully about the situation. Once you've given it some thought, you might come to realise that you were exaggerating the negative aspects of the situation.",
+    ],
+    link: "https://www.positivityblog.com/positive-thinking/",
+  },
+  Pride: {
+    activities: [
+      "It's good to be proud of yourself sometimes, but be sure to keep yourself in check.",
+      "Try asking yourself questions about the current situation. You might be being overconfident and arrogant.",
+      "Try bring more open-minded and listen more to others. Your pride may be stopping you from taking advice from others.",
+    ],
+    link: "https://leadchangegroup.com/6-ways-overcome-pride/",
+  },
+  Sadness: {
+    activities: [
+      "Try doing small activities, such as taking a walk to the nearest supermarket. You might be able to distract yourself from your feelings and feel better.",
+      "Try accepting the current situation. Sometimes, thinking over the current situation and accepting it may help you feel better.",
+      "Try forgetting about the painful memory. Sometimes, it may be better to forget about the sadness, and time will solve the problem.",
+    ],
+    link:
+      "https://www.psychologytoday.com/sg/blog/how-do-life/202001/dealing-sadness",
+  },
 };
 
 const EmotionsScreen = ({ navigation }) => {
