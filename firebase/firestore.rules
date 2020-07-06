@@ -1,0 +1,21 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // modified from https://stackoverflow.com/a/49678794
+    match /users/{userId} {
+      allow read;
+      allow create;
+      allow update, delete: if request.auth.uid == resource.id;
+
+      function getUserId() {
+        return get(/databases/$(database)/documents/users/$(userId)).id
+      }
+
+      match /{document=**} {
+        allow read;
+        allow write: if getUserId() == request.auth.uid;
+      }
+
+    }
+  }
+}
