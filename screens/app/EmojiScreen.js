@@ -1,15 +1,7 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Text, Button } from "react-native-elements";
-
-const EmojiComponent = ({ emoji, emotion }) => (
-  <Button
-    containerStyle={{ flex: 1, margin: 10, marginHorizontal: 30 }}
-    title={emoji}
-    type="outline"
-    titleStyle={{ fontSize: 36, margin: 10 }}
-  />
-);
+import EmojiComponent from "../../components/EmojiComponent";
 
 const EmojiScreen = ({ navigation }) => {
   const emotions = navigation.getParam("emotions");
