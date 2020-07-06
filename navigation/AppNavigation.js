@@ -9,6 +9,7 @@ import DiaryScreen from "../screens/app/DiaryScreen";
 import NewEntryScreen from "../screens/app/NewEntryScreen";
 import DiaryEntryScreen from "../screens/app/DiaryEntryScreen";
 import EditScreen from "../screens/app/EditScreen";
+import EmojiScreen from "../screens/app/EmojiScreen";
 
 const AppNavigation = createStackNavigator(
   {
@@ -51,6 +52,9 @@ const AppNavigation = createStackNavigator(
     },
     Edit: {
       screen: EditScreen,
+    },
+    Emoji: {
+      screen: EmojiScreen,
     },
   },
   {

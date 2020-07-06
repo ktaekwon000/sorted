@@ -89,12 +89,31 @@ const DiaryEntryScreen = ({ navigation }) => {
           <Text style={{ margin: 5, fontSize: 24 }}>{entry.content}</Text>
         </ScrollView>
         {"sentimentScore" in entry && "sentimentMagnitude" in entry ? (
-          <Text>
-            {makeSentimentString(
-              entry.sentimentScore,
-              entry.sentimentMagnitude
-            )}
-          </Text>
+          <View style={{ flexDirection: "row" }}>
+            <Text
+              style={{
+                flex: 9,
+                margin: 5,
+                marginHorizontal: 30,
+                textAlign: "center",
+              }}
+            >
+              {makeSentimentString(
+                entry.sentimentScore,
+                entry.sentimentMagnitude
+              )}
+            </Text>
+            {"emotions" in entry ? (
+              <Button
+                title="Emotions"
+                type="clear"
+                style={{ flex: 1, margin: 5 }}
+                onPress={() =>
+                  navigation.navigate("Emoji", { emotions: entry.emotions })
+                }
+              />
+            ) : null}
+          </View>
         ) : (
           <TouchableOpacity
             onPress={() => {
