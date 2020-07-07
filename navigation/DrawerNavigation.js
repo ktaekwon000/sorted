@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { StyleSheet, ScrollView, Text, View, SafeAreaView } from 'react-native';
 import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
 import { createAppContainer } from 'react-navigation';
@@ -56,6 +57,12 @@ You may have to restart the app for your name to show here.`}
       </SafeAreaView>
     </ScrollView>
   );
+};
+
+CustomDrawerContentComponent.propTypes = {
+  firebase: PropTypes.shape({
+    retrieveUser: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 const DrawerNavigation = createDrawerNavigator(

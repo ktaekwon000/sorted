@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { StyleSheet, SafeAreaView, View, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
@@ -112,7 +113,9 @@ function Login({ navigation, firebase }) {
               onBlur={handleBlur('email')}
               ref={emailInput}
               onSubmitEditing={() => passwordInput.current.focus()}
+              returnKeyType="next"
               blurOnSubmit={false}
+              keyboardType="email-address"
             />
             <ErrorMessage errorValue={touched.email && errors.email} />
             <FormInput
@@ -129,6 +132,7 @@ function Login({ navigation, firebase }) {
                   <Ionicons name={rightIcon} size={28} color="grey" />
                 </TouchableOpacity>
               }
+              returnKeyType="done"
               ref={passwordInput}
               blurOnSubmit
               onSubmitEditing={
@@ -171,5 +175,14 @@ function Login({ navigation, firebase }) {
     </SafeAreaView>
   );
 }
+
+Login.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+  firebase: PropTypes.shape({
+    loginWithEmail: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 export default withFirebaseHOC(Login);

@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { View, ActivityIndicator } from 'react-native';
 import EntryComponent from '../../components/EntryComponent';
 import { Context as DiaryContext } from '../../config/DiaryContext';
@@ -32,6 +33,14 @@ const EditScreen = ({ navigation }) => {
       />
     </View>
   );
+};
+
+EditScreen.propTypes = {
+  navigation: PropTypes.shape({
+    getParam: PropTypes.func.isRequired,
+    setParams: PropTypes.func.isRequired,
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 EditScreen.navigationOptions = ({ navigation }) => ({

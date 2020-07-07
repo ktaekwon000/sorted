@@ -20,6 +20,7 @@
     "prettier"
   ],
   "rules": {
+    "no-alert": 0,
     "react/prop-types": 1,
     "react/jsx-props-no-spreading": 0,
     "react/jsx-filename-extension": [

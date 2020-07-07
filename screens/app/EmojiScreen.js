@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import { Text } from 'react-native-elements';
 import EmojiComponent from '../../components/EmojiComponent';
@@ -33,6 +34,12 @@ const EmojiScreen = ({ navigation }) => {
       />
     </View>
   );
+};
+
+EmojiScreen.propTypes = {
+  navigation: PropTypes.shape({
+    getParam: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default EmojiScreen;

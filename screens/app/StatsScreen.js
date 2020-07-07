@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { View, ActivityIndicator, Alert } from 'react-native';
 import { Text, Badge, Button } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
@@ -50,7 +51,7 @@ const makeColorFromString = (str) => {
   }
 };
 
-const StatsScreen = ({ firebase, navigation }) => {
+const StatsScreen = ({ navigation, firebase }) => {
   // TODO: clean these up...
   const { state, getDiaryEntries } = useContext(DiaryContext);
   const [loading, setLoading] = useState(true);
@@ -229,6 +230,18 @@ const StatsScreen = ({ firebase, navigation }) => {
       </View>
     </View>
   );
+};
+
+StatsScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+    setParams: PropTypes.func.isRequired,
+  }).isRequired,
+  firebase: PropTypes.shape({
+    retrieveUser: PropTypes.func.isRequired,
+    retrieveUserDocument: PropTypes.func.isRequired,
+    updateNotifiedDate: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 const StatsWithFirebase = withFirebaseHOC(StatsScreen);
