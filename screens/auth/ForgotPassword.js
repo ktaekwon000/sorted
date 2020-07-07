@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Text, SafeAreaView, View, StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Formik } from 'formik';
@@ -37,7 +38,6 @@ function ForgotPassword({ navigation, firebase }) {
 
     try {
       await firebase.passwordReset(email);
-      console.log(`Password reset email sent successfully for ${email}`);
       alert('Password reset email sent successfully!');
       navigation.navigate('Login');
     } catch (error) {
@@ -79,6 +79,8 @@ function ForgotPassword({ navigation, firebase }) {
               iconName="ios-mail"
               iconColor="#2C384A"
               onBlur={handleBlur('email')}
+              returnKeyType="done"
+              keyboardType="email-address"
             />
             <ErrorMessage errorValue={touched.email && errors.email} />
             <View style={styles.buttonContainer}>
@@ -105,5 +107,14 @@ function ForgotPassword({ navigation, firebase }) {
     </SafeAreaView>
   );
 }
+
+ForgotPassword.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+  firebase: PropTypes.shape({
+    passwordReset: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 export default withFirebaseHOC(ForgotPassword);

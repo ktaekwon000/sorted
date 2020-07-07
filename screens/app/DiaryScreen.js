@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   View,
   FlatList,
@@ -55,6 +56,12 @@ const DiaryScreen = ({ navigation }) => {
       />
     </View>
   );
+};
+
+DiaryScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default DiaryScreen;

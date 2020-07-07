@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -22,23 +23,15 @@ function Settings({ navigation, firebase }) {
   const [uid, setUid] = useState('');
 
   async function handleSignout() {
-    try {
-      await firebase.signOut();
-      navigation.navigate('Auth');
-    } catch (error) {
-      console.warn(error);
-    }
+    await firebase.signOut();
+    navigation.navigate('Auth');
   }
 
   async function retrieveUser() {
-    try {
-      const user = await firebase.retrieveUser();
-      setName(user.displayName);
-      setEmail(user.email);
-      setUid(user.uid);
-    } catch (error) {
-      console.warn(error);
-    }
+    const user = await firebase.retrieveUser();
+    setName(user.displayName);
+    setEmail(user.email);
+    setUid(user.uid);
   }
 
   useEffect(() => {
@@ -72,6 +65,16 @@ function Settings({ navigation, firebase }) {
     </View>
   );
 }
+
+Settings.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+  firebase: PropTypes.shape({
+    retrieveUser: PropTypes.func.isRequired,
+    signOut: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 const SettingsWithFirebase = withFirebaseHOC(Settings);
 

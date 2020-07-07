@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import PropTypes from 'prop-types';
 import { View, ActivityIndicator } from 'react-native';
 import EntryComponent from '../../components/EntryComponent';
 import { Context as DiaryContext } from '../../config/DiaryContext';
@@ -25,6 +26,12 @@ const NewEntryScreen = ({ navigation }) => {
       />
     </View>
   );
+};
+
+NewEntryScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default NewEntryScreen;

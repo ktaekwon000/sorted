@@ -5,13 +5,6 @@ import { Text, Button, ListItem } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import * as Linking from 'expo-linking';
 
-const styles = StyleSheet.create({
-  categoryHeaderText: {
-    marginHorizontal: 8,
-    alignSelf: 'center',
-  },
-});
-
 const helplines = {
   suicideHelplines: [
     {
@@ -65,6 +58,13 @@ const helplines = {
     },
   ],
 };
+
+const styles = StyleSheet.create({
+  categoryHeaderText: {
+    marginHorizontal: 8,
+    alignSelf: 'center',
+  },
+});
 
 const ContactsScreen = () => {
   return (

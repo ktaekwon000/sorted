@@ -1,12 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { View, Dimensions } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import { Formik } from 'formik';
 
-const EntryComponent = ({
-  initialValues = { title: '', content: '' },
-  onSubmit,
-}) => {
+const EntryComponent = ({ initialValues, onSubmit }) => {
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
       {({ handleChange, handleSubmit, values }) => (
@@ -35,6 +33,18 @@ const EntryComponent = ({
       )}
     </Formik>
   );
+};
+
+EntryComponent.propTypes = {
+  initialValues: PropTypes.exact({
+    title: PropTypes.string,
+    content: PropTypes.string,
+  }),
+  onSubmit: PropTypes.func.isRequired,
+};
+
+EntryComponent.defaultProps = {
+  initialValues: { title: '', content: '' },
 };
 
 export default EntryComponent;

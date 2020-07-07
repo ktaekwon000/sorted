@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   View,
   ActivityIndicator,
@@ -132,6 +133,15 @@ const DiaryEntryScreen = ({ navigation }) => {
       </View>
     </View>
   );
+};
+
+DiaryEntryScreen.propTypes = {
+  navigation: PropTypes.shape({
+    getParam: PropTypes.func.isRequired,
+    setParams: PropTypes.func.isRequired,
+    addListener: PropTypes.func.isRequired,
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 DiaryEntryScreen.navigationOptions = ({ navigation }) => ({

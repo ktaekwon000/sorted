@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import PropTypes from 'prop-types';
 import {
   StyleSheet,
   View,
@@ -104,7 +105,6 @@ function Signup({ navigation, firebase }) {
         navigation.navigate('App');
       }
     } catch (error) {
-      console.warn(error);
       actions.setFieldError('general', error.message);
     } finally {
       actions.setSubmitting(false);
@@ -150,6 +150,7 @@ function Signup({ navigation, firebase }) {
                 ref={nameInput}
                 onSubmitEditing={() => emailInput.current.focus()}
                 blurOnSubmit={false}
+                returnKeyType="next"
               />
               <ErrorMessage errorValue={touched.name && errors.name} />
               <FormInput
@@ -164,6 +165,8 @@ function Signup({ navigation, firebase }) {
                 ref={emailInput}
                 onSubmitEditing={() => passwordInput.current.focus()}
                 blurOnSubmit={false}
+                returnKeyType="next"
+                keyboardType="email-address"
               />
               <ErrorMessage errorValue={touched.email && errors.email} />
               <FormInput
@@ -183,6 +186,7 @@ function Signup({ navigation, firebase }) {
                 ref={passwordInput}
                 onSubmitEditing={() => passwordConfirmInput.current.focus()}
                 blurOnSubmit={false}
+                returnKeyType="next"
               />
               <ErrorMessage errorValue={touched.password && errors.password} />
               <FormInput
@@ -209,6 +213,7 @@ function Signup({ navigation, firebase }) {
                     ? () => alert('Please check your inputs and try again.')
                     : handleSubmit
                 }
+                returnKeyType="done"
               />
               <ErrorMessage
                 errorValue={touched.confirmPassword && errors.confirmPassword}
@@ -256,5 +261,16 @@ function Signup({ navigation, firebase }) {
     </KeyboardAvoidingView>
   );
 }
+
+Signup.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+  firebase: PropTypes.shape({
+    signupWithEmail: PropTypes.func.isRequired,
+    retrieveUser: PropTypes.func.isRequired,
+    createNewUser: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 export default withFirebaseHOC(Signup);

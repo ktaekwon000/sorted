@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import { Text, Button } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -245,6 +246,13 @@ const EmotionsScreen = ({ navigation }) => {
       )}
     </View>
   );
+};
+
+EmotionsScreen.propTypes = {
+  navigation: PropTypes.shape({
+    getParam: PropTypes.func.isRequired,
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default EmotionsScreen;
