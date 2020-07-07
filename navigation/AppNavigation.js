@@ -55,9 +55,11 @@ const AppNavigation = createStackNavigator(
     },
     Emoji: {
       screen: EmojiScreen,
+      navigationOptions: { title: 'Choose an emoji' },
     },
     Emotions: {
       screen: EmotionsScreen,
+      navigationOptions: { title: 'Your emotion' },
     },
   },
   {

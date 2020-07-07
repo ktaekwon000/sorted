@@ -52,11 +52,11 @@ const makeColorFromString = (str) => {
 };
 
 const StatsScreen = ({ navigation, firebase }) => {
-  // TODO: clean these up...
   const { state, getDiaryEntries } = useContext(DiaryContext);
   const [loading, setLoading] = useState(true);
   const [accCreatedDate, setAccCreatedDate] = useState(new Date(0));
   let lastNotifiedDate = 0;
+  let broughtToHelplines = false;
   const [emotions, setEmotions] = useState([]);
   const [consecutive, setConsecutive] = useState(-1);
   // index 0 is yesterday, index 1 is the 2 days before, etc...
@@ -140,14 +140,18 @@ const StatsScreen = ({ navigation, firebase }) => {
         badDays += 1;
       }
     });
-    if (badDays >= 4 && new Date() - lastNotifiedDate > 1000 * 60 * 60 * 24) {
+    if (
+      !broughtToHelplines &&
+      badDays >= 4 &&
+      new Date() - lastNotifiedDate > 1000 * 60 * 60 * 24
+    ) {
       Alert.alert(
         'Alert',
         "It appears that you haven't been feeling too well recently. Keep in " +
           'mind that you always will have someone to talk to. Press Helplines' +
           ' to bring you to the list of helplines, or press Cancel to go back' +
-          " to the Stats screen. If you press Cancel, you won't see this for " +
-          'the nest 24 hours.',
+          ' to the Stats screen. If you do not wish to see this message for ' +
+          'the next 24 hours, tap Cancel.',
         [
           {
             text: 'Cancel',
@@ -159,6 +163,7 @@ const StatsScreen = ({ navigation, firebase }) => {
           {
             text: 'Helplines',
             onPress: () => {
+              broughtToHelplines = true;
               navigation.navigate('Helplines');
             },
           },
@@ -203,7 +208,7 @@ const StatsScreen = ({ navigation, firebase }) => {
           : `You have written for ${consecutive} consecutive days.\n${
               consecutive <= 3
                 ? "You're writing entries pretty often. Keep it up!"
-                : "😊 Wow, you're writing entries pretty often. Keep it up!"
+                : "Wow, you're writing entries pretty often. Keep it up!"
             }`}
       </Text>
       <View style={{ padding: 10 }} />
