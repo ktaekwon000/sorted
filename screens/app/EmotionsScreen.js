@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View } from 'react-native';
+import { View, Share } from 'react-native';
 import { Text, Button } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as Linking from 'expo-linking';
@@ -15,8 +15,6 @@ const EMOTIONS_TO_DATA = {
       'Follow up on your excitement with a quick full-body workout exercise!',
       'How about expressing your feelings as a drawing?',
     ],
-    link:
-      'https://www.quora.com/What-is-the-best-thing-to-do-when-very-happy-or-excited',
   },
   Amusement: {
     activities: [
@@ -136,8 +134,6 @@ const EMOTIONS_TO_DATA = {
       'Follow up on your happiness with a quick full-body workout exercise!',
       'How about expressing your feelings as a drawing?',
     ],
-    link:
-      'https://www.quora.com/What-is-the-best-thing-to-do-when-very-happy-or-excited',
   },
   Love: {
     activities: [
@@ -236,7 +232,17 @@ const EmotionsScreen = ({ navigation }) => {
                 Linking.openURL(EMOTIONS_TO_DATA[emotion.emotion].link)
               }
             />
-          ) : null}
+          ) : (
+            <Button
+              title="Share this with your friends!"
+              type="outline"
+              onPress={() =>
+                Share.share({
+                  message: `My diary told me that I was feeling "${emotion.emotion}"... Find out more about yourself and your feeling with Sorted! https://play.google.com/`,
+                })
+              }
+            />
+          )}
         </View>
       ) : (
         <Text style={{ textAlign: 'center', fontSize: 16 }}>
