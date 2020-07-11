@@ -3,21 +3,34 @@ import PropTypes from 'prop-types';
 import { View, Dimensions } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import { Formik } from 'formik';
+import * as Yup from 'yup';
+import ErrorMessage from './ErrorMessage';
+
+const entrySchema = Yup.object().shape({
+  title: Yup.string().required('A title is required.'),
+  content: Yup.string().required('Content is required.'),
+});
 
 const EntryComponent = ({ initialValues, onSubmit }) => {
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {({ handleChange, handleSubmit, values }) => (
+    <Formik
+      initialValues={initialValues}
+      onSubmit={onSubmit}
+      validationSchema={entrySchema}
+    >
+      {({ handleChange, handleSubmit, values, touched, errors }) => (
         <View>
           <Input
+            name="title"
             placeholder="Title"
             value={values.title}
             onChangeText={handleChange('title')}
           />
-          <View padding={10} />
+          <ErrorMessage errorValue={touched.title && errors.title} />
           {/* //TODO: fix the design */}
           <View style={{ height: Dimensions.get('window').height * 0.28 }}>
             <Input
+              name="content"
               placeholder="Content"
               multiline
               scrollEnabled
@@ -27,6 +40,7 @@ const EntryComponent = ({ initialValues, onSubmit }) => {
               onChangeText={handleChange('content')}
             />
           </View>
+          <ErrorMessage errorValue={touched.content && errors.content} />
           <View padding={2} />
           <Button title="Submit" onPress={handleSubmit} />
         </View>
