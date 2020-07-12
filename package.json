@@ -1,10 +1,9 @@
 {
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "CustomRootComponent.js",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
+    "test": "expo start",
     "eject": "expo eject"
   },
   "dependencies": {
@@ -38,6 +37,8 @@
   },
   "devDependencies": {
     "babel-preset-expo": "^8.1.0",
+    "cavy": "^4.0.0",
+    "cross-env": "^7.0.2",
     "eslint": "^7.4.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-prettier": "^6.11.0",

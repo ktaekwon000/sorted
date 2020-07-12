@@ -4,6 +4,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 import { Button } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
+import { useCavy } from 'cavy';
 import DiaryScreen from '../screens/app/DiaryScreen';
 import NewEntryScreen from '../screens/app/NewEntryScreen';
 import DiaryEntryScreen from '../screens/app/DiaryEntryScreen';
@@ -15,33 +16,34 @@ const AppNavigation = createStackNavigator(
   {
     Diary: {
       screen: DiaryScreen,
-      navigationOptions: ({ navigation }) => ({
-        title: 'Your entries',
-        headerTitleStyle: {
-          // textAlign: "center",
-          // flex: 1,
-        },
-        headerRight: (
-          <Button
-            title="New Entry"
-            type="clear"
-            containerStyle={{ margin: 6 }}
-            titleStyle={{ fontSize: 14 }}
-            onPress={() => navigation.navigate('NewEntry')}
-          />
-        ),
-        headerLeft: () => (
-          <View style={{ flexDirection: 'row' }}>
+      navigationOptions: ({ navigation }) => {
+        // const generateTestHook = useCavy();
+
+        return {
+          title: 'Your entries',
+          headerRight: (
             <Button
-              icon={<Ionicons name="md-menu" size={24} color="black" />}
+              title="New Entry"
               type="clear"
-              containerStyle={{ marginLeft: 6 }}
+              containerStyle={{ margin: 6 }}
               titleStyle={{ fontSize: 14 }}
-              onPress={() => navigation.openDrawer()}
+              onPress={() => navigation.navigate('NewEntry')}
+              // ref={generateTestHook('DiaryScreen.MenuButton')}
             />
-          </View>
-        ),
-      }),
+          ),
+          headerLeft: () => (
+            <View style={{ flexDirection: 'row' }}>
+              <Button
+                icon={<Ionicons name="md-menu" size={24} color="black" />}
+                type="clear"
+                containerStyle={{ marginLeft: 6 }}
+                titleStyle={{ fontSize: 14 }}
+                onPress={() => navigation.openDrawer()}
+              />
+            </View>
+          ),
+        };
+      },
     },
     NewEntry: {
       screen: NewEntryScreen,
