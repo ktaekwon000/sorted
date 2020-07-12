@@ -179,6 +179,6 @@ dmypy.json
 cython_debug/
 
 firebaseConfig.js
-apiURL.json
+envVar.js
 
 .vscode

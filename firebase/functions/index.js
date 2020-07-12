@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const functions = require('firebase-functions');
 const axios = require('axios');
 const language = require('@google-cloud/language');
