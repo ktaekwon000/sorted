@@ -17,6 +17,11 @@ The following are links to Milestone 2 documents:
 1. Follow instructions in [firebase](firebase) to set up firebase cloud functions.
 1. Run `npm start` then connect using Expo app.
 
+# Testing
+
+1. Change `global.isTestingEnvironment` in `CustomRootComponent.js` to `true`.
+1. Run `npm start`. If any tests fail, they will be logged as errors in expo-cli.
+
 # Credits
 
 Login starter kit from [expo-community/expo-firebase-starter](https://github.com/expo-community/expo-firebase-starter)

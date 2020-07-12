@@ -6,6 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { HideWithKeyboard } from 'react-native-hide-with-keyboard';
+import { useCavy } from 'cavy';
 import FormInput from '../../components/FormInput';
 import FormButton from '../../components/FormButton';
 import ErrorMessage from '../../components/ErrorMessage';
@@ -39,6 +40,8 @@ const validationSchema = Yup.object().shape({
 });
 
 function Login({ navigation, firebase }) {
+  const generateTestHook = useCavy();
+
   const [passwordVisibility, setPasswordVisibility] = useState(true);
   const [rightIcon, setRightIcon] = useState('ios-eye');
 
@@ -80,9 +83,9 @@ function Login({ navigation, firebase }) {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} ref={generateTestHook('Login')}>
       <HideWithKeyboard style={styles.logoContainer}>
-        <AppLogo />
+        <AppLogo ref={generateTestHook('Login.AppLogo')} />
       </HideWithKeyboard>
       <Formik
         initialValues={{ email: '', password: '' }}
@@ -111,7 +114,11 @@ function Login({ navigation, firebase }) {
               iconName="ios-mail"
               iconColor="#2C384A"
               onBlur={handleBlur('email')}
-              ref={emailInput}
+              ref={
+                global.isTestingEnvironment
+                  ? generateTestHook('Login.EmailInput')
+                  : emailInput
+              }
               onSubmitEditing={() => passwordInput.current.focus()}
               returnKeyType="next"
               blurOnSubmit={false}
@@ -133,7 +140,11 @@ function Login({ navigation, firebase }) {
                 </TouchableOpacity>
               }
               returnKeyType="done"
-              ref={passwordInput}
+              ref={
+                global.isTestingEnvironment
+                  ? generateTestHook('Login.PasswordInput')
+                  : passwordInput
+              }
               blurOnSubmit
               onSubmitEditing={
                 !isValid || isSubmitting
@@ -150,6 +161,7 @@ function Login({ navigation, firebase }) {
                 buttonColor="#039BE5"
                 disabled={!isValid || isSubmitting}
                 loading={isSubmitting}
+                ref={generateTestHook('Login.LoginButton')}
               />
             </View>
             <ErrorMessage errorValue={errors.general} />
@@ -163,6 +175,7 @@ function Login({ navigation, firebase }) {
           color: '#F57C00',
         }}
         type="clear"
+        ref={generateTestHook('Login.SignupButton')}
       />
       <Button
         title="Forgot Password?"
@@ -171,6 +184,7 @@ function Login({ navigation, firebase }) {
           color: '#039BE5',
         }}
         type="clear"
+        ref={generateTestHook('Login.ForgotPasswordButton')}
       />
     </SafeAreaView>
   );
