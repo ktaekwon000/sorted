@@ -20,7 +20,8 @@ The following are links to Milestone 2 documents:
 # Testing
 
 1. Change `global.isTestingEnvironment` in `CustomRootComponent.js` to `true`.
-1. Run `npm start`. If any tests fail, they will be logged as errors in expo-cli.
+1. Clear the app data of the Android Expo client. (This is optional, but often trying to work around this will cause crashes and errors.)
+1. Run `npm start` and connect a device using the Expo app. If any tests fail, they will show up as yellowboxes on the Expo client.
 
 # Credits
 

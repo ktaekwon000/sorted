@@ -1,4 +1,5 @@
 import React from 'react';
+import { YellowBox } from 'react-native';
 import { decode, encode } from 'base-64';
 
 import { Tester, TestHookStore } from 'cavy';
@@ -17,6 +18,10 @@ if (!global.btoa) {
 if (!global.atob) {
   global.atob = decode;
 }
+
+YellowBox.ignoreWarnings([
+  "Warning: Can't perform a React state update on an unmounted",
+]);
 
 const testHookStore = new TestHookStore();
 
