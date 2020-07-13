@@ -1,43 +1,15 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { View } from 'react-native';
+import React from 'react';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
-import { Button } from 'react-native-elements';
-import { Ionicons } from '@expo/vector-icons';
-import { hook } from 'cavy';
 import DiaryScreen from '../screens/app/DiaryScreen';
 import NewEntryScreen from '../screens/app/NewEntryScreen';
 import DiaryEntryScreen from '../screens/app/DiaryEntryScreen';
 import EditScreen from '../screens/app/EditScreen';
 import EmojiScreen from '../screens/app/EmojiScreen';
 import EmotionsScreen from '../screens/app/EmotionsScreen';
-
-// TODO: Maybe change this into a functional component? Hooks behave weirdly rn
-class MenuIcon extends Component {
-  render() {
-    const { generateTestHook, navigation } = this.props;
-    return (
-      <Ionicons
-        name="md-menu"
-        size={24}
-        color="black"
-        style={{ marginLeft: 16 }}
-        ref={generateTestHook('DiaryScreen.MenuButton')}
-        onPress={() => navigation.openDrawer()}
-      />
-    );
-  }
-}
-
-MenuIcon.propTypes = {
-  generateTestHook: PropTypes.func.isRequired,
-  navigation: PropTypes.shape({
-    openDrawer: PropTypes.func.isRequired,
-  }).isRequired,
-};
-
-const HookedIcon = hook(MenuIcon);
+import HookedButton from '../components/HookedButton';
+import HookedIcon from '../components/HookedIcon';
+import HookedBackButton from '../components/HookedBackButton';
 
 const AppNavigation = createStackNavigator(
   {
@@ -46,24 +18,29 @@ const AppNavigation = createStackNavigator(
       navigationOptions: ({ navigation }) => ({
         title: 'Your entries',
         headerRight: (
-          <Button
+          <HookedButton
             title="New Entry"
-            type="clear"
-            containerStyle={{ margin: 6 }}
-            titleStyle={{ fontSize: 14 }}
             onPress={() => navigation.navigate('NewEntry')}
+            testHook="DiaryScreen.NewEntryButton"
           />
         ),
-        headerLeft: () => (
-          <View style={{ flexDirection: 'row' }}>
-            <HookedIcon navigation={navigation} />
-          </View>
+        headerLeft: (
+          <HookedIcon
+            name="md-menu"
+            size={24}
+            containerStyle={{ marginHorizontal: 16 }}
+            color="black"
+            testHook="DiaryScreen.MenuButton"
+            onPress={() => navigation.openDrawer()}
+          />
         ),
       }),
     },
     NewEntry: {
       screen: NewEntryScreen,
-      navigationOptions: { title: 'New entry' },
+      navigationOptions: {
+        title: 'New entry',
+      },
     },
     DiaryEntry: {
       screen: DiaryEntryScreen,
@@ -84,6 +61,7 @@ const AppNavigation = createStackNavigator(
     initialRouteName: 'Diary',
     defaultNavigationOptions: {
       title: 'placeholder text',
+      headerLeft: <HookedBackButton testHook="AppNavigation.BackButton" />,
     },
   }
 );

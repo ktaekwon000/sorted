@@ -21,13 +21,19 @@ if (!global.atob) {
 
 YellowBox.ignoreWarnings([
   "Warning: Can't perform a React state update on an unmounted",
+  'Deprecation warning: support for custom functionreporters',
 ]);
 
 const testHookStore = new TestHookStore();
 
 export default function App() {
   return (
-    <Tester specs={[Spec]} store={testHookStore}>
+    <Tester
+      specs={[Spec]}
+      store={testHookStore}
+      reporter={(report) => console.log(report.fullResults)} // eslint-disable-line
+      // only={['entrySystem']}
+    >
       <FirebaseProvider value={Firebase}>
         <AppContainer />
       </FirebaseProvider>
