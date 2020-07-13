@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text as UnwrappedText, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import { createStackNavigator } from 'react-navigation-stack';
 import { Ionicons } from '@expo/vector-icons';
 import * as Linking from 'expo-linking';
+import { useCavy, wrap } from 'cavy';
 import { withFirebaseHOC } from '../../config/Firebase';
 
 const styles = StyleSheet.create({
@@ -17,6 +18,9 @@ const styles = StyleSheet.create({
 });
 
 function Settings({ navigation, firebase }) {
+  const generateTestHook = useCavy();
+  const Text = wrap(UnwrappedText);
+
   const [ready, setReady] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -48,12 +52,16 @@ function Settings({ navigation, firebase }) {
     </View>
   ) : (
     <View style={styles.container}>
-      <Text>Welcome! You are {name}</Text>
-      <Text>Your email is {email}</Text>
+      <Text ref={generateTestHook('SettingsScreen.NameField')}>
+        Welcome! You are {name}
+      </Text>
+      <Text ref={generateTestHook('SettingsScreen.EmailField')}>
+        Your email is {email}
+      </Text>
       <Text>
         {'\n'}The following information is only for debugging purposes:
       </Text>
-      <Text>uid: {uid}</Text>
+      <Text ref={generateTestHook('SettingsScreen.UidField')}>uid: {uid}</Text>
       <Button
         title="Signout"
         onPress={handleSignout}
@@ -61,6 +69,7 @@ function Settings({ navigation, firebase }) {
           color: '#F57C00',
         }}
         type="clear"
+        ref={generateTestHook('SettingsScreen.SignoutButton')}
       />
     </View>
   );

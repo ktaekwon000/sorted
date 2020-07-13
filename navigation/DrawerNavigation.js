@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, ScrollView, Text, View, SafeAreaView } from 'react-native';
+import {
+  StyleSheet,
+  ScrollView,
+  Text as UnwrappedText,
+  View,
+  SafeAreaView,
+} from 'react-native';
 import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
 import { createAppContainer } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
-
+import { useCavy, wrap, hook } from 'cavy';
 import { withFirebaseHOC } from '../config/Firebase';
 import { Provider as DiaryProvider } from '../config/DiaryContext';
 import DiaryScreens from './AppNavigation';
@@ -19,6 +25,9 @@ const styles = StyleSheet.create({
 });
 
 const CustomDrawerContentComponent = ({ firebase, ...props }) => {
+  const generateTestHook = useCavy();
+  const Text = wrap(UnwrappedText);
+
   const [name, setName] = useState('loading...');
   async function getUserInfo() {
     const user = await firebase.retrieveUser();
@@ -44,7 +53,7 @@ const CustomDrawerContentComponent = ({ firebase, ...props }) => {
             marginTop: 30,
           }}
         >
-          <Text>
+          <Text ref={generateTestHook('DrawerNavigation.NameField')}>
             {name
               ? `Welcome ${name}.`
               : `Your account is in the process of being set up.
@@ -64,6 +73,33 @@ CustomDrawerContentComponent.propTypes = {
     retrieveUser: PropTypes.func.isRequired,
   }).isRequired,
 };
+
+// dirty hack. https://github.com/pixielabs/cavy/issues/75
+class Icon extends Component {
+  render() {
+    const { generateTestHook, navigation, name, routeName, size } = this.props;
+    return (
+      <Ionicons
+        name={name}
+        size={size}
+        onPress={() => navigation.navigate(routeName)}
+        ref={generateTestHook(`DrawerNavigation.${routeName}`)}
+      />
+    );
+  }
+}
+
+Icon.propTypes = {
+  generateTestHook: PropTypes.func.isRequired,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+  name: PropTypes.string.isRequired,
+  routeName: PropTypes.string.isRequired,
+  size: PropTypes.number.isRequired,
+};
+
+const WrappedIcon = hook(Icon);
 
 const DrawerNavigation = createDrawerNavigator(
   {
@@ -87,10 +123,17 @@ const DrawerNavigation = createDrawerNavigator(
     },
     Account: {
       screen: SettingsScreen,
-      navigationOptions: {
+      navigationOptions: ({ navigation }) => ({
         title: 'Account Settings',
-        drawerIcon: <Ionicons name="md-person" size={24} />,
-      },
+        drawerIcon: (
+          <WrappedIcon
+            name="md-person"
+            size={24}
+            navigation={navigation}
+            routeName={navigation.state.routeName}
+          />
+        ),
+      }),
     },
   },
   {

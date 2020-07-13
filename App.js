@@ -1,4 +1,5 @@
 import React from 'react';
+import { YellowBox } from 'react-native';
 import { decode, encode } from 'base-64';
 import AppContainer from './navigation';
 import Firebase, { FirebaseProvider } from './config/Firebase';
@@ -12,6 +13,10 @@ if (!global.btoa) {
 if (!global.atob) {
   global.atob = decode;
 }
+
+YellowBox.ignoreWarnings([
+  "Warning: Can't perform a React state update on an unmounted",
+]);
 
 export default function App() {
   return (
