@@ -19,9 +19,11 @@ The following are links to Milestone 2 documents:
 
 # Testing
 
+1. Create a user with credentials `cavy@example.com` and `password`. Make a sample post under that account.
 1. Change `global.isTestingEnvironment` in `CustomRootComponent.js` to `true`.
 1. Clear the app data of the Android Expo client. (This is optional, but often trying to work around this will cause crashes and errors.)
-1. Run `npm start` and connect a device using the Expo app. If any tests fail, they will show up as yellowboxes on the Expo client.
+1. Run `npm start` and connect a device using the Expo app. If any tests fail, they will show up as yellowboxes on the Expo client. An object representing the full report of the tests will be printed to the console after the tests.
+1. Before restarting the app, remember to change the global variable `global.isTestingEnvironment` back to false.
 
 # Credits
 

@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   StyleSheet,
@@ -10,13 +10,14 @@ import {
 import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
 import { createAppContainer } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
-import { useCavy, wrap, hook } from 'cavy';
+import { useCavy, wrap } from 'cavy';
 import { withFirebaseHOC } from '../config/Firebase';
 import { Provider as DiaryProvider } from '../config/DiaryContext';
 import DiaryScreens from './AppNavigation';
 import ContactsScreen from '../screens/app/ContactsScreen';
 import StatsScreen from '../screens/app/StatsScreen';
 import SettingsScreen from '../screens/app/SettingsScreen';
+import HookedIcon from '../components/HookedIcon';
 
 const styles = StyleSheet.create({
   container: {
@@ -74,33 +75,6 @@ CustomDrawerContentComponent.propTypes = {
   }).isRequired,
 };
 
-// dirty hack. https://github.com/pixielabs/cavy/issues/75
-class Icon extends Component {
-  render() {
-    const { generateTestHook, navigation, name, routeName, size } = this.props;
-    return (
-      <Ionicons
-        name={name}
-        size={size}
-        onPress={() => navigation.navigate(routeName)}
-        ref={generateTestHook(`DrawerNavigation.${routeName}`)}
-      />
-    );
-  }
-}
-
-Icon.propTypes = {
-  generateTestHook: PropTypes.func.isRequired,
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
-  name: PropTypes.string.isRequired,
-  routeName: PropTypes.string.isRequired,
-  size: PropTypes.number.isRequired,
-};
-
-const WrappedIcon = hook(Icon);
-
 const DrawerNavigation = createDrawerNavigator(
   {
     Diary: {
@@ -126,11 +100,12 @@ const DrawerNavigation = createDrawerNavigator(
       navigationOptions: ({ navigation }) => ({
         title: 'Account Settings',
         drawerIcon: (
-          <WrappedIcon
+          <HookedIcon
             name="md-person"
             size={24}
-            navigation={navigation}
-            routeName={navigation.state.routeName}
+            color="black"
+            testHook="DrawerNavigation.Account"
+            onPress={() => navigation.navigate('Account')}
           />
         ),
       }),

@@ -4,6 +4,7 @@ import { View, Dimensions } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { useCavy } from 'cavy';
 import ErrorMessage from './ErrorMessage';
 
 const entrySchema = Yup.object().shape({
@@ -12,6 +13,8 @@ const entrySchema = Yup.object().shape({
 });
 
 const EntryComponent = ({ initialValues, onSubmit }) => {
+  const generateTestHook = useCavy();
+
   return (
     <Formik
       initialValues={initialValues}
@@ -25,6 +28,7 @@ const EntryComponent = ({ initialValues, onSubmit }) => {
             placeholder="Title"
             value={values.title}
             onChangeText={handleChange('title')}
+            ref={generateTestHook('EntryComponent.Title')}
           />
           <ErrorMessage errorValue={touched.title && errors.title} />
           {/* //TODO: fix the design */}
@@ -38,11 +42,16 @@ const EntryComponent = ({ initialValues, onSubmit }) => {
               textAlignVertical="top"
               value={values.content}
               onChangeText={handleChange('content')}
+              ref={generateTestHook('EntryComponent.Content')}
             />
           </View>
           <ErrorMessage errorValue={touched.content && errors.content} />
           <View padding={2} />
-          <Button title="Submit" onPress={handleSubmit} />
+          <Button
+            title="Submit"
+            onPress={handleSubmit}
+            ref={generateTestHook('EntryComponent.SubmitButton')}
+          />
         </View>
       )}
     </Formik>

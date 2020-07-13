@@ -35,8 +35,9 @@ const DiaryScreen = ({ navigation }) => {
         numColumns={2}
         data={state}
         keyExtractor={(entry) => entry.id}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <TouchableNativeFeedback
+            ref={generateTestHook(`DiaryScreen.EntryCard.${index}`)}
             onPress={() => navigation.navigate('DiaryEntry', { id: item.id })}
           >
             <Card

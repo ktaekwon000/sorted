@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, Share } from 'react-native';
+import { View, Share, TouchableOpacity } from 'react-native';
 import { Text, Button } from 'react-native-elements';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as Linking from 'expo-linking';
 import sample from 'lodash.sample';
 
