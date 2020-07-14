@@ -4,6 +4,7 @@
  * a new spec.describe().
  * This is for easier test filtering.
  */
+
 import { format } from 'date-fns';
 
 const specItLogin = (spec) =>
@@ -20,10 +21,19 @@ const specItLogout = (spec) =>
     await spec.press('DiaryScreen.MenuButton');
     await spec.press('DrawerNavigation.Account');
     await spec.press('SettingsScreen.SignoutButton');
-    await spec.pause(100);
     await spec.notExists('SettingsScreen.NameField');
     await spec.notExists('SettingsScreen.EmailField');
   });
+
+/**
+ * The following line represents 40 second wait!
+ * It's hard to predict how long google cloud functions will take to
+ * analyze text. Anecdotally, it seems to range from ~6 seconds to ~35
+ * seconds. Change the number below to a higher number if you're more
+ * patient, and lower if if you do not want to spent a full 2 minutes on
+ * the 'emotionsSystem' test.
+ */
+const cloudFunctionWaitTime = 40 * 1000;
 
 export default (spec) => {
   spec.describe(
@@ -95,7 +105,6 @@ export default (spec) => {
         await spec.press('DiaryScreen.MenuButton');
         await spec.press('DrawerNavigation.Account');
         await spec.press('SettingsScreen.SignoutButton');
-        await spec.pause(100);
         await spec.notExists('SettingsScreen.NameField');
         await spec.notExists('SettingsScreen.EmailField');
         await spec.exists('Login.AppLogo');
@@ -125,6 +134,7 @@ export default (spec) => {
         await spec.exists('EntryComponent.Title');
         await spec.exists('EntryComponent.Content');
         await spec.exists('EntryComponent.SubmitButton');
+        await spec.exists('AppNavigation.BackButton');
       });
 
       spec.it('Entry Screen shows up', async () => {
@@ -136,6 +146,7 @@ export default (spec) => {
         await spec.exists('DiaryEntryScreen.SentimentText');
         await spec.exists('DiaryEntryScreen.EmotionsButton');
         await spec.exists('DiaryEntryScreen.DeleteButton');
+        await spec.exists('AppNavigation.BackButton');
       });
 
       spec.it('Edit Screen shows up', async () => {
@@ -145,6 +156,7 @@ export default (spec) => {
         await spec.exists('EntryComponent.Title');
         await spec.exists('EntryComponent.Content');
         await spec.exists('EntryComponent.SubmitButton');
+        await spec.exists('AppNavigation.BackButton');
       });
 
       specItLogout(spec);
@@ -230,5 +242,217 @@ export default (spec) => {
       specItLogout(spec);
     },
     'entrySystem'
+  );
+
+  spec.describe(
+    'Emotions UI',
+    () => {
+      specItLogin(spec);
+
+      spec.it('Emoji screen shows up', async () => {
+        await spec.press('DiaryScreen.EntryCard.0');
+        await spec.pause(1000);
+        await spec.press('DiaryEntryScreen.EmotionsButton');
+        await spec.exists('EmojiScreen.TitleText');
+        await spec.exists('AppNavigation.BackButton');
+        await spec.exists('EmojiScreen.emoji0Button');
+        await spec.exists('EmojiScreen.emoji1Button');
+        await spec.exists('EmojiScreen.emoji2Button');
+        await spec.exists('EmojiScreen.emoji3Button');
+        await spec.exists('EmojiScreen.emoji4Button');
+      });
+
+      spec.it('Emotion screen shows up (Joy variant)', async () => {
+        await spec.press('DiaryScreen.EntryCard.0');
+        await spec.pause(1000);
+        await spec.press('DiaryEntryScreen.EmotionsButton');
+        await spec.press('EmojiScreen.emoji4Button');
+        await spec.exists('AppNavigation.BackButton');
+        await spec.containsText('EmotionsScreen.EmotionText', 'Joy');
+        await spec.exists('EmotionsScreen.HelplinesButton');
+        await spec.exists('EmotionsScreen.RecommendationText');
+        await spec.exists('EmotionsScreen.ShareButton');
+      });
+
+      spec.it('Emotion screen shows up (Outrage variant)', async () => {
+        await spec.press('DiaryScreen.EntryCard.0');
+        await spec.pause(1000);
+        await spec.press('DiaryEntryScreen.EmotionsButton');
+        await spec.press('EmojiScreen.emoji0Button');
+        await spec.exists('AppNavigation.BackButton');
+        await spec.containsText('EmotionsScreen.EmotionText', 'Outrage');
+        await spec.exists('EmotionsScreen.HelplinesButton');
+        await spec.exists('EmotionsScreen.RecommendationText');
+        await spec.exists('EmotionsScreen.LearnMoreButton');
+      });
+
+      spec.it(
+        'Navigation from emotions screen to helplines screen',
+        async () => {
+          await spec.press('DiaryScreen.EntryCard.0');
+          await spec.pause(1000);
+          await spec.press('DiaryEntryScreen.EmotionsButton');
+          await spec.press('EmojiScreen.emoji0Button');
+          await spec.press('EmotionsScreen.HelplinesButton');
+          await spec.exists('ContactsScreen.View');
+        }
+      );
+
+      specItLogout(spec);
+    },
+    'emotionsUI'
+  );
+
+  spec.describe(
+    'Emotions system',
+    () => {
+      specItLogin(spec);
+
+      spec.it('Make new entry', async () => {
+        await spec.press('DiaryScreen.NewEntryButton');
+        await spec.fillIn(
+          'EntryComponent.Title',
+          'Cavy sample entry (emotions system)'
+        );
+        await spec.fillIn(
+          'EntryComponent.Content',
+          'I am ecstatic about this.'
+        );
+        await spec.press('EntryComponent.SubmitButton');
+        await spec.pause(1000);
+      });
+
+      spec.it('Google NLP response (New entry)', async () => {
+        await spec.press('DiaryScreen.EntryCard.0');
+        await spec.containsText(
+          'DiaryEntryScreen.ContentText',
+          'I am ecstatic about this.'
+        );
+        console.log(
+          `pausing for ${cloudFunctionWaitTime} milliseconds for cloud functions...`
+        );
+        await spec.pause(cloudFunctionWaitTime);
+        await spec.press('DiaryEntryScreen.AnalyzingText');
+        await spec.pause(1000);
+        await spec.containsText(
+          'DiaryEntryScreen.SentimentText',
+          'your feelings are very positive.'
+        );
+      });
+
+      spec.it('Emoji response (New Entry)', async () => {
+        await spec.press('DiaryScreen.EntryCard.0');
+        await spec.containsText(
+          'DiaryEntryScreen.ContentText',
+          'I am ecstatic about this.'
+        );
+
+        await spec.press('DiaryEntryScreen.EmotionsButton');
+        await spec.press('EmojiScreen.emoji0Button');
+        await spec.containsText('EmotionsScreen.EmotionText', 'Optimism');
+        await spec.exists('EmotionsScreen.ShareButton');
+        await spec.press('AppNavigation.BackButton');
+
+        await spec.press('DiaryEntryScreen.EmotionsButton');
+        await spec.press('EmojiScreen.emoji1Button');
+        await spec.containsText('EmotionsScreen.EmotionText', 'Interest');
+        await spec.exists('EmotionsScreen.ShareButton');
+        await spec.press('AppNavigation.BackButton');
+
+        await spec.press('DiaryEntryScreen.EmotionsButton');
+        await spec.press('EmojiScreen.emoji2Button');
+        await spec.containsText('EmotionsScreen.EmotionText', 'Joy');
+        await spec.exists('EmotionsScreen.ShareButton');
+        await spec.press('AppNavigation.BackButton');
+
+        await spec.press('DiaryEntryScreen.EmotionsButton');
+        await spec.press('EmojiScreen.emoji3Button');
+        await spec.containsText('EmotionsScreen.EmotionText', 'Joy');
+        await spec.exists('EmotionsScreen.ShareButton');
+        await spec.press('AppNavigation.BackButton');
+
+        await spec.press('DiaryEntryScreen.EmotionsButton');
+        await spec.press('EmojiScreen.emoji4Button');
+        await spec.containsText('EmotionsScreen.EmotionText', 'Optimism');
+        await spec.exists('EmotionsScreen.ShareButton');
+      });
+
+      spec.it('Edit entry', async () => {
+        await spec.press('DiaryScreen.EntryCard.0');
+        await spec.pause(1000);
+        await spec.press('DiaryEntryScreen.EditButton');
+        await spec.fillIn(
+          'EntryComponent.Content',
+          'I am very sad and angry. I am so upset.'
+        );
+        await spec.press('EntryComponent.SubmitButton');
+        await spec.pause(1000);
+      });
+
+      spec.it('Google NLP response (New entry)', async () => {
+        await spec.press('DiaryScreen.EntryCard.0');
+        await spec.containsText(
+          'DiaryEntryScreen.ContentText',
+          'I am very sad and angry. I am so upset.'
+        );
+        console.log(
+          `pausing for ${cloudFunctionWaitTime} milliseconds for cloud functions...`
+        );
+        await spec.pause(cloudFunctionWaitTime);
+        await spec.press('DiaryEntryScreen.AnalyzingText');
+        await spec.pause(1000);
+        await spec.containsText(
+          'DiaryEntryScreen.SentimentText',
+          'your feelings are negative.'
+        );
+      });
+
+      spec.it('Emoji response (New Entry)', async () => {
+        await spec.press('DiaryScreen.EntryCard.0');
+        await spec.containsText(
+          'DiaryEntryScreen.ContentText',
+          'I am very sad and angry. I am so upset.'
+        );
+
+        await spec.press('DiaryEntryScreen.EmotionsButton');
+        await spec.press('EmojiScreen.emoji0Button');
+        await spec.containsText('EmotionsScreen.EmotionText', 'Outrage');
+        await spec.exists('EmotionsScreen.LearnMoreButton');
+        await spec.press('AppNavigation.BackButton');
+
+        await spec.press('DiaryEntryScreen.EmotionsButton');
+        await spec.press('EmojiScreen.emoji1Button');
+        await spec.containsText('EmotionsScreen.EmotionText', 'Annoyance');
+        await spec.exists('EmotionsScreen.LearnMoreButton');
+        await spec.press('AppNavigation.BackButton');
+
+        await spec.press('DiaryEntryScreen.EmotionsButton');
+        await spec.press('EmojiScreen.emoji2Button');
+        await spec.containsText('EmotionsScreen.EmotionText', 'Pessimism');
+        await spec.exists('EmotionsScreen.LearnMoreButton');
+        await spec.press('AppNavigation.BackButton');
+
+        await spec.press('DiaryEntryScreen.EmotionsButton');
+        await spec.press('EmojiScreen.emoji3Button');
+        await spec.containsText('EmotionsScreen.EmotionText', 'Boredom');
+        await spec.exists('EmotionsScreen.LearnMoreButton');
+        await spec.press('AppNavigation.BackButton');
+
+        await spec.press('DiaryEntryScreen.EmotionsButton');
+        await spec.press('EmojiScreen.emoji4Button');
+        await spec.containsText('EmotionsScreen.EmotionText', 'Despair');
+        await spec.exists('EmotionsScreen.LearnMoreButton');
+      });
+
+      spec.it('Delete entry', async () => {
+        await spec.press('DiaryScreen.EntryCard.0');
+        await spec.pause(1000);
+        await spec.press('DiaryEntryScreen.DeleteButton');
+        await spec.pause(1000);
+      });
+
+      specItLogout(spec);
+    },
+    'emotionsSystem'
   );
 };

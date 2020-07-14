@@ -29,11 +29,13 @@ The following are links to Milestone 2 documents:
 
 # Testing
 
-1. Create a user with credentials `cavy@example.com` and `password`. Make a sample happy post under that account.
+1. Create a user with credentials `cavy@example.com` and `password`. Make a sample post under that account, with the content `I am happy. I am also angry.`.
 1. Change `global.isTestingEnvironment` in `CustomRootComponent.js` to `true`.
 1. Clear the app data of the Android Expo client. (This is optional, but often trying to work around this will cause crashes and errors.)
 1. Run `npm start` and connect a device using the Expo app. If any tests fail, they will show up as yellowboxes on the Expo client. An object representing the full report of the tests will be printed to the console after the tests.
 1. Before restarting the app, remember to change the global variable `global.isTestingEnvironment` back to false.
+
+Note: The timeouts within the tests are hardcoded, based on the performance of my own test device (Galaxy S6, a high-end device from 2015) and my network speeds. If you experience cavy attempting to run tests before the elements/UI have appeared, you might have to increase these timeouts in `specs/specs.js`.
 
 # Credits
 
