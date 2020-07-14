@@ -1,5 +1,15 @@
 # sorted
 
+A diary app built for your emotions.
+Available only for Android.
+
+Built with [React Native](https://reactnative.dev/), [Firebase](https://firebase.google.com/) and [Google Cloud](https://cloud.google.com/). 
+
+Emotion Identification powered by [TorchMoji](https://github.com/huggingface/torchMoji), a [pyTorch](http://pytorch.org/) implementation of the [DeepMoji](https://github.com/bfelbo/DeepMoji) model developed by Bjarke Felbo, Alan Mislove, Anders Søgaard, Iyad Rahwan and Sune Lehmann. Check out their [paper](https://arxiv.org/abs/1708.00524) and [demo](http://deepmoji.mit.edu/).
+A fork of torchmoji, adapted for use in Google Cloud Functions, was used for this project. Check it out [here](https://github.com/ktaekwon000/torchMoji-CloudFunction).
+
+Testing implemented with [Cavy](https://cavy.app/).
+
 ![Poster Image](https://i.imgur.com/mAwQgxJ.png)
 Orbital 2020 project by Kim Tae Kwon and Kim Sangwoo
 
@@ -12,14 +22,14 @@ The following are links to Milestone 2 documents:
 
 1. Clone the repo.
 1. Rename `firebase/funcions/example.apiURL.json` to `apiURL.json`.
-1. Set up API for emotion analysis over at [torchMoji-cloudfunction](https://github.com/delicious-chocomint/torchMoji-CloudFunction) and copy the endpoint URL into `apiURL.json`
+1. Set up API for emotion analysis over at [torchMoji-cloudfunction](https://github.com/ktaekwon000/torchMoji-CloudFunction) and copy the endpoint URL into `apiURL.json`.
 1. Rename the file `config/Firebase/example.firebaseConfig.js` to `firebaseConfig.js` and replace with own keys.
 1. Follow instructions in [firebase](firebase) to set up firebase cloud functions.
 1. Run `npm start` then connect using Expo app.
 
 # Testing
 
-1. Create a user with credentials `cavy@example.com` and `password`. Make a sample post under that account.
+1. Create a user with credentials `cavy@example.com` and `password`. Make a sample happy post under that account.
 1. Change `global.isTestingEnvironment` in `CustomRootComponent.js` to `true`.
 1. Clear the app data of the Android Expo client. (This is optional, but often trying to work around this will cause crashes and errors.)
 1. Run `npm start` and connect a device using the Expo app. If any tests fail, they will show up as yellowboxes on the Expo client. An object representing the full report of the tests will be printed to the console after the tests.
