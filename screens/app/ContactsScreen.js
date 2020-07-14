@@ -4,6 +4,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { Text, Button, ListItem } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import * as Linking from 'expo-linking';
+import { useCavy } from 'cavy';
 
 const helplines = {
   suicideHelplines: [
@@ -67,8 +68,10 @@ const styles = StyleSheet.create({
 });
 
 const ContactsScreen = () => {
+  const generateTestHook = useCavy();
+
   return (
-    <ScrollView>
+    <ScrollView ref={generateTestHook('ContactsScreen.View')}>
       <TouchableOpacity
         onPress={() =>
           Linking.openURL(

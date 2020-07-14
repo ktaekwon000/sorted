@@ -32,7 +32,14 @@ export default function App() {
       specs={[Spec]}
       store={testHookStore}
       reporter={(report) => console.log(report.fullResults)} // eslint-disable-line
-      // only={['entrySystem']}
+      only={[
+        'authUI',
+        'authSystem',
+        'entryUI',
+        'entrySystem',
+        'emotionsUI',
+        // 'emotionsSystem' /* This test takes almost 2 minutes on its own! */,
+      ]}
     >
       <FirebaseProvider value={Firebase}>
         <AppContainer />

@@ -133,7 +133,13 @@ const DiaryEntryScreen = ({ navigation }) => {
             }}
             ref={generateTestHook('DiaryEntryScreen.AnalyzingText')}
           >
-            <Text>
+            <Text
+              style={{
+                margin: 15,
+                marginHorizontal: 30,
+                textAlign: 'center',
+              }}
+            >
               We are analyzing your text. Tap this text to check for updates.
             </Text>
           </TouchableOpacity>
