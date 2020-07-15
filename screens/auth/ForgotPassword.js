@@ -4,6 +4,7 @@ import { Text, SafeAreaView, View, StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { useCavy } from 'cavy';
 import FormInput from '../../components/FormInput';
 import FormButton from '../../components/FormButton';
 import ErrorMessage from '../../components/ErrorMessage';
@@ -33,6 +34,8 @@ const validationSchema = Yup.object().shape({
 });
 
 function ForgotPassword({ navigation, firebase }) {
+  const generateTestHook = useCavy();
+
   async function handlePasswordReset(values, actions) {
     const { email } = values;
 
@@ -51,7 +54,12 @@ function ForgotPassword({ navigation, firebase }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.text}>Forgot Password?</Text>
+      <Text
+        style={styles.text}
+        ref={generateTestHook('ForgotPassword.MainText')}
+      >
+        Forgot Password?
+      </Text>
       <Formik
         initialValues={{ email: '' }}
         onSubmit={(values, actions) => {
@@ -81,6 +89,7 @@ function ForgotPassword({ navigation, firebase }) {
               onBlur={handleBlur('email')}
               returnKeyType="done"
               keyboardType="email-address"
+              ref={generateTestHook('ForgotPassword.EmailInput')}
             />
             <ErrorMessage errorValue={touched.email && errors.email} />
             <View style={styles.buttonContainer}>
@@ -90,6 +99,7 @@ function ForgotPassword({ navigation, firebase }) {
                 title="Send Email"
                 buttonColor="#039BE5"
                 disabled={!isValid || isSubmitting}
+                ref={generateTestHook('ForgotPassword.ForgotPasswordButton')}
               />
             </View>
             <ErrorMessage errorValue={errors.general} />
@@ -103,6 +113,7 @@ function ForgotPassword({ navigation, firebase }) {
           color: '#039BE5',
         }}
         type="clear"
+        ref={generateTestHook('ForgotPassword.LoginButton')}
       />
     </SafeAreaView>
   );

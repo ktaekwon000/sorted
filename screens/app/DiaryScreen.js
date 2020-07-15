@@ -9,9 +9,12 @@ import {
   Dimensions,
 } from 'react-native';
 import { Card } from 'react-native-elements';
+import { useCavy } from 'cavy';
 import { Context as DiaryContext } from '../../config/DiaryContext';
 
 const DiaryScreen = ({ navigation }) => {
+  const generateTestHook = useCavy();
+
   const { state, getDiaryEntries } = useContext(DiaryContext);
   const [loading, setLoading] = useState(true);
 
@@ -24,13 +27,17 @@ const DiaryScreen = ({ navigation }) => {
       <ActivityIndicator size="large" />
     </View>
   ) : (
-    <View style={{ flex: 1, alignItems: 'center' }}>
+    <View
+      style={{ flex: 1, alignItems: 'center' }}
+      ref={generateTestHook('DiaryScreen.LoadedDiaryView')}
+    >
       <FlatList
         numColumns={2}
         data={state}
         keyExtractor={(entry) => entry.id}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <TouchableNativeFeedback
+            ref={generateTestHook(`DiaryScreen.EntryCard.${index}`)}
             onPress={() => navigation.navigate('DiaryEntry', { id: item.id })}
           >
             <Card

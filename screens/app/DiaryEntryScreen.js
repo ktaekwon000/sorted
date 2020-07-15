@@ -5,11 +5,13 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   Dimensions,
+  ScrollView,
 } from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import { format } from 'date-fns';
-import { ScrollView } from 'react-native-gesture-handler';
+import { useCavy } from 'cavy';
 import { Context as DiaryContext } from '../../config/DiaryContext';
+import HookedButton from '../../components/HookedButton';
 
 function makeSentimentString(score, magnitude) {
   let str = "Google's algorithms think that your feelings are ";
@@ -40,6 +42,8 @@ function makeStringFromTimestamp(timestamp) {
 }
 
 const DiaryEntryScreen = ({ navigation }) => {
+  const generateTestHook = useCavy();
+
   const id = navigation.getParam('id');
   const { state, deleteDiaryEntry, getDiaryEntries } = useContext(DiaryContext);
   const entry = state.find((x) => x.id === id);
@@ -64,19 +68,34 @@ const DiaryEntryScreen = ({ navigation }) => {
   ) : (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 1, height: Dimensions.get('window').height - 50 }}>
-        <Text h3 style={{ margin: 5 }}>
+        <Text
+          h3
+          style={{ margin: 5 }}
+          ref={generateTestHook('DiaryEntryScreen.TitleText')}
+        >
           {entry.title}
         </Text>
-        <Text style={{ marginLeft: 5 }}>
+        <Text
+          style={{ marginLeft: 5 }}
+          ref={generateTestHook('DiaryEntryScreen.CreatedDateText')}
+        >
           Created on {makeStringFromTimestamp(entry.createdDate)}
         </Text>
         {'updatedDate' in entry ? (
-          <Text style={{ marginLeft: 5 }}>
-            Edited on {makeStringFromTimestamp(entry.createdDate)}
+          <Text
+            style={{ marginLeft: 5 }}
+            ref={generateTestHook('DiaryEntryScreen.EditedDateText')}
+          >
+            Edited on {makeStringFromTimestamp(entry.updatedDate)}
           </Text>
         ) : null}
         <ScrollView>
-          <Text style={{ margin: 5, fontSize: 24 }}>{entry.content}</Text>
+          <Text
+            style={{ margin: 5, fontSize: 24 }}
+            ref={generateTestHook('DiaryEntryScreen.ContentText')}
+          >
+            {entry.content}
+          </Text>
         </ScrollView>
         {'sentimentScore' in entry && 'sentimentMagnitude' in entry ? (
           <View style={{ flexDirection: 'row' }}>
@@ -87,6 +106,7 @@ const DiaryEntryScreen = ({ navigation }) => {
                 marginHorizontal: 30,
                 textAlign: 'center',
               }}
+              ref={generateTestHook('DiaryEntryScreen.SentimentText')}
             >
               {makeSentimentString(
                 entry.sentimentScore,
@@ -101,6 +121,7 @@ const DiaryEntryScreen = ({ navigation }) => {
                 onPress={() =>
                   navigation.navigate('Emoji', { emotions: entry.emotions })
                 }
+                ref={generateTestHook('DiaryEntryScreen.EmotionsButton')}
               />
             ) : null}
           </View>
@@ -110,8 +131,15 @@ const DiaryEntryScreen = ({ navigation }) => {
               setLoading(true);
               getDiaryEntries(() => setLoading(false));
             }}
+            ref={generateTestHook('DiaryEntryScreen.AnalyzingText')}
           >
-            <Text>
+            <Text
+              style={{
+                margin: 15,
+                marginHorizontal: 30,
+                textAlign: 'center',
+              }}
+            >
               We are analyzing your text. Tap this text to check for updates.
             </Text>
           </TouchableOpacity>
@@ -129,6 +157,7 @@ const DiaryEntryScreen = ({ navigation }) => {
           style={{
             alignSelf: 'center',
           }}
+          ref={generateTestHook('DiaryEntryScreen.DeleteButton')}
         />
       </View>
     </View>
@@ -147,14 +176,13 @@ DiaryEntryScreen.propTypes = {
 DiaryEntryScreen.navigationOptions = ({ navigation }) => ({
   title: navigation.getParam('title', 'Loading...'),
   headerRight: (
-    <TouchableOpacity
-      style={{ marginRight: 13 }}
-      onPress={() =>
-        navigation.navigate('Edit', { entry: navigation.getParam('entry') })
-      }
-    >
-      <Text style={{ color: '#007AFF' }}>Edit</Text>
-    </TouchableOpacity>
+    <HookedButton
+      title="Edit"
+      onPress={() => {
+        navigation.navigate('Edit', { entry: navigation.getParam('entry') });
+      }}
+      testHook="DiaryEntryScreen.EditButton"
+    />
   ),
 });
 

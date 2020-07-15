@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'react-native-elements';
 
-const FormButton = ({ title, buttonType, buttonColor, ...rest }) => (
-  <Button
-    {...rest}
-    type={buttonType}
-    title={title}
-    buttonStyle={{ borderColor: buttonColor, borderRadius: 20 }}
-    titleStyle={{ color: buttonColor }}
-  />
+const FormButton = forwardRef(
+  ({ title, buttonType, buttonColor, ...rest }, ref) => (
+    <Button
+      {...rest}
+      type={buttonType}
+      title={title}
+      buttonStyle={{ borderColor: buttonColor, borderRadius: 20 }}
+      titleStyle={{ color: buttonColor }}
+      ref={ref}
+    />
+  )
 );
 
 FormButton.propTypes = {

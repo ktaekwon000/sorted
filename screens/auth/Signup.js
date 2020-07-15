@@ -12,6 +12,7 @@ import { Button, CheckBox } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { useCavy } from 'cavy';
 import FormInput from '../../components/FormInput';
 import FormButton from '../../components/FormButton';
 import ErrorMessage from '../../components/ErrorMessage';
@@ -56,6 +57,8 @@ const styles = StyleSheet.create({
 });
 
 function Signup({ navigation, firebase }) {
+  const generateTestHook = useCavy();
+
   const [passwordVisibility, setPasswordVisibility] = useState(true);
   const [passwordIcon, setPasswordIcon] = useState('ios-eye');
   const [confirmPasswordIcon, setConfirmPasswordIcon] = useState('ios-eye');
@@ -147,7 +150,11 @@ function Signup({ navigation, firebase }) {
                 iconName="md-person"
                 iconColor="#2C384A"
                 onBlur={handleBlur('name')}
-                ref={nameInput}
+                ref={
+                  global.isTestingEnvironment
+                    ? generateTestHook('Signup.NameInput')
+                    : nameInput
+                }
                 onSubmitEditing={() => emailInput.current.focus()}
                 blurOnSubmit={false}
                 returnKeyType="next"
@@ -162,7 +169,11 @@ function Signup({ navigation, firebase }) {
                 iconName="ios-mail"
                 iconColor="#2C384A"
                 onBlur={handleBlur('email')}
-                ref={emailInput}
+                ref={
+                  global.isTestingEnvironment
+                    ? generateTestHook('Signup.EmailInput')
+                    : emailInput
+                }
                 onSubmitEditing={() => passwordInput.current.focus()}
                 blurOnSubmit={false}
                 returnKeyType="next"
@@ -183,7 +194,11 @@ function Signup({ navigation, firebase }) {
                     <Ionicons name={passwordIcon} size={28} color="grey" />
                   </TouchableOpacity>
                 }
-                ref={passwordInput}
+                ref={
+                  global.isTestingEnvironment
+                    ? generateTestHook('Signup.PasswordInput')
+                    : passwordInput
+                }
                 onSubmitEditing={() => passwordConfirmInput.current.focus()}
                 blurOnSubmit={false}
                 returnKeyType="next"
@@ -207,7 +222,11 @@ function Signup({ navigation, firebase }) {
                     />
                   </TouchableOpacity>
                 }
-                ref={passwordConfirmInput}
+                ref={
+                  global.isTestingEnvironment
+                    ? generateTestHook('Signup.PasswordConfirmInput')
+                    : passwordConfirmInput
+                }
                 onSubmitEditing={
                   !isValid || isSubmitting
                     ? () => alert('Please check your inputs and try again.')
@@ -227,6 +246,7 @@ function Signup({ navigation, firebase }) {
                 checkedTitle="You agreed to our terms and conditions"
                 checked={values.check}
                 onPress={() => setFieldValue('check', !values.check)}
+                ref={generateTestHook('Signup.AgreeCheckBox')}
               />
               <Text style={{ textAlign: 'center', margin: 13 }}>
                 Your email will only be used if you wish to reset your password.
@@ -243,6 +263,7 @@ function Signup({ navigation, firebase }) {
                   buttonColor="#F57C00"
                   disabled={!isValid || isSubmitting}
                   loading={isSubmitting}
+                  ref={generateTestHook('Signup.SignupButton')}
                 />
               </View>
               <ErrorMessage errorValue={errors.general} />
@@ -256,6 +277,7 @@ function Signup({ navigation, firebase }) {
             color: '#039BE5',
           }}
           type="clear"
+          ref={generateTestHook('Signup.LoginButton')}
         />
       </ScrollView>
     </KeyboardAvoidingView>
