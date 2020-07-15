@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
 import { createAppContainer } from 'react-navigation';
-import { Ionicons } from '@expo/vector-icons';
 import { useCavy, wrap } from 'cavy';
 import { withFirebaseHOC } from '../config/Firebase';
 import { Provider as DiaryProvider } from '../config/DiaryContext';
@@ -61,7 +60,6 @@ const CustomDrawerContentComponent = ({ firebase, ...props }) => {
 You may have to restart the app for your name to show here.`}
           </Text>
           <Text>Have a nice day today 😊</Text>
-          {/* <Text>{`${email}`}</Text> */}
         </View>
         <DrawerItems {...props} />
       </SafeAreaView>
@@ -79,21 +77,45 @@ const DrawerNavigation = createDrawerNavigator(
   {
     Diary: {
       screen: DiaryScreens,
-      navigationOptions: {
-        drawerIcon: <Ionicons name="md-bookmarks" size={24} />,
-      },
+      navigationOptions: ({ navigation }) => ({
+        drawerIcon: (
+          <HookedIcon
+            name="md-bookmarks"
+            size={24}
+            color="black"
+            testHook="DrawerNavigation.Diary"
+            onPress={() => navigation.navigate('Diary')}
+          />
+        ),
+      }),
     },
     Helplines: {
       screen: ContactsScreen,
-      navigationOptions: {
-        drawerIcon: <Ionicons name="md-call" size={24} />,
-      },
+      navigationOptions: ({ navigation }) => ({
+        drawerIcon: (
+          <HookedIcon
+            name="md-call"
+            size={24}
+            color="black"
+            testHook="DrawerNavigation.Helplines"
+            onPress={() => navigation.navigate('Helplines')}
+          />
+        ),
+      }),
     },
     Stats: {
       screen: StatsScreen,
-      navigationOptions: {
-        drawerIcon: <Ionicons name="md-stats" size={24} />,
-      },
+      navigationOptions: ({ navigation }) => ({
+        drawerIcon: (
+          <HookedIcon
+            name="md-stats"
+            size={24}
+            color="black"
+            testHook="DrawerNavigation.Stats"
+            onPress={() => navigation.navigate('Stats')}
+          />
+        ),
+      }),
     },
     Account: {
       screen: SettingsScreen,
