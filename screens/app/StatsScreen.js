@@ -5,6 +5,7 @@ import { Text, Badge, Button } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import { format } from 'date-fns';
 import { createStackNavigator } from 'react-navigation-stack';
+import { useCavy } from 'cavy';
 import { Context as DiaryContext } from '../../config/DiaryContext';
 import { withFirebaseHOC } from '../../config/Firebase';
 
@@ -52,6 +53,8 @@ const makeColorFromString = (str) => {
 };
 
 const StatsScreen = ({ navigation, firebase }) => {
+  const generateTestHook = useCavy();
+
   const { state, getDiaryEntries } = useContext(DiaryContext);
   const [loading, setLoading] = useState(true);
   const [accCreatedDate, setAccCreatedDate] = useState(new Date(0));
@@ -198,7 +201,10 @@ const StatsScreen = ({ navigation, firebase }) => {
       <ActivityIndicator size="large" />
     </View>
   ) : (
-    <View style={{ flex: 1, alignItems: 'center' }}>
+    <View
+      style={{ flex: 1, alignItems: 'center' }}
+      ref={generateTestHook('StatsScreen.LoadedStatsView')}
+    >
       <Text style={{ margin: 5 }}>
         Your account was created on {format(accCreatedDate, "do 'of' MMMM, R")}.
       </Text>

@@ -1,15 +1,15 @@
 import React from 'react';
-import { View } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
-import { Button } from 'react-native-elements';
-import { Ionicons } from '@expo/vector-icons';
 import DiaryScreen from '../screens/app/DiaryScreen';
 import NewEntryScreen from '../screens/app/NewEntryScreen';
 import DiaryEntryScreen from '../screens/app/DiaryEntryScreen';
 import EditScreen from '../screens/app/EditScreen';
 import EmojiScreen from '../screens/app/EmojiScreen';
 import EmotionsScreen from '../screens/app/EmotionsScreen';
+import HookedButton from '../components/HookedButton';
+import HookedIcon from '../components/HookedIcon';
+import HookedBackButton from '../components/HookedBackButton';
 
 const AppNavigation = createStackNavigator(
   {
@@ -17,35 +17,30 @@ const AppNavigation = createStackNavigator(
       screen: DiaryScreen,
       navigationOptions: ({ navigation }) => ({
         title: 'Your entries',
-        headerTitleStyle: {
-          // textAlign: "center",
-          // flex: 1,
-        },
         headerRight: (
-          <Button
+          <HookedButton
             title="New Entry"
-            type="clear"
-            containerStyle={{ margin: 6 }}
-            titleStyle={{ fontSize: 14 }}
             onPress={() => navigation.navigate('NewEntry')}
+            testHook="DiaryScreen.NewEntryButton"
           />
         ),
-        headerLeft: () => (
-          <View style={{ flexDirection: 'row' }}>
-            <Button
-              icon={<Ionicons name="md-menu" size={24} color="black" />}
-              type="clear"
-              containerStyle={{ marginLeft: 6 }}
-              titleStyle={{ fontSize: 14 }}
-              onPress={() => navigation.openDrawer()}
-            />
-          </View>
+        headerLeft: (
+          <HookedIcon
+            name="md-menu"
+            size={24}
+            containerStyle={{ marginHorizontal: 16 }}
+            color="black"
+            testHook="DiaryScreen.MenuButton"
+            onPress={() => navigation.openDrawer()}
+          />
         ),
       }),
     },
     NewEntry: {
       screen: NewEntryScreen,
-      navigationOptions: { title: 'New entry' },
+      navigationOptions: {
+        title: 'New entry',
+      },
     },
     DiaryEntry: {
       screen: DiaryEntryScreen,
@@ -66,6 +61,7 @@ const AppNavigation = createStackNavigator(
     initialRouteName: 'Diary',
     defaultNavigationOptions: {
       title: 'placeholder text',
+      headerLeft: <HookedBackButton testHook="AppNavigation.BackButton" />,
     },
   }
 );

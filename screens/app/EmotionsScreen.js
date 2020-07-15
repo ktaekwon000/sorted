@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, Share } from 'react-native';
+import { View, Share, TouchableOpacity } from 'react-native';
 import { Text, Button } from 'react-native-elements';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as Linking from 'expo-linking';
 import sample from 'lodash.sample';
+import { useCavy } from 'cavy';
 
 // These activities were not vetted by any professionals and have been made up
 // by the members of Sorted.
@@ -195,6 +195,8 @@ const EMOTIONS_TO_DATA = {
 };
 
 const EmotionsScreen = ({ navigation }) => {
+  const generateTestHook = useCavy();
+
   const emotion = navigation.getParam('emotion');
 
   return (
@@ -202,11 +204,18 @@ const EmotionsScreen = ({ navigation }) => {
       <Text style={{ textAlign: 'center', marginTop: 10, fontSize: 20 }}>
         We think that you&apos;re feeling...
       </Text>
-      <Text h4 style={{ textAlign: 'center' }}>
+      <Text
+        h4
+        style={{ textAlign: 'center' }}
+        ref={generateTestHook('EmotionsScreen.EmotionText')}
+      >
         {emotion.emoji} {emotion.emotion}
       </Text>
       {/* <View style={{ padding: 10 }} /> */}
-      <TouchableOpacity onPress={() => navigation.navigate('Helplines')}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Helplines')}
+        ref={generateTestHook('EmotionsScreen.HelplinesButton')}
+      >
         <Text style={{ textAlign: 'center', margin: 15, fontSize: 10 }}>
           Please note that these are recommendations written by developers of
           the app, not mental health professionals. If you need a professional
@@ -221,7 +230,10 @@ const EmotionsScreen = ({ navigation }) => {
           >
             Our recommendation to you is...
           </Text>
-          <Text style={{ margin: 5, fontSize: 20 }}>
+          <Text
+            style={{ margin: 5, fontSize: 20 }}
+            ref={generateTestHook('EmotionsScreen.RecommendationText')}
+          >
             {sample(EMOTIONS_TO_DATA[emotion.emotion].activities)}
           </Text>
           {'link' in EMOTIONS_TO_DATA[emotion.emotion] ? (
@@ -231,6 +243,7 @@ const EmotionsScreen = ({ navigation }) => {
               onPress={() =>
                 Linking.openURL(EMOTIONS_TO_DATA[emotion.emotion].link)
               }
+              ref={generateTestHook('EmotionsScreen.LearnMoreButton')}
             />
           ) : (
             <Button
@@ -238,9 +251,10 @@ const EmotionsScreen = ({ navigation }) => {
               type="outline"
               onPress={() =>
                 Share.share({
-                  message: `My diary told me that I was feeling "${emotion.emotion}"... Find out more about yourself and your feeling with Sorted! https://play.google.com/`,
+                  message: `My diary told me that I was feeling "${emotion.emotion}"... Find out more about yourself and your feelings with Sorted! https://play.google.com/`,
                 })
               }
+              ref={generateTestHook('EmotionsScreen.ShareButton')}
             />
           )}
         </View>

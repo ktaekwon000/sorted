@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, ScrollView, Text, View, SafeAreaView } from 'react-native';
+import {
+  StyleSheet,
+  ScrollView,
+  Text as UnwrappedText,
+  View,
+  SafeAreaView,
+} from 'react-native';
 import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
 import { createAppContainer } from 'react-navigation';
-import { Ionicons } from '@expo/vector-icons';
-
+import { useCavy, wrap } from 'cavy';
 import { withFirebaseHOC } from '../config/Firebase';
 import { Provider as DiaryProvider } from '../config/DiaryContext';
 import DiaryScreens from './AppNavigation';
 import ContactsScreen from '../screens/app/ContactsScreen';
 import StatsScreen from '../screens/app/StatsScreen';
 import SettingsScreen from '../screens/app/SettingsScreen';
+import HookedIcon from '../components/HookedIcon';
 
 const styles = StyleSheet.create({
   container: {
@@ -19,6 +25,9 @@ const styles = StyleSheet.create({
 });
 
 const CustomDrawerContentComponent = ({ firebase, ...props }) => {
+  const generateTestHook = useCavy();
+  const Text = wrap(UnwrappedText);
+
   const [name, setName] = useState('loading...');
   async function getUserInfo() {
     const user = await firebase.retrieveUser();
@@ -44,14 +53,13 @@ const CustomDrawerContentComponent = ({ firebase, ...props }) => {
             marginTop: 30,
           }}
         >
-          <Text>
+          <Text ref={generateTestHook('DrawerNavigation.NameField')}>
             {name
               ? `Welcome ${name}.`
               : `Your account is in the process of being set up.
 You may have to restart the app for your name to show here.`}
           </Text>
           <Text>Have a nice day today 😊</Text>
-          {/* <Text>{`${email}`}</Text> */}
         </View>
         <DrawerItems {...props} />
       </SafeAreaView>
@@ -69,28 +77,60 @@ const DrawerNavigation = createDrawerNavigator(
   {
     Diary: {
       screen: DiaryScreens,
-      navigationOptions: {
-        drawerIcon: <Ionicons name="md-bookmarks" size={24} />,
-      },
+      navigationOptions: ({ navigation }) => ({
+        drawerIcon: (
+          <HookedIcon
+            name="md-bookmarks"
+            size={24}
+            color="black"
+            testHook="DrawerNavigation.Diary"
+            onPress={() => navigation.navigate('Diary')}
+          />
+        ),
+      }),
     },
     Helplines: {
       screen: ContactsScreen,
-      navigationOptions: {
-        drawerIcon: <Ionicons name="md-call" size={24} />,
-      },
+      navigationOptions: ({ navigation }) => ({
+        drawerIcon: (
+          <HookedIcon
+            name="md-call"
+            size={24}
+            color="black"
+            testHook="DrawerNavigation.Helplines"
+            onPress={() => navigation.navigate('Helplines')}
+          />
+        ),
+      }),
     },
     Stats: {
       screen: StatsScreen,
-      navigationOptions: {
-        drawerIcon: <Ionicons name="md-stats" size={24} />,
-      },
+      navigationOptions: ({ navigation }) => ({
+        drawerIcon: (
+          <HookedIcon
+            name="md-stats"
+            size={24}
+            color="black"
+            testHook="DrawerNavigation.Stats"
+            onPress={() => navigation.navigate('Stats')}
+          />
+        ),
+      }),
     },
     Account: {
       screen: SettingsScreen,
-      navigationOptions: {
+      navigationOptions: ({ navigation }) => ({
         title: 'Account Settings',
-        drawerIcon: <Ionicons name="md-person" size={24} />,
-      },
+        drawerIcon: (
+          <HookedIcon
+            name="md-person"
+            size={24}
+            color="black"
+            testHook="DrawerNavigation.Account"
+            onPress={() => navigation.navigate('Account')}
+          />
+        ),
+      }),
     },
   },
   {
