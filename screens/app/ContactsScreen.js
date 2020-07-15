@@ -79,7 +79,7 @@ const ContactsScreen = () => {
           )
         }
       >
-        <Text style={{ margin: 8 }}>
+        <Text style={{ margin: 8, textAlign: 'center' }}>
           The following list is a selection of organisations you can contact to
           discuss your mental health. Tap this text to visit healthhub.sg for a
           more extensive list.

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * spec tests
  * Log out after every spec.describe(). Assume that app starts in fresh state in
@@ -89,6 +90,7 @@ export default (spec) => {
       });
 
       spec.it('Acccount Settings shows relevant details', async () => {
+        await spec.press('DiaryScreen.MenuButton');
         await spec.press('DrawerNavigation.Account');
         await spec.containsText('SettingsScreen.NameField', 'Cavy Example');
         await spec.containsText(
@@ -454,5 +456,28 @@ export default (spec) => {
       specItLogout(spec);
     },
     'emotionsSystem'
+  );
+
+  spec.describe(
+    'Miscellaneous',
+    () => {
+      specItLogin(spec);
+
+      spec.it('Helplines Screen can be loaded', async () => {
+        await spec.press('DiaryScreen.MenuButton');
+        await spec.press('DrawerNavigation.Helplines');
+        await spec.exists('ContactsScreen.View');
+      });
+
+      spec.it('Stats Screen can be loaded', async () => {
+        await spec.press('DiaryScreen.MenuButton');
+        await spec.press('DrawerNavigation.Stats');
+        await spec.pause(1000);
+        await spec.exists('StatsScreen.LoadedStatsView');
+      });
+
+      specItLogout(spec);
+    },
+    'misc'
   );
 };
