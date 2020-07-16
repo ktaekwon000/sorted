@@ -33,11 +33,11 @@ export default function App() {
       store={testHookStore}
       reporter={(report) => console.log(report.fullResults)} // eslint-disable-line
       only={[
-        // 'authUI',
-        // 'authSystem',
-        // 'entryUI',
-        // 'entrySystem',
-        // 'emotionsUI',
+        'authUI',
+        'authSystem',
+        'entryUI',
+        'entrySystem',
+        'emotionsUI',
         // 'emotionsSystem' /* This test takes almost 2 minutes on its own! */,
         'misc',
       ]}
