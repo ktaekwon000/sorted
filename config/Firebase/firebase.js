@@ -55,6 +55,13 @@ const Firebase = {
       .doc(`${userData.uid}`)
       .update({ notifiedDate: FieldValue.serverTimestamp() });
   },
+  updateUserEmoji: (userData) => (emoji) => {
+    return firebase
+      .firestore()
+      .collection('users')
+      .doc(`${userData.uid}`)
+      .update({ userEmoji: emoji });
+  },
 };
 
 export default Firebase;

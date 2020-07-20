@@ -7,6 +7,7 @@ import DiaryEntryScreen from '../screens/app/DiaryEntryScreen';
 import EditScreen from '../screens/app/EditScreen';
 import EmojiScreen from '../screens/app/EmojiScreen';
 import EmotionsScreen from '../screens/app/EmotionsScreen';
+import SelectUserEmojiScreen from '../screens/app/SelectUserEmojiScreen';
 import HookedButton from '../components/HookedButton';
 import HookedIcon from '../components/HookedIcon';
 import HookedBackButton from '../components/HookedBackButton';
@@ -55,6 +56,10 @@ const AppNavigation = createStackNavigator(
     Emotions: {
       screen: EmotionsScreen,
       navigationOptions: { title: 'Your emotion' },
+    },
+    SelectUserEmoji: {
+      screen: SelectUserEmojiScreen,
+      navigationOptions: { title: 'Select your emoji' },
     },
   },
   {

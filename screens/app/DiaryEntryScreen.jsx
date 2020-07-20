@@ -70,7 +70,7 @@ const DiaryEntryScreen = ({ navigation }) => {
       <View style={{ flex: 1, height: Dimensions.get('window').height - 50 }}>
         <Text
           h3
-          style={{ margin: 5 }}
+          style={{ margin: 5, textAlign: 'center', marginVertical: 20 }}
           ref={generateTestHook('DiaryEntryScreen.TitleText')}
         >
           {entry.title}

@@ -11,10 +11,10 @@ const EmojiScreen = ({ navigation }) => {
   const emotions = navigation.getParam('emotions');
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: '#FF66B2' }}>
       <Text
         h4
-        style={{ textAlign: 'center', marginTop: 20, flex: 1 }}
+        style={{ textAlign: 'center', marginTop: 20, flex: 1, color: 'white' }}
         ref={generateTestHook('EmojiScreen.TitleText')}
       >
         Pick the emoji which you think is appropriate for this entry :)

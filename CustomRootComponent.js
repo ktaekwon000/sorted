@@ -5,6 +5,6 @@ import TestApp from './App.test';
 
 // change to true for testing
 // sorry for global env
-global.isTestingEnvironment = true;
+global.isTestingEnvironment = false;
 
 registerRootComponent(!global.isTestingEnvironment ? ProdApp : TestApp);

@@ -1,9 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { View, ActivityIndicator, Alert } from 'react-native';
-import { Text, Badge, Button } from 'react-native-elements';
+import { View, ScrollView, ActivityIndicator, Alert } from 'react-native';
+import { Text, Button } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
-import { format } from 'date-fns';
 import { createStackNavigator } from 'react-navigation-stack';
 import { useCavy } from 'cavy';
 import { Context as DiaryContext } from '../../config/DiaryContext';
@@ -40,7 +39,8 @@ const makeDayfromInt = (num) => {
 const makeColorFromString = (str) => {
   switch (str) {
     case 'None':
-      return '#848484';
+      return '#FFFFFF';
+    // return '#848484';
     case 'Mixed/Neutral':
       return '#FFBE46';
     case 'Bad':
@@ -57,7 +57,6 @@ const StatsScreen = ({ navigation, firebase }) => {
 
   const { state, getDiaryEntries } = useContext(DiaryContext);
   const [loading, setLoading] = useState(true);
-  const [accCreatedDate, setAccCreatedDate] = useState(new Date(0));
   let lastNotifiedDate = 0;
   let broughtToHelplines = false;
   const [emotions, setEmotions] = useState([]);
@@ -68,7 +67,6 @@ const StatsScreen = ({ navigation, firebase }) => {
     const user = await firebase.retrieveUser();
     const userData = (await firebase.retrieveUserDocument(user)).data();
 
-    setAccCreatedDate(new Date(userData.createdDate.seconds * 1000));
     lastNotifiedDate =
       'notifiedDate' in userData
         ? new Date(userData.notifiedDate.seconds * 1000)
@@ -201,24 +199,59 @@ const StatsScreen = ({ navigation, firebase }) => {
       <ActivityIndicator size="large" />
     </View>
   ) : (
-    <View
-      style={{ flex: 1, alignItems: 'center' }}
+    <ScrollView
+      contentContainerStyle={{
+        alignItems: 'center',
+        backgroundColor: '#3399FF',
+      }}
       ref={generateTestHook('StatsScreen.LoadedStatsView')}
     >
-      <Text style={{ margin: 5 }}>
+      {/* <Text
+        style={{
+          margin: 5,
+          marginHorizontal: 50,
+          color: 'white',
+          fontSize: 24,
+          textAlign: 'center',
+        }}
+      >
         Your account was created on {format(accCreatedDate, "do 'of' MMMM, R")}.
-      </Text>
-      <Text style={{ textAlign: 'center', margin: 10, marginVertical: 20 }}>
-        {consecutive <= 0
-          ? "Looks like you haven't written an entry yesterday. Try restarting your streak today!"
-          : `You have written for ${consecutive} consecutive days.\n${
-              consecutive <= 3
-                ? "You're writing entries pretty often. Keep it up!"
-                : "Wow, you're writing entries pretty often. Keep it up!"
-            }`}
-      </Text>
+      </Text> */}
+      <View
+        style={{
+          backgroundColor: 'white',
+          margin: 20,
+          borderWidth: 8,
+          borderRadius: 8,
+        }}
+      >
+        <Text
+          style={{
+            textAlign: 'center',
+            margin: 20,
+            marginVertical: 20,
+            color: 'black',
+            fontSize: 24,
+          }}
+        >
+          {consecutive <= 0
+            ? "Looks like you haven't written an entry yesterday. Try restarting your streak today!"
+            : `You have written for ${consecutive} consecutive days.\n${
+                consecutive <= 3
+                  ? "You're writing entries pretty often. Keep it up!"
+                  : "Wow, you're writing entries pretty often. Keep it up!"
+              }`}
+        </Text>
+      </View>
       <View style={{ padding: 10 }} />
-      <Text style={{ textAlign: 'center', marginTop: 5 }}>
+      <Text
+        style={{
+          textAlign: 'center',
+          marginTop: 5,
+          color: 'white',
+          fontSize: 20,
+        }}
+      >
         Stats for the last 7 days:
       </Text>
       <View style={{ flexDirection: 'column', justifyContent: 'space-evenly' }}>
@@ -228,18 +261,40 @@ const StatsScreen = ({ navigation, firebase }) => {
               style={{ margin: 8, alignItems: 'center' }}
               key={makeDayfromInt(index)}
             >
-              <Text>{makeDayfromInt(index)}</Text>
-              <Badge
+              <Text style={{ color: 'white', fontSize: 16 }}>
+                {makeDayfromInt(index)}
+              </Text>
+              {/* <Badge
                 badgeStyle={{
                   backgroundColor: makeColorFromString(val),
                 }}
                 value={val}
-              />
+                textProps={{ style: { color: 'white', fontSize: 20 } }}
+              /> */}
+              <View
+                style={{
+                  backgroundColor: makeColorFromString(val),
+                  borderRadius: 8,
+                  marginVertical: 6,
+                  borderWidth: 2,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 16,
+                    margin: 10,
+                    marginVertical: 6,
+                    color: 'black',
+                  }}
+                >
+                  {val}
+                </Text>
+              </View>
             </View>
           );
         })}
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

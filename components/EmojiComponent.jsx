@@ -9,7 +9,17 @@ const EmojiComponent = ({ emoji, emotion, navigation, testHook }) => {
 
   return (
     <Button
-      containerStyle={{ flex: 1, margin: 10, marginHorizontal: 30 }}
+      containerStyle={{
+        flex: 1,
+        margin: 10,
+        marginHorizontal: 30,
+        backgroundColor: 'white',
+      }}
+      buttonStyle={{
+        borderWidth: 3,
+        borderColor: 'black',
+        backgroundColor: 'white',
+      }}
       title={emoji}
       type="outline"
       titleStyle={{ fontSize: 36, margin: 10 }}
