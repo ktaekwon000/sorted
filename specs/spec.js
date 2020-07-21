@@ -21,6 +21,7 @@ const specItLogout = (spec) =>
   spec.it('Logout', async () => {
     await spec.press('DiaryScreen.MenuButton');
     await spec.press('DrawerNavigation.Account');
+    await spec.pause(1000);
     await spec.press('SettingsScreen.SignoutButton');
     await spec.notExists('SettingsScreen.NameField');
     await spec.notExists('SettingsScreen.EmailField');
@@ -79,7 +80,7 @@ export default (spec) => {
         await spec.fillIn('Login.EmailInput', 'cavy@example.com');
         await spec.fillIn('Login.PasswordInput', 'password');
         await spec.press('Login.LoginButton');
-        await spec.pause(1000); // do not remove, network call
+        await spec.pause(2000); // do not remove, network call
         await spec.exists('DiaryScreen.LoadedDiaryView');
       });
 
@@ -106,6 +107,7 @@ export default (spec) => {
       spec.it('Logout works', async () => {
         await spec.press('DiaryScreen.MenuButton');
         await spec.press('DrawerNavigation.Account');
+        await spec.pause(1000);
         await spec.press('SettingsScreen.SignoutButton');
         await spec.notExists('SettingsScreen.NameField');
         await spec.notExists('SettingsScreen.EmailField');
@@ -153,7 +155,7 @@ export default (spec) => {
 
       spec.it('Edit Screen shows up', async () => {
         await spec.press('DiaryScreen.EntryCard.0');
-        await spec.pause(1000);
+        await spec.pause(2000);
         await spec.press('DiaryEntryScreen.EditButton');
         await spec.exists('EntryComponent.Title');
         await spec.exists('EntryComponent.Content');
@@ -179,7 +181,7 @@ export default (spec) => {
           'I am ecstatic about this.'
         );
         await spec.press('EntryComponent.SubmitButton');
-        await spec.pause(1000);
+        await spec.pause(2000);
         await spec.exists('DiaryScreen.EntryCard.0');
         await spec.exists('DiaryScreen.EntryCard.1'); // check number of entries
         await spec.press('DiaryScreen.EntryCard.0');
@@ -199,7 +201,7 @@ export default (spec) => {
 
       spec.it('Edit entry', async () => {
         await spec.press('DiaryScreen.EntryCard.0');
-        await spec.pause(1000);
+        await spec.pause(2000);
         await spec.press('DiaryEntryScreen.EditButton');
         await spec.fillIn(
           'EntryComponent.Title',
@@ -210,7 +212,7 @@ export default (spec) => {
           'I am very sad and angry. I am so upset.'
         );
         await spec.press('EntryComponent.SubmitButton');
-        await spec.pause(1000);
+        await spec.pause(2000);
         await spec.exists('DiaryScreen.EntryCard.0');
         await spec.exists('DiaryScreen.EntryCard.1'); // check number of entries
         await spec.press('DiaryScreen.EntryCard.0');
@@ -234,9 +236,9 @@ export default (spec) => {
 
       spec.it('Delete entry', async () => {
         await spec.press('DiaryScreen.EntryCard.0');
-        await spec.pause(1000);
+        await spec.pause(2000);
         await spec.press('DiaryEntryScreen.DeleteButton');
-        await spec.pause(1000);
+        await spec.pause(2000);
         await spec.exists('DiaryScreen.EntryCard.0');
         await spec.notExists('DiaryScreen.EntryCard.1');
       });
@@ -253,7 +255,7 @@ export default (spec) => {
 
       spec.it('Emoji screen shows up', async () => {
         await spec.press('DiaryScreen.EntryCard.0');
-        await spec.pause(1000);
+        await spec.pause(2000);
         await spec.press('DiaryEntryScreen.EmotionsButton');
         await spec.exists('EmojiScreen.TitleText');
         await spec.exists('AppNavigation.BackButton');
@@ -266,7 +268,7 @@ export default (spec) => {
 
       spec.it('Emotion screen shows up (Joy variant)', async () => {
         await spec.press('DiaryScreen.EntryCard.0');
-        await spec.pause(1000);
+        await spec.pause(2000);
         await spec.press('DiaryEntryScreen.EmotionsButton');
         await spec.press('EmojiScreen.emoji4Button');
         await spec.exists('AppNavigation.BackButton');
@@ -278,7 +280,7 @@ export default (spec) => {
 
       spec.it('Emotion screen shows up (Outrage variant)', async () => {
         await spec.press('DiaryScreen.EntryCard.0');
-        await spec.pause(1000);
+        await spec.pause(2000);
         await spec.press('DiaryEntryScreen.EmotionsButton');
         await spec.press('EmojiScreen.emoji0Button');
         await spec.exists('AppNavigation.BackButton');
@@ -292,7 +294,7 @@ export default (spec) => {
         'Navigation from emotions screen to helplines screen',
         async () => {
           await spec.press('DiaryScreen.EntryCard.0');
-          await spec.pause(1000);
+          await spec.pause(2000);
           await spec.press('DiaryEntryScreen.EmotionsButton');
           await spec.press('EmojiScreen.emoji0Button');
           await spec.press('EmotionsScreen.HelplinesButton');
@@ -321,7 +323,7 @@ export default (spec) => {
           'I am ecstatic about this.'
         );
         await spec.press('EntryComponent.SubmitButton');
-        await spec.pause(1000);
+        await spec.pause(2000);
       });
 
       spec.it('Google NLP response (New entry)', async () => {
@@ -335,7 +337,7 @@ export default (spec) => {
         );
         await spec.pause(cloudFunctionWaitTime);
         await spec.press('DiaryEntryScreen.AnalyzingText');
-        await spec.pause(1000);
+        await spec.pause(2000);
         await spec.containsText(
           'DiaryEntryScreen.SentimentText',
           'your feelings are very positive.'
@@ -381,14 +383,14 @@ export default (spec) => {
 
       spec.it('Edit entry', async () => {
         await spec.press('DiaryScreen.EntryCard.0');
-        await spec.pause(1000);
+        await spec.pause(2000);
         await spec.press('DiaryEntryScreen.EditButton');
         await spec.fillIn(
           'EntryComponent.Content',
           'I am very sad and angry. I am so upset.'
         );
         await spec.press('EntryComponent.SubmitButton');
-        await spec.pause(1000);
+        await spec.pause(2000);
       });
 
       spec.it('Google NLP response (New entry)', async () => {
@@ -402,7 +404,7 @@ export default (spec) => {
         );
         await spec.pause(cloudFunctionWaitTime);
         await spec.press('DiaryEntryScreen.AnalyzingText');
-        await spec.pause(1000);
+        await spec.pause(2000);
         await spec.containsText(
           'DiaryEntryScreen.SentimentText',
           'your feelings are negative.'
@@ -448,9 +450,9 @@ export default (spec) => {
 
       spec.it('Delete entry', async () => {
         await spec.press('DiaryScreen.EntryCard.0');
-        await spec.pause(1000);
+        await spec.pause(2000);
         await spec.press('DiaryEntryScreen.DeleteButton');
-        await spec.pause(1000);
+        await spec.pause(2000);
       });
 
       specItLogout(spec);
@@ -472,8 +474,13 @@ export default (spec) => {
       spec.it('Stats Screen can be loaded', async () => {
         await spec.press('DiaryScreen.MenuButton');
         await spec.press('DrawerNavigation.Stats');
-        await spec.pause(1000);
+        await spec.pause(2000);
         await spec.exists('StatsScreen.LoadedStatsView');
+      });
+
+      spec.it('Select User Emoji Screen can be loaded', async () => {
+        await spec.press('DiaryScreen.SelectUserEmojiButton');
+        await spec.exists('SelectUserEmojiScreen.LoadedView');
       });
 
       specItLogout(spec);

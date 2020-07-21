@@ -1,4 +1,5 @@
 import React from 'react';
+import { useCavy } from 'cavy';
 import PropTypes from 'prop-types';
 import { View, TouchableOpacity } from 'react-native';
 import { Text } from 'react-native-elements';
@@ -19,6 +20,8 @@ const propTypes = {
 };
 
 const SelectUserEmojiScreen = ({ navigation, firebase }) => {
+  const generateTestHook = useCavy();
+
   async function updateUserEmoji(emoji, callback) {
     const user = await firebase.retrieveUser();
     firebase.updateUserEmoji(user)(emoji);
@@ -29,7 +32,10 @@ const SelectUserEmojiScreen = ({ navigation, firebase }) => {
   }
 
   return (
-    <View style={{ alignContent: 'center', justifyContent: 'center' }}>
+    <View
+      style={{ alignContent: 'center', justifyContent: 'center' }}
+      ref={generateTestHook('SelectUserEmojiScreen.LoadedView')}
+    >
       <Text h4 style={{ textAlign: 'center', margin: 50 }}>
         Select an emoji!
       </Text>

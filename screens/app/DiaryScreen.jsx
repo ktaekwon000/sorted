@@ -115,6 +115,7 @@ const DiaryScreen = ({ navigation, firebase }) => {
           onPress={() => {
             navigation.navigate('SelectUserEmoji', { setUserEmoji });
           }}
+          ref={generateTestHook('DiaryScreen.SelectUserEmojiButton')}
         >
           <Text
             style={{
