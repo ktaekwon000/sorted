@@ -94,7 +94,10 @@ const SelectUserEmojiScreen = ({ navigation, firebase }) => {
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() =>
-              updateUserEmoji(item, () => navigation.navigate('Diary'))
+              updateUserEmoji(item, () => {
+                navigation.getParam('setUserEmoji')(item);
+                navigation.navigate('Diary');
+              })
             }
           >
             <Text style={{ fontSize: 30, margin: 8 }}>{item}</Text>
@@ -109,6 +112,7 @@ const SelectUserEmojiScreen = ({ navigation, firebase }) => {
 SelectUserEmojiScreen.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
+    getParam: PropTypes.func.isRequired,
   }).isRequired,
   firebase: PropTypes.shape({
     retrieveUser: PropTypes.func.isRequired,

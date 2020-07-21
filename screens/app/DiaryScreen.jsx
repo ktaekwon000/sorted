@@ -110,11 +110,12 @@ const DiaryScreen = ({ navigation, firebase }) => {
           flex: 0.08,
           backgroundColor: '#91751F',
           justifyContent: 'center',
+          padding: 10,
         }}
       >
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('SelectUserEmoji');
+            navigation.navigate('SelectUserEmoji', { setUserEmoji });
           }}
         >
           <Text

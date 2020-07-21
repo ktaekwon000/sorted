@@ -15,6 +15,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  text: {
+    marginHorizontal: 10,
+  },
 });
 
 function Settings({ navigation, firebase }) {
@@ -52,16 +55,27 @@ function Settings({ navigation, firebase }) {
     </View>
   ) : (
     <View style={styles.container}>
-      <Text ref={generateTestHook('SettingsScreen.NameField')}>
+      <Text
+        style={styles.text}
+        ref={generateTestHook('SettingsScreen.NameField')}
+      >
         Welcome! You are {name}
       </Text>
-      <Text ref={generateTestHook('SettingsScreen.EmailField')}>
+      <Text
+        style={styles.text}
+        ref={generateTestHook('SettingsScreen.EmailField')}
+      >
         Your email is {email}
       </Text>
-      <Text>
+      <Text style={styles.text}>
         {'\n'}The following information is only for debugging purposes:
       </Text>
-      <Text ref={generateTestHook('SettingsScreen.UidField')}>uid: {uid}</Text>
+      <Text
+        style={styles.text}
+        ref={generateTestHook('SettingsScreen.UidField')}
+      >
+        uid: {uid}
+      </Text>
       <Button
         title="Signout"
         onPress={handleSignout}
