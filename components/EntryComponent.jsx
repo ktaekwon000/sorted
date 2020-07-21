@@ -12,6 +12,18 @@ const entrySchema = Yup.object().shape({
   content: Yup.string().required('Content is required.'),
 });
 
+const propTypes = {
+  initialValues: PropTypes.exact({
+    title: PropTypes.string,
+    content: PropTypes.string,
+  }),
+  onSubmit: PropTypes.func.isRequired,
+};
+
+const defaultProps = {
+  initialValues: { title: '', content: '' },
+};
+
 const EntryComponent = ({ initialValues, onSubmit }) => {
   const generateTestHook = useCavy();
 
@@ -58,16 +70,7 @@ const EntryComponent = ({ initialValues, onSubmit }) => {
   );
 };
 
-EntryComponent.propTypes = {
-  initialValues: PropTypes.exact({
-    title: PropTypes.string,
-    content: PropTypes.string,
-  }),
-  onSubmit: PropTypes.func.isRequired,
-};
-
-EntryComponent.defaultProps = {
-  initialValues: { title: '', content: '' },
-};
+EntryComponent.propTypes = propTypes;
+EntryComponent.defaultProps = defaultProps;
 
 export default EntryComponent;

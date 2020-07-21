@@ -2,6 +2,18 @@ import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'react-native-elements';
 
+const propTypes = {
+  title: PropTypes.string,
+  buttonType: PropTypes.oneOf(['solid', 'clear', 'outline']),
+  buttonColor: PropTypes.string,
+};
+
+const defaultProps = {
+  title: '',
+  buttonType: 'solid',
+  buttonColor: '#2089dc',
+};
+
 const FormButton = forwardRef(
   ({ title, buttonType, buttonColor, ...rest }, ref) => (
     <Button
@@ -15,16 +27,7 @@ const FormButton = forwardRef(
   )
 );
 
-FormButton.propTypes = {
-  title: PropTypes.string,
-  buttonType: PropTypes.oneOf(['solid', 'clear', 'outline']),
-  buttonColor: PropTypes.string,
-};
-
-FormButton.defaultProps = {
-  title: '',
-  buttonType: 'solid',
-  buttonColor: '#2089dc',
-};
+FormButton.propTypes = propTypes;
+FormButton.defaultProps = defaultProps;
 
 export default FormButton;

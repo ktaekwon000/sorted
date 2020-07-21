@@ -41,6 +41,15 @@ function makeStringFromTimestamp(timestamp) {
   return formatted;
 }
 
+const propTypes = {
+  navigation: PropTypes.shape({
+    getParam: PropTypes.func.isRequired,
+    setParams: PropTypes.func.isRequired,
+    addListener: PropTypes.func.isRequired,
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
 const DiaryEntryScreen = ({ navigation }) => {
   const generateTestHook = useCavy();
 
@@ -164,15 +173,6 @@ const DiaryEntryScreen = ({ navigation }) => {
   );
 };
 
-DiaryEntryScreen.propTypes = {
-  navigation: PropTypes.shape({
-    getParam: PropTypes.func.isRequired,
-    setParams: PropTypes.func.isRequired,
-    addListener: PropTypes.func.isRequired,
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
-};
-
 DiaryEntryScreen.navigationOptions = ({ navigation }) => ({
   title: navigation.getParam('title', 'Loading...'),
   headerRight: (
@@ -185,5 +185,7 @@ DiaryEntryScreen.navigationOptions = ({ navigation }) => ({
     />
   ),
 });
+
+DiaryEntryScreen.propTypes = propTypes;
 
 export default DiaryEntryScreen;

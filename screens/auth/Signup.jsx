@@ -18,6 +18,25 @@ import FormButton from '../../components/FormButton';
 import ErrorMessage from '../../components/ErrorMessage';
 import { withFirebaseHOC } from '../../config/Firebase';
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    marginTop: 50,
+  },
+  logoContainer: {
+    marginBottom: 15,
+    alignItems: 'center',
+  },
+  buttonContainer: {
+    margin: 25,
+  },
+  checkBoxContainer: {
+    backgroundColor: '#fff',
+    borderColor: '#fff',
+  },
+});
+
 const validationSchema = Yup.object().shape({
   name: Yup.string()
     .label('Name')
@@ -37,24 +56,16 @@ const validationSchema = Yup.object().shape({
   check: Yup.boolean().oneOf([true], 'Please check the agreement'),
 });
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    marginTop: 50,
-  },
-  logoContainer: {
-    marginBottom: 15,
-    alignItems: 'center',
-  },
-  buttonContainer: {
-    margin: 25,
-  },
-  checkBoxContainer: {
-    backgroundColor: '#fff',
-    borderColor: '#fff',
-  },
-});
+const propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+  firebase: PropTypes.shape({
+    signupWithEmail: PropTypes.func.isRequired,
+    retrieveUser: PropTypes.func.isRequired,
+    createNewUser: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 function Signup({ navigation, firebase }) {
   const generateTestHook = useCavy();
@@ -284,15 +295,6 @@ function Signup({ navigation, firebase }) {
   );
 }
 
-Signup.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
-  firebase: PropTypes.shape({
-    signupWithEmail: PropTypes.func.isRequired,
-    retrieveUser: PropTypes.func.isRequired,
-    createNewUser: PropTypes.func.isRequired,
-  }).isRequired,
-};
+Signup.propTypes = propTypes;
 
 export default withFirebaseHOC(Signup);

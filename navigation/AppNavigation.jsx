@@ -65,7 +65,6 @@ const AppNavigation = createStackNavigator(
   {
     initialRouteName: 'Diary',
     defaultNavigationOptions: {
-      title: 'placeholder text',
       headerLeft: <HookedBackButton testHook="AppNavigation.BackButton" />,
     },
   }

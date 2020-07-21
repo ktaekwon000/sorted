@@ -5,6 +5,12 @@ import { Text } from 'react-native-elements';
 import { useCavy } from 'cavy';
 import EmojiComponent from '../../components/EmojiComponent';
 
+const propTypes = {
+  navigation: PropTypes.shape({
+    getParam: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
 const EmojiScreen = ({ navigation }) => {
   const generateTestHook = useCavy();
 
@@ -48,10 +54,6 @@ const EmojiScreen = ({ navigation }) => {
   );
 };
 
-EmojiScreen.propTypes = {
-  navigation: PropTypes.shape({
-    getParam: PropTypes.func.isRequired,
-  }).isRequired,
-};
+EmojiScreen.propTypes = propTypes;
 
 export default EmojiScreen;

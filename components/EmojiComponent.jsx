@@ -4,6 +4,19 @@ import { Button } from 'react-native-elements';
 import { withNavigation } from 'react-navigation';
 import { useCavy } from 'cavy';
 
+const propTypes = {
+  emoji: PropTypes.string.isRequired,
+  emotion: PropTypes.string.isRequired,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+  testHook: PropTypes.string,
+};
+
+const defaultProps = {
+  testHook: undefined,
+};
+
 const EmojiComponent = ({ emoji, emotion, navigation, testHook }) => {
   const generateTestHook = useCavy();
 
@@ -31,17 +44,7 @@ const EmojiComponent = ({ emoji, emotion, navigation, testHook }) => {
   );
 };
 
-EmojiComponent.propTypes = {
-  emoji: PropTypes.string.isRequired,
-  emotion: PropTypes.string.isRequired,
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
-  testHook: PropTypes.string,
-};
-
-EmojiComponent.defaultProps = {
-  testHook: undefined,
-};
+EmojiComponent.propTypes = propTypes;
+EmojiComponent.defaultProps = defaultProps;
 
 export default withNavigation(EmojiComponent);

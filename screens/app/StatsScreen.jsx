@@ -52,6 +52,18 @@ const makeColorFromString = (str) => {
   }
 };
 
+const propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+    setParams: PropTypes.func.isRequired,
+  }).isRequired,
+  firebase: PropTypes.shape({
+    retrieveUser: PropTypes.func.isRequired,
+    retrieveUserDocument: PropTypes.func.isRequired,
+    updateNotifiedDate: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
 const StatsScreen = ({ navigation, firebase }) => {
   const generateTestHook = useCavy();
 
@@ -264,13 +276,6 @@ const StatsScreen = ({ navigation, firebase }) => {
               <Text style={{ color: 'white', fontSize: 16 }}>
                 {makeDayfromInt(index)}
               </Text>
-              {/* <Badge
-                badgeStyle={{
-                  backgroundColor: makeColorFromString(val),
-                }}
-                value={val}
-                textProps={{ style: { color: 'white', fontSize: 20 } }}
-              /> */}
               <View
                 style={{
                   backgroundColor: makeColorFromString(val),
@@ -298,17 +303,7 @@ const StatsScreen = ({ navigation, firebase }) => {
   );
 };
 
-StatsScreen.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-    setParams: PropTypes.func.isRequired,
-  }).isRequired,
-  firebase: PropTypes.shape({
-    retrieveUser: PropTypes.func.isRequired,
-    retrieveUserDocument: PropTypes.func.isRequired,
-    updateNotifiedDate: PropTypes.func.isRequired,
-  }).isRequired,
-};
+StatsScreen.propTypes = propTypes;
 
 const StatsWithFirebase = withFirebaseHOC(StatsScreen);
 

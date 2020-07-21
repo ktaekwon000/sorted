@@ -39,6 +39,15 @@ const validationSchema = Yup.object().shape({
     .min(6, 'Password must have at least 6 characters '),
 });
 
+const propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+  firebase: PropTypes.shape({
+    loginWithEmail: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
 function Login({ navigation, firebase }) {
   const generateTestHook = useCavy();
 
@@ -190,13 +199,6 @@ function Login({ navigation, firebase }) {
   );
 }
 
-Login.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
-  firebase: PropTypes.shape({
-    loginWithEmail: PropTypes.func.isRequired,
-  }).isRequired,
-};
+Login.propTypes = propTypes;
 
 export default withFirebaseHOC(Login);

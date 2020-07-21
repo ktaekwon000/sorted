@@ -11,18 +11,21 @@ const styles = StyleSheet.create({
   },
 });
 
+const propTypes = {
+  errorValue: PropTypes.string,
+};
+
+const defaultProps = {
+  errorValue: '',
+};
+
 const ErrorMessage = ({ errorValue }) => (
   <View style={styles.container}>
     <Text style={styles.errorText}>{errorValue}</Text>
   </View>
 );
 
-ErrorMessage.propTypes = {
-  errorValue: PropTypes.string,
-};
-
-ErrorMessage.defaultProps = {
-  errorValue: '',
-};
+ErrorMessage.propTypes = propTypes;
+ErrorMessage.defaultProps = defaultProps;
 
 export default ErrorMessage;

@@ -24,6 +24,12 @@ const styles = StyleSheet.create({
   },
 });
 
+const propTypes = {
+  firebase: PropTypes.shape({
+    retrieveUser: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
 const CustomDrawerContentComponent = ({ firebase, ...props }) => {
   const generateTestHook = useCavy();
   const Text = wrap(UnwrappedText);
@@ -67,11 +73,7 @@ You may have to restart the app for your name to show here.`}
   );
 };
 
-CustomDrawerContentComponent.propTypes = {
-  firebase: PropTypes.shape({
-    retrieveUser: PropTypes.func.isRequired,
-  }).isRequired,
-};
+CustomDrawerContentComponent.propTypes = propTypes;
 
 const DrawerNavigation = createDrawerNavigator(
   {

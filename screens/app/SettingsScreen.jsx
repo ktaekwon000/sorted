@@ -20,6 +20,16 @@ const styles = StyleSheet.create({
   },
 });
 
+const propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+  firebase: PropTypes.shape({
+    retrieveUser: PropTypes.func.isRequired,
+    signOut: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
 function Settings({ navigation, firebase }) {
   const generateTestHook = useCavy();
   const Text = wrap(UnwrappedText);
@@ -89,15 +99,7 @@ function Settings({ navigation, firebase }) {
   );
 }
 
-Settings.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
-  firebase: PropTypes.shape({
-    retrieveUser: PropTypes.func.isRequired,
-    signOut: PropTypes.func.isRequired,
-  }).isRequired,
-};
+Settings.propTypes = propTypes;
 
 const SettingsWithFirebase = withFirebaseHOC(Settings);
 

@@ -33,6 +33,15 @@ const validationSchema = Yup.object().shape({
     .required('Please enter a registered email'),
 });
 
+const propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+  firebase: PropTypes.shape({
+    passwordReset: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
 function ForgotPassword({ navigation, firebase }) {
   const generateTestHook = useCavy();
 
@@ -119,13 +128,6 @@ function ForgotPassword({ navigation, firebase }) {
   );
 }
 
-ForgotPassword.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
-  firebase: PropTypes.shape({
-    passwordReset: PropTypes.func.isRequired,
-  }).isRequired,
-};
+ForgotPassword.propTypes = propTypes;
 
 export default withFirebaseHOC(ForgotPassword);

@@ -3,74 +3,20 @@ import PropTypes from 'prop-types';
 import { View, TouchableOpacity } from 'react-native';
 import { Text } from 'react-native-elements';
 import { FlatList } from 'react-native-gesture-handler';
+import EMOJIS from '../../assets/Emojis';
 import { withFirebaseHOC } from '../../config/Firebase';
 
-const emojis = [
-  '😂',
-  '😒',
-  '😩',
-  '😭',
-  '😍',
-  '😔',
-  '👌 ',
-  '☺️',
-  '❤️',
-  '😏',
-  '😁',
-  '🎶',
-  '😳',
-  '💯',
-  '😴',
-  '😌',
-  '😊',
-  '🙌',
-  '💕',
-  '😑',
-  '😅',
-  '🙏',
-  '😕',
-  '😘',
-  '❤️',
-  '😐',
-  '💁',
-  '😞',
-  '🙈',
-  '😫',
-  '✌️',
-  '😎',
-  '😡',
-  '👍',
-  '😢',
-  '😪',
-  '😝',
-  '😤',
-  '✋',
-  '😷',
-  '👋',
-  '👀',
-  '🔫',
-  '😣',
-  '😈',
-  '😓',
-  '💔',
-  '❤️',
-  '🎧',
-  '🙊',
-  '😉',
-  '💀',
-  '😖',
-  '😄',
-  '😜',
-  '😠',
-  '🙅',
-  '💪',
-  '✊',
-  '💜',
-  '💖',
-  '💙',
-  '😬',
-  '✨',
-];
+const propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+    getParam: PropTypes.func.isRequired,
+  }).isRequired,
+  firebase: PropTypes.shape({
+    retrieveUser: PropTypes.func.isRequired,
+    retrieveUserDocument: PropTypes.func.isRequired,
+    updateUserEmoji: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 const SelectUserEmojiScreen = ({ navigation, firebase }) => {
   async function updateUserEmoji(emoji, callback) {
@@ -89,7 +35,7 @@ const SelectUserEmojiScreen = ({ navigation, firebase }) => {
       </Text>
       <FlatList
         numColumns={8}
-        data={emojis}
+        data={EMOJIS}
         keyExtractor={(str) => str}
         renderItem={({ item }) => (
           <TouchableOpacity
@@ -109,16 +55,6 @@ const SelectUserEmojiScreen = ({ navigation, firebase }) => {
   );
 };
 
-SelectUserEmojiScreen.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-    getParam: PropTypes.func.isRequired,
-  }).isRequired,
-  firebase: PropTypes.shape({
-    retrieveUser: PropTypes.func.isRequired,
-    retrieveUserDocument: PropTypes.func.isRequired,
-    updateUserEmoji: PropTypes.func.isRequired,
-  }).isRequired,
-};
+SelectUserEmojiScreen.propTypes = propTypes;
 
 export default withFirebaseHOC(SelectUserEmojiScreen);

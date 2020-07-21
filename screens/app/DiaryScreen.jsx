@@ -4,7 +4,6 @@ import {
   View,
   FlatList,
   ActivityIndicator,
-  TouchableNativeFeedback,
   Text,
   Dimensions,
   ImageBackground,
@@ -14,6 +13,16 @@ import { useCavy } from 'cavy';
 import { useFonts, Raleway_600SemiBold } from '@expo-google-fonts/raleway'; //eslint-disable-line
 import { Context as DiaryContext } from '../../config/DiaryContext';
 import { withFirebaseHOC } from '../../config/Firebase';
+
+const propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+  firebase: PropTypes.shape({
+    retrieveUser: PropTypes.func.isRequired,
+    retrieveUserDocument: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 const DiaryScreen = ({ navigation, firebase }) => {
   const generateTestHook = useCavy();
@@ -55,7 +64,7 @@ const DiaryScreen = ({ navigation, firebase }) => {
           data={state}
           keyExtractor={(entry) => entry.id}
           renderItem={({ item, index }) => (
-            <TouchableNativeFeedback
+            <TouchableOpacity
               ref={generateTestHook(`DiaryScreen.EntryCard.${index}`)}
               onPress={() => navigation.navigate('DiaryEntry', { id: item.id })}
             >
@@ -65,6 +74,7 @@ const DiaryScreen = ({ navigation, firebase }) => {
                   width: Dimensions.get('window').width * 0.45,
                   height: Dimensions.get('window').height * 0.25,
                   justifyContent: 'center',
+                  margin: 20,
                 }}
               >
                 <Text
@@ -82,21 +92,7 @@ const DiaryScreen = ({ navigation, firebase }) => {
                   {item.title}
                 </Text>
               </ImageBackground>
-              {/* <Card
-                title={item.title}
-                titleNumberOfLines={1}
-                dividerStyle={{ marginBottom: 3 }}
-                titleStyle={{ marginBottom: 3 }}
-                containerStyle={{
-                  paddingTop: 3,
-                  marginBottom: 3,
-                  width: Dimensions.get('window').width * 0.42,
-                  height: Dimensions.get('window').height * 0.25,
-                }}
-              >
-                <Text numberOfLines={9}>{item.content}</Text>
-              </Card> */}
-            </TouchableNativeFeedback>
+            </TouchableOpacity>
           )}
           refreshing={loading}
           onRefresh={() => {
@@ -134,14 +130,6 @@ const DiaryScreen = ({ navigation, firebase }) => {
   );
 };
 
-DiaryScreen.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
-  firebase: PropTypes.shape({
-    retrieveUser: PropTypes.func.isRequired,
-    retrieveUserDocument: PropTypes.func.isRequired,
-  }).isRequired,
-};
+DiaryScreen.propTypes = propTypes;
 
 export default withFirebaseHOC(DiaryScreen);

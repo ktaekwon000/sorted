@@ -13,6 +13,38 @@ const styles = StyleSheet.create({
   },
 });
 
+const propTypes = {
+  iconName: PropTypes.string,
+  iconColor: PropTypes.string,
+  returnKeyType: PropTypes.oneOf([
+    'done',
+    'go',
+    'next',
+    'search',
+    'send',
+    'none',
+    'previous',
+  ]),
+  keyboardType: PropTypes.oneOf([
+    'default',
+    'email-address',
+    'numeric',
+    'phone-pad',
+    'visible-password',
+  ]),
+  name: PropTypes.string,
+  placeholder: PropTypes.string,
+};
+
+const defaultProps = {
+  iconName: undefined,
+  iconColor: undefined,
+  returnKeyType: 'done',
+  keyboardType: 'default',
+  name: undefined,
+  placeholder: undefined,
+};
+
 const FormInput = forwardRef(
   (
     {
@@ -43,36 +75,7 @@ const FormInput = forwardRef(
   )
 );
 
-FormInput.propTypes = {
-  iconName: PropTypes.string,
-  iconColor: PropTypes.string,
-  returnKeyType: PropTypes.oneOf([
-    'done',
-    'go',
-    'next',
-    'search',
-    'send',
-    'none',
-    'previous',
-  ]),
-  keyboardType: PropTypes.oneOf([
-    'default',
-    'email-address',
-    'numeric',
-    'phone-pad',
-    'visible-password',
-  ]),
-  name: PropTypes.string,
-  placeholder: PropTypes.string,
-};
-
-FormInput.defaultProps = {
-  iconName: undefined,
-  iconColor: undefined,
-  returnKeyType: 'done',
-  keyboardType: 'default',
-  name: undefined,
-  placeholder: undefined,
-};
+FormInput.propTypes = propTypes;
+FormInput.defaultProps = defaultProps;
 
 export default FormInput;

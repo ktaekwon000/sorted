@@ -4,6 +4,14 @@ import { View, ActivityIndicator } from 'react-native';
 import EntryComponent from '../../components/EntryComponent';
 import { Context as DiaryContext } from '../../config/DiaryContext';
 
+const propTypes = {
+  navigation: PropTypes.shape({
+    getParam: PropTypes.func.isRequired,
+    setParams: PropTypes.func.isRequired,
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
 const EditScreen = ({ navigation }) => {
   const { editDiaryEntry, getDiaryEntries } = useContext(DiaryContext);
   const [loading, setLoading] = useState(false);
@@ -35,16 +43,10 @@ const EditScreen = ({ navigation }) => {
   );
 };
 
-EditScreen.propTypes = {
-  navigation: PropTypes.shape({
-    getParam: PropTypes.func.isRequired,
-    setParams: PropTypes.func.isRequired,
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
-};
-
 EditScreen.navigationOptions = ({ navigation }) => ({
   title: `Editing ${navigation.getParam('origTitle', 'loading...')}`,
 });
+
+EditScreen.propTypes = propTypes;
 
 export default EditScreen;
