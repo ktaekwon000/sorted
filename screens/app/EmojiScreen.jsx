@@ -19,8 +19,15 @@ const EmojiScreen = ({ navigation }) => {
   return (
     <View style={{ flex: 1, backgroundColor: '#FF66B2' }}>
       <Text
-        h4
-        style={{ textAlign: 'center', marginTop: 20, flex: 1, color: 'white' }}
+        style={{
+          textAlign: 'center',
+          marginTop: 20,
+          marginHorizontal: 10,
+          flex: 0.7,
+          color: 'white',
+          fontSize: 22,
+          fontWeight: 'bold',
+        }}
         ref={generateTestHook('EmojiScreen.TitleText')}
       >
         Pick the emoji which you think is appropriate for this entry :)

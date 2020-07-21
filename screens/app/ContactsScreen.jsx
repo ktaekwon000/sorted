@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
   categoryHeaderText: {
     marginHorizontal: 8,
     alignSelf: 'center',
+    textAlign: 'center',
   },
 });
 

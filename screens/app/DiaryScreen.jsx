@@ -46,7 +46,9 @@ const DiaryScreen = ({ navigation, firebase }) => {
   }
 
   useEffect(() => {
-    getUserInfo(() => getDiaryEntries(() => setLoading(false)));
+    getUserInfo(() => getDiaryEntries(() => setLoading(false))).catch(
+      () => undefined
+    );
   }, []);
 
   return loading || !fontsLoaded ? (
@@ -74,7 +76,7 @@ const DiaryScreen = ({ navigation, firebase }) => {
                   width: Dimensions.get('window').width * 0.45,
                   height: Dimensions.get('window').height * 0.25,
                   justifyContent: 'center',
-                  margin: 20,
+                  marginVertical: 20,
                 }}
               >
                 <Text
@@ -84,8 +86,8 @@ const DiaryScreen = ({ navigation, firebase }) => {
                     alignSelf: 'center',
                     top: 10,
                     right: 10,
-                    margin: 40,
                     textAlign: 'center',
+                    padding: 40,
                   }}
                   numberOfLines={5}
                 >

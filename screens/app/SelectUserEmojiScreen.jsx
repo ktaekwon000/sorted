@@ -46,7 +46,7 @@ const SelectUserEmojiScreen = ({ navigation, firebase }) => {
               })
             }
           >
-            <Text style={{ fontSize: 30, margin: 8 }}>{item}</Text>
+            <Text style={{ fontSize: 26, margin: 6 }}>{item}</Text>
           </TouchableOpacity>
         )}
         style={{ alignSelf: 'center' }}

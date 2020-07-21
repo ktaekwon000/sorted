@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
   },
   text: {
     marginHorizontal: 10,
+    textAlign: 'center',
   },
 });
 
@@ -122,7 +123,7 @@ const SettingsNavigation = createStackNavigator(
         ),
         headerRight: (
           <Button
-            title="Contact developers"
+            title="Email us"
             type="clear"
             containerStyle={{ marginRight: 6 }}
             titleStyle={{ fontSize: 14 }}

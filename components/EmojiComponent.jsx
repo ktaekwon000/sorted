@@ -24,9 +24,8 @@ const EmojiComponent = ({ emoji, emotion, navigation, testHook }) => {
     <Button
       containerStyle={{
         flex: 1,
-        margin: 10,
+        margin: 5,
         marginHorizontal: 30,
-        backgroundColor: 'white',
       }}
       buttonStyle={{
         borderWidth: 3,
