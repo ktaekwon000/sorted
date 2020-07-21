@@ -5,8 +5,8 @@ Available only for Android.
 
 Built with [React Native](https://reactnative.dev/), [Firebase](https://firebase.google.com/) and [Google Cloud](https://cloud.google.com/). 
 
-Emotion Identification powered by [TorchMoji](https://github.com/huggingface/torchMoji), a [pyTorch](http://pytorch.org/) implementation of the [DeepMoji](https://github.com/bfelbo/DeepMoji) model developed by Bjarke Felbo, Alan Mislove, Anders Søgaard, Iyad Rahwan and Sune Lehmann. Check out their [paper](https://arxiv.org/abs/1708.00524) and [demo](http://deepmoji.mit.edu/).
-A fork of torchmoji, adapted for use in Google Cloud Functions, was used for this project. Check it out [here](https://github.com/ktaekwon000/torchMoji-CloudFunction).
+Emotion Identification powered by [torchMoji](https://github.com/huggingface/torchMoji), a [pyTorch](http://pytorch.org/) implementation of the [DeepMoji](https://github.com/bfelbo/DeepMoji) model developed by Bjarke Felbo, Alan Mislove, Anders Søgaard, Iyad Rahwan and Sune Lehmann. Check out their [paper](https://arxiv.org/abs/1708.00524) and [demo](http://deepmoji.mit.edu/).
+A fork of torchMoji, adapted for use in Google Cloud Functions, was used for this project. Check it out [here](https://github.com/ktaekwon000/torchMoji-CloudFunction).
 
 Testing implemented with [Cavy](https://cavy.app/).
 
