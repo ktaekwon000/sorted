@@ -160,11 +160,8 @@ const StatsScreen = ({ navigation, firebase }) => {
     ) {
       Alert.alert(
         'Alert',
-        "It appears that you haven't been feeling too well recently. Keep in " +
-          'mind that you always will have someone to talk to. Press Helplines' +
-          ' to bring you to the list of helplines, or press Cancel to go back' +
-          ' to the Stats screen. If you do not wish to see this message for ' +
-          'the next 24 hours, tap Cancel.',
+        // eslint-disable-nextline
+        "It appears that you haven't been feeling too well recently. Keep in mind that you always will have someone to talk to.\n\nPress Helplines to bring you to the list of helplines, or press Cancel to go back to the Stats screen. If tap Cancel, you will not see this message for the next 24 hours.",
         [
           {
             text: 'Cancel',
