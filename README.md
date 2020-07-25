@@ -10,7 +10,7 @@ A fork of torchMoji, adapted for use in Google Cloud Functions, was used for thi
 
 Testing implemented with [Cavy](https://cavy.app/).
 
-![Poster Image](https://i.imgur.com/4wZWQDQ.png)
+![Poster Image](https://i.imgur.com/0kXWaNa.png)
 Orbital 2020 project by Kim Tae Kwon and Kim Sangwoo
 
 The following are links to Milestone 3 documents:
